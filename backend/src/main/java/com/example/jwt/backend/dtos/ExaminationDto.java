@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 public class ExaminationDto {
-    @NotNull
+
     private Long id;
     @NotNull
     private String name;

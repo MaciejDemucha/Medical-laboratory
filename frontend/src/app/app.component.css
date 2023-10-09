@@ -8,3 +8,8 @@
 	background-position: 10px center;
 	max-width: 460px;
 }
+.main {
+	padding: 20px;
+	margin: auto;
+	width: 50%;
+}

@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -33,5 +32,25 @@ public class ExaminationsService {
 
         return examinationMapper.toExaminationDto(createdExamination);
 
+    }
+
+    public ExaminationDto deleteExamination(Long id) {
+        Examination examination = examinationRepository.findById(id)
+                .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
+
+        examinationRepository.deleteById(examination.getId());
+
+        return examinationMapper.toExaminationDto(examination);
+    }
+
+    public ExaminationDto updateExamination(Long id, ExaminationDto examinationDto) {
+        Examination examination = examinationRepository.findById(id)
+                .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
+
+        examinationMapper.updateExamination(examination, examinationMapper.toExamination(examinationDto));
+
+        Examination updatedExamination = examinationRepository.save(examination);
+
+        return examinationMapper.toExaminationDto(updatedExamination);
     }
 }

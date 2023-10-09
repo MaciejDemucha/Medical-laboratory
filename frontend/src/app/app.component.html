@@ -16,9 +16,14 @@
     <div *ngIf="showError" class="error">{{message}}</div>
   
     <app-auth-content *ngIf="componentToShow == 'messages'"/>
-  
-    <app-examination-display *ngFor="let examination of examinations" 
-    [examination] = "examination"/>
+    
+    <div class="main">
+        <h1>Dodaj nowe badanie</h1>
+        <app-examination-input (newDataEvent)="appendData($event)"/>
+        <app-examination-display *ngFor="let examination of examinations" 
+        (removeItemEvent)="removeItem($event)"
+        [examination] = "examination"/>
+  </div>
   
   </div>
   

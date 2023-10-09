@@ -80,5 +80,17 @@ export class AppComponent {
 		);
 	}
 
+	appendData(newExamination: any): void {
+		this.examinations.push(newExamination);
+	}
+
+	removeItem(examinationId: number): void {
+		this.http.delete(
+			"http://localhost:8080/examinations/" + examinationId
+		).subscribe(data => 
+			this.examinations = this.examinations.filter((examination: Examination) =>
+			examination.id != examinationId));
+	}
+
 
 }

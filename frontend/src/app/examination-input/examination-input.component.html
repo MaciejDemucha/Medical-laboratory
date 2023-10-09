@@ -1,0 +1,13 @@
+<form #examinationForm="ngForm" class="examination-form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="examination-full-width">
+        <mat-label>Nazwa</mat-label>
+        <input name="name" ngModel required matInput>
+      </mat-form-field>
+
+      <mat-form-field class="examination-full-width">
+        <mat-label>Cena</mat-label>
+        <input name="price" ngModel required matInput>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button>Zapisz</button>
+</form>

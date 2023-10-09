@@ -3,6 +3,8 @@ package com.example.jwt.backend.mappers;
 import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.entites.Examination;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -12,4 +14,6 @@ public interface ExaminationMapper {
     ExaminationDto toExaminationDto(Examination examination);
 
     List<ExaminationDto> toExaminationDtos(List<Examination> examinations);
+
+    void updateExamination(@MappingTarget Examination target, Examination source);
 }

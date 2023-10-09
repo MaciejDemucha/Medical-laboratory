@@ -16,6 +16,7 @@ import { AxiosService } from './axios.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExaminationDisplayComponent } from './examination-display/examination-display.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ExaminationInputComponent } from './examination-input/examination-input.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginFormComponent,
     WelcomeContentComponent,
     AuthContentComponent,
-    ContentComponent
+    ContentComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatFormFieldModule,
     HttpClientModule,
-    ExaminationDisplayComponent
+    ExaminationDisplayComponent,
+    ExaminationInputComponent
   ],
   providers: [AxiosService],
   bootstrap: [AppComponent]

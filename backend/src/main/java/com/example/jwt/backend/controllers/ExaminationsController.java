@@ -31,4 +31,14 @@ public class ExaminationsController {
         ExaminationDto createdExamination = examinationsService.createExamination(examinationDto);
         return ResponseEntity.created(URI.create("/examinations/" + createdExamination.getId())).body(createdExamination);
     }
+
+    @DeleteMapping("/examinations/{id}")
+    public ResponseEntity<ExaminationDto> deleteExamination(@PathVariable Long id){
+        return ResponseEntity.ok(examinationsService.deleteExamination(id));
+    }
+
+    @PutMapping("/examinations/{id}")
+    public ResponseEntity<ExaminationDto> updateExamination(@PathVariable Long id, @Valid @RequestBody ExaminationDto examinationDto){
+        return ResponseEntity.ok(examinationsService.updateExamination(id, examinationDto));
+    }
 }
