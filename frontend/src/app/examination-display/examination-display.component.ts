@@ -13,4 +13,5 @@ import { Examination } from './examination';
 export class ExaminationDisplayComponent {
     @Input() examination = new Examination(0, "", 0);
     @Output() removeItemEvent = new EventEmitter();
+    @Output() editItemEvent = new EventEmitter();
 }

@@ -1,0 +1,10 @@
+.examination-form {
+    min-width: 50px;
+    max-width: 300px;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .examination-full-width {
+    width: 100%;
+  }

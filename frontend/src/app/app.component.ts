@@ -40,7 +40,7 @@ export class AppComponent {
 		    }).then(
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
-		        this.componentToShow = "messages";
+		        this.componentToShow = "restricted";
 				
 				
 		    }).catch(
