@@ -1,0 +1,17 @@
+<div>
+  <app-buttons *ngIf="componentToShow != 'login'"
+    
+    (logoutEvent)="showComponent('login')"
+  />
+
+	
+	<app-login-form *ngIf="componentToShow == 'login'" (onSubmitLoginEvent)="onLogin($event)" (onSubmitRegisterEvent)="onRegister($event)"/>
+
+  <div *ngIf="showError" class="error">{{message}}</div>
+
+	<app-auth-content *ngIf="componentToShow == 'messages'"/>
+
+  <app-examination-display *ngFor="let examination of examinations" 
+  [examination] = "examination"/>
+
+</div>
