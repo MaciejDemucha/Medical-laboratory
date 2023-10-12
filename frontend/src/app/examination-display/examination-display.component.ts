@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
-import { Examination } from './examination';
+import { Examination } from '../examination';
 
 @Component({
   selector: 'app-examination-display',

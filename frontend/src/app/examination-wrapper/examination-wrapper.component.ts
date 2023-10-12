@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Examination } from '../examination-display/examination';
 import { ExaminationDisplayComponent } from '../examination-display/examination-display.component';
 import { ExaminationEditComponent } from '../examination-edit/examination-edit.component';
 import { CommonModule } from '@angular/common';
+import { Examination } from '../examination';
 
 @Component({
   selector: 'app-examination-wrapper',

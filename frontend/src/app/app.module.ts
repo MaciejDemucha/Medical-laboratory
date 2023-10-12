@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { AuthContentComponent } from './auth-content/auth-content.component';
 import { MatFormFieldModule } from '@angular/material/form-field';  
+import {MatButtonModule} from '@angular/material/button';
 
 import { AxiosService } from './axios.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExaminationInputComponent } from './examination-input/examination-input.component';
 import { ExaminationWrapperComponent } from './examination-wrapper/examination-wrapper.component';
 import { ExaminationEditComponent } from './examination-edit/examination-edit.component';
+import { ExaminationClientComponent } from './examination-client/examination-client.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,7 @@ import { ExaminationEditComponent } from './examination-edit/examination-edit.co
     ButtonsComponent,
     HeaderComponent,
     LoginFormComponent,
-    AuthContentComponent,
-     
+    AuthContentComponent,   
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,9 @@ import { ExaminationEditComponent } from './examination-edit/examination-edit.co
     ExaminationDisplayComponent,
     ExaminationInputComponent,
     ExaminationWrapperComponent,
-    ExaminationEditComponent
+    ExaminationEditComponent,
+    ExaminationClientComponent,
+    MatButtonModule
   ],
   providers: [AxiosService],
   bootstrap: [AppComponent]

@@ -2,11 +2,11 @@ security.jwt.token.secret-key: my-secret-key
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/backenddb
-    username: backend
-    password: backend
+    driver-class-name: com.mysql.cj.jdbc.Driver #org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/laboratory #jdbc:postgresql://localhost:5432/backenddb
+    username: root #backend
+    password: d31f2547 #backend
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: create

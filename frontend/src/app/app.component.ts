@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
-import { Examination } from './examination-display/examination';
 import {HttpClient} from '@angular/common/http';
 import { AxiosService } from './axios.service';
+import { Examination } from './examination';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title: string = 'Laboratorium medyczne';
 
   examinations: Examination[] = [];
-  componentToShow: string = "login";
+  componentToShow: string = "examinations";
 	showError: boolean = false;
+	isAuthenticated: boolean = false;
 	message: string = " ";
 
   constructor(private http: HttpClient, private axiosService: AxiosService){
@@ -30,6 +32,18 @@ export class AppComponent {
     this.componentToShow = componentToShow;
   }
 
+  onLoginTab(): void {
+	this.componentToShow = "login";
+  }
+
+  onShopTab(): void {
+	this.componentToShow = "examinations";
+  }
+
+  onBucketTab(): void {
+	
+  }
+
 	onLogin(input: any): void {
 		this.axiosService.request(
 		    "POST",
@@ -41,14 +55,17 @@ export class AppComponent {
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
 		        this.componentToShow = "restricted";
+				this.showError = false;
+				this.isAuthenticated = true;
 				
 				
 		    }).catch(
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				this.showError = true;
-				this.message = "Invalid username or password"
+				//this.showError = true;
+				//this.message = "Invalid username or password"
+				alert("Błędne dane logowania");
 				
 		    }
 		);
@@ -67,17 +84,26 @@ export class AppComponent {
 		    }).then(
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
-		        this.componentToShow = "messages";
+		        this.componentToShow = "restricted";
+				this.showError = false;
+				this.isAuthenticated = true;
 				
 		    }).catch(
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				this.showError = true;
-				this.message = "Error with register"
+				//this.showError = true;
+				//this.message = "Error with register"
+				alert("Błąd rejestracji")
 				
 		    }
 		);
+	}
+
+	onLogout(): void {
+		this.isAuthenticated = false;
+		localStorage.removeItem('auth_token');
+		this.showComponent("login");
 	}
 
 	appendData(newExamination: any): void {
@@ -90,6 +116,10 @@ export class AppComponent {
 		).subscribe(data => 
 			this.examinations = this.examinations.filter((examination: Examination) =>
 			examination.id != examinationId));
+	}
+
+	addItemToBucket(examinationId: number): void {
+		
 	}
 
 

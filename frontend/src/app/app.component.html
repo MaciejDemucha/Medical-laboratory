@@ -1,14 +1,23 @@
 <div class="app">
-  <app-header [pageTitle]="'Laboratorium medyczne'" 
-  [logoSrc]="'assets/images/logo.png'"/>
+    <app-header [pageTitle]="'Laboratorium medyczne'" 
+    [logoSrc]="'assets/images/logo.png'">
+  </app-header>
+  <div class="menu">
+  <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Logowanie</button>
+  <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-raised-button>Wyloguj się</button>
+  <button *ngIf="isAuthenticated == true" (click)="showComponent('restricted')" mat-raised-button>Dodaj nowe badanie</button>
+  <button (click)="onShopTab()" mat-raised-button>Oferta</button>
+  <button (click)="onBucketTab()" mat-raised-button>Koszyk</button>
+  </div>
+ 
 
   <!--<app-content (examinations)="examinations"/>-->
 
   <div>
-    <app-buttons *ngIf="componentToShow != 'login'"
+   <!--<app-buttons *ngIf="isAuthenticated == true"
       
       (logoutEvent)="showComponent('login')"
-    />
+    />-->
   
     
     <app-login-form *ngIf="componentToShow == 'login'" (onSubmitLoginEvent)="onLogin($event)" (onSubmitRegisterEvent)="onRegister($event)"/>
@@ -21,6 +30,13 @@
         <app-examination-input (newDataEvent)="appendData($event)"/>
         <app-examination-wrapper *ngFor="let examination of examinations" 
         (removeItemEvent)="removeItem($event)"
+        [examination] = "examination"/>
+  </div>
+
+  <div *ngIf="componentToShow == 'examinations'" class="main">
+    <h1>Oferta</h1>
+    <app-examination-client *ngFor="let examination of examinations" 
+        (addItemEvent)="addItemToBucket($event)"
         [examination] = "examination"/>
   </div>
   
