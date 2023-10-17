@@ -13,11 +13,16 @@ import java.time.LocalDate;
 @Builder
 @Getter
 @Setter
-public class ExaminationDto {
+public class PatientDto {
 
     private Long id;
     @NotNull
-    private String name;
+    private String pesel;
+    @NotNull
+    private String firstName;
+    @NotNull
+    private String lastName;
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date datePerformed; //TODO: naprawić
+    private Date birthDate;
 }

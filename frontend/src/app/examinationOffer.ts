@@ -1,7 +1,7 @@
-export class Examination {
+export class ExaminationOffer {
     constructor(
         public id: number | null,
         public name: string,
-        public datePerformed: string|null
+        public price: number
     ) {}
 }

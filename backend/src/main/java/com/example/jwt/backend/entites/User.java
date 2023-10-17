@@ -7,12 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name = "app_user")
+@Table(name = "doctor")
 public class User {
 
     @Id
@@ -34,4 +36,7 @@ public class User {
     @Column(nullable = false)
     @Size(max = 100)
     private String password;
+
+    @OneToMany(mappedBy="doctor")
+    private Set<Patient> patients;
 }

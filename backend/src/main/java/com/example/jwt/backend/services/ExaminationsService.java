@@ -1,10 +1,14 @@
 package com.example.jwt.backend.services;
 
 import com.example.jwt.backend.dtos.ExaminationDto;
+import com.example.jwt.backend.dtos.ParameterDto;
 import com.example.jwt.backend.entites.Examination;
+import com.example.jwt.backend.entites.Parameter;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.ExaminationMapper;
+import com.example.jwt.backend.mappers.ParameterMapper;
 import com.example.jwt.backend.repositories.ExaminationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,9 +20,15 @@ import java.util.List;
 public class ExaminationsService {
     private final ExaminationRepository examinationRepository;
     private final ExaminationMapper examinationMapper;
+    private final ParameterMapper parameterMapper;
     public List<ExaminationDto> allExaminations(){
         return examinationMapper.toExaminationDtos(examinationRepository.findAll());
     }
+
+    public List<ExaminationDto> getExaminationByPatientId(Long id){
+        return examinationMapper.toExaminationDtos(examinationRepository.findByPatientId(id));
+    }
+
 
     public ExaminationDto getExamination(Long id){
         Examination examination = examinationRepository.findById(id)

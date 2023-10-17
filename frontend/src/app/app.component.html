@@ -6,6 +6,7 @@
   <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Logowanie</button>
   <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-raised-button>Wyloguj się</button>
   <button *ngIf="isAuthenticated == true" (click)="showComponent('restricted')" mat-raised-button>Dodaj nowe badanie</button>
+  <button *ngIf="isAuthenticated == true" (click)="OnPatientsTab()" mat-raised-button>Pacjenci</button>
   <button (click)="onShopTab()" mat-raised-button>Oferta</button>
   <button (click)="onBucketTab()" mat-raised-button>Koszyk</button>
   </div>
@@ -28,14 +29,19 @@
     <div *ngIf="componentToShow == 'restricted'" class="main">
         <h1>Dodaj nowe badanie</h1>
         <app-examination-input (newDataEvent)="appendData($event)"/>
-        <app-examination-wrapper *ngFor="let examination of examinations" 
+        <app-examination-wrapper *ngFor="let examination of offers" 
         (removeItemEvent)="removeItem($event)"
         [examination] = "examination"/>
   </div>
 
+  <div *ngIf="componentToShow == 'patients'" class="main">
+    <h1>Pacjenci</h1>
+    <app-patient-display *ngFor="let patient of patients" [patient] = "patient"/>
+</div>
+
   <div *ngIf="componentToShow == 'examinations'" class="main">
     <h1>Oferta</h1>
-    <app-examination-client *ngFor="let examination of examinations" 
+    <app-examination-client *ngFor="let examination of offers" 
         (addItemEvent)="addItemToBucket($event)"
         [examination] = "examination"/>
   </div>

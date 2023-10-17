@@ -4,10 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonsComponent } from './buttons/buttons.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { AuthContentComponent } from './auth-content/auth-content.component';
 import { MatFormFieldModule } from '@angular/material/form-field';  
 import {MatButtonModule} from '@angular/material/button';
 
@@ -19,14 +17,18 @@ import { ExaminationInputComponent } from './examination-input/examination-input
 import { ExaminationWrapperComponent } from './examination-wrapper/examination-wrapper.component';
 import { ExaminationEditComponent } from './examination-edit/examination-edit.component';
 import { ExaminationClientComponent } from './examination-client/examination-client.component';
+import { PatientDisplayComponent } from './patient-display/patient-display.component';
+import { DisplayResultsComponent } from './display-results/display-results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ButtonsComponent,
+    
     HeaderComponent,
     LoginFormComponent,
-    AuthContentComponent,   
+    
+    DisplayResultsComponent,
+       
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { ExaminationClientComponent } from './examination-client/examination-cli
     ExaminationWrapperComponent,
     ExaminationEditComponent,
     ExaminationClientComponent,
-    MatButtonModule
+    MatButtonModule,
+    PatientDisplayComponent,
   ],
   providers: [AxiosService],
   bootstrap: [AppComponent]

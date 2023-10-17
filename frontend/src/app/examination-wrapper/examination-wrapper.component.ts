@@ -3,6 +3,7 @@ import { ExaminationDisplayComponent } from '../examination-display/examination-
 import { ExaminationEditComponent } from '../examination-edit/examination-edit.component';
 import { CommonModule } from '@angular/common';
 import { Examination } from '../examination';
+import { ExaminationOffer } from '../examinationOffer';
 
 @Component({
   selector: 'app-examination-wrapper',
@@ -12,7 +13,7 @@ import { Examination } from '../examination';
   imports: [ExaminationDisplayComponent, ExaminationEditComponent, CommonModule]
 })
 export class ExaminationWrapperComponent {
-    @Input() examination: Examination = new Examination(0, "", 0.00);
+    @Input() examination: ExaminationOffer = new ExaminationOffer(0, "", 0);
     @Output() removeItemEvent = new EventEmitter();
 
     editable: boolean = false;
@@ -21,7 +22,7 @@ export class ExaminationWrapperComponent {
       this.editable = true;
     }
 
-    handleSaveEdition(examination: Examination): void{
+    handleSaveEdition(examination: ExaminationOffer): void{
       this.editable = false;
       this.examination = examination;
     }

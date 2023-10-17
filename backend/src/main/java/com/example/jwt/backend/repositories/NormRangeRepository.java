@@ -1,13 +1,14 @@
 package com.example.jwt.backend.repositories;
 
 import com.example.jwt.backend.entites.Examination;
+import com.example.jwt.backend.entites.NormRange;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ExaminationRepository extends JpaRepository<Examination, Long> {
+public interface NormRangeRepository extends JpaRepository<NormRange, Long> {
 
-    List<Examination> findByPatientId(Long patientId);
+    Optional<NormRange> findByParameter_Id(Long parameterId);
 }

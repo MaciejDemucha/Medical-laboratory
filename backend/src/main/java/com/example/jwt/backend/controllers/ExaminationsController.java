@@ -1,6 +1,7 @@
 package com.example.jwt.backend.controllers;
 
 import com.example.jwt.backend.dtos.ExaminationDto;
+import com.example.jwt.backend.dtos.ParameterDto;
 import com.example.jwt.backend.services.ExaminationsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class ExaminationsController {
         return ResponseEntity.ok(examinationsService.allExaminations());
     }
 
+    @GetMapping("patients/{id}/examinations")
+    public ResponseEntity<List<ExaminationDto>> getExaminationByPatientId(@PathVariable Long id){
+        return ResponseEntity.ok(examinationsService.getExaminationByPatientId(id));
+    }
+
+
     @GetMapping("/examinations/{id}")
-    public ResponseEntity<ExaminationDto> allExaminations(@PathVariable Long id){
+    public ResponseEntity<ExaminationDto> getExamination(@PathVariable Long id){
         return ResponseEntity.ok(examinationsService.getExamination(id));
     }
 

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { AxiosService } from './axios.service';
 import { Examination } from './examination';
+import { Patient } from './patient';
+import { ExaminationOffer } from './examinationOffer';
 
 
 @Component({
@@ -12,8 +14,9 @@ import { Examination } from './examination';
 export class AppComponent {
   title: string = 'Laboratorium medyczne';
 
-  examinations: Examination[] = [];
-  componentToShow: string = "examinations";
+  offers: ExaminationOffer[] = [];
+  patients: Patient[] = [];
+  componentToShow: string = "offers";
 	showError: boolean = false;
 	isAuthenticated: boolean = false;
 	message: string = " ";
@@ -23,9 +26,17 @@ export class AppComponent {
   }
 
   ngOnInit(): void{
-    this.http.get<Examination[]> (
-      "http://localhost:8080/examinations"
-    ).subscribe(data => this.examinations = data);
+    this.http.get<ExaminationOffer[]> (
+      "http://localhost:8080/offers"
+    ).subscribe(data => this.offers = data);
+  }
+
+  OnPatientsTab(): void{
+	this.componentToShow = "patients";
+    this.http.get<Patient[]> (
+      "http://localhost:8080/patients"
+    ).subscribe(data => this.patients = data);
+
   }
 
   showComponent(componentToShow: string): void {
@@ -37,7 +48,7 @@ export class AppComponent {
   }
 
   onShopTab(): void {
-	this.componentToShow = "examinations";
+	this.componentToShow = "offers";
   }
 
   onBucketTab(): void {
@@ -107,14 +118,14 @@ export class AppComponent {
 	}
 
 	appendData(newExamination: any): void {
-		this.examinations.push(newExamination);
+		this.offers.push(newExamination);
 	}
 
 	removeItem(examinationId: number): void {
 		this.http.delete(
-			"http://localhost:8080/examinations/" + examinationId
+			"http://localhost:8080/offers/" + examinationId
 		).subscribe(data => 
-			this.examinations = this.examinations.filter((examination: Examination) =>
+			this.offers = this.offers.filter((examination: ExaminationOffer) =>
 			examination.id != examinationId));
 	}
 

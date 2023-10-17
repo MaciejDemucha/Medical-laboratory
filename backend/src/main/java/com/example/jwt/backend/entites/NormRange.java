@@ -1,0 +1,41 @@
+package com.example.jwt.backend.entites;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Entity
+@Getter
+@Setter
+@Table(name = "norm_range")
+public class NormRange {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "unit", nullable = false)
+    @Size(max = 100)
+    private String unit;
+
+    @Column(name = "min", nullable = false)
+    @Size(max = 100)
+    private Float min;
+
+    @Column(name = "max", nullable = false)
+    @Size(max = 100)
+    private Float max;
+
+    @ManyToOne
+    @JoinColumn(name="gender_id", nullable = false)
+    private Gender gender;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parameter_id", referencedColumnName = "id")
+    //@OneToOne(mappedBy = "normRange")
+    private Parameter parameter;
+}

@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register", "/examinations").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/examinations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/examinations/**", "/patients/**", "/parameters/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/examinations/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/examinations/**").permitAll()
                         .anyRequest().authenticated())

@@ -3,6 +3,10 @@ package com.example.jwt.backend.entites;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Collection;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -19,5 +23,13 @@ public class Examination {
     @Column
     private String name;
     @Column
-    private Float price;
+    private LocalDate datePerformed;
+
+    @ManyToOne
+    @JoinColumn(name="patient_id", nullable = false)
+    private Patient patient;
+
+    //@ManyToMany
+    //@JoinTable(name = "examination_parameter", joinColumns = @JoinColumn(name = "examination_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"))
+    //private Collection<Parameter> parameters;
 }

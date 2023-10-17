@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { Examination } from '../examination';
+import { ExaminationOffer } from '../examinationOffer';
 
 @Component({
   selector: 'app-examination-edit',
@@ -17,7 +18,7 @@ import { Examination } from '../examination';
 })
 export class ExaminationEditComponent {
   
-  @Input() examination: Examination = new Examination(0, "", 0.0);
+  @Input() examination: ExaminationOffer = new ExaminationOffer(0, "", 0.0);
 
     @Output() editDataEvent = new EventEmitter();
 

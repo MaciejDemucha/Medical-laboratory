@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import { Examination } from '../examination';
+import { ExaminationOffer } from '../examinationOffer';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Examination } from '../examination';
   imports: [MatCardModule, MatButtonModule],
 })
 export class ExaminationClientComponent {
-  @Input() examination = new Examination(0, "", 0);
+  @Input() examination = new ExaminationOffer(0, "", 0);
   @Output() addItemEvent = new EventEmitter();
 
 }
