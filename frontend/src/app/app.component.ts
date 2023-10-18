@@ -22,7 +22,7 @@ export class AppComponent {
 	message: string = " ";
 
   constructor(private http: HttpClient, private axiosService: AxiosService){
-
+	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   }
 
   ngOnInit(): void{
@@ -68,8 +68,8 @@ export class AppComponent {
 		        this.componentToShow = "restricted";
 				this.showError = false;
 				this.isAuthenticated = true;
-				
-				
+				localStorage.setItem('isAuthenticated', 'true');
+
 		    }).catch(
 		    error => {
 		        this.axiosService.setAuthToken(null);
@@ -98,6 +98,7 @@ export class AppComponent {
 		        this.componentToShow = "restricted";
 				this.showError = false;
 				this.isAuthenticated = true;
+				localStorage.setItem('isAuthenticated', 'true');
 				
 		    }).catch(
 		    error => {
@@ -113,6 +114,7 @@ export class AppComponent {
 
 	onLogout(): void {
 		this.isAuthenticated = false;
+		localStorage.setItem('isAuthenticated', 'false');
 		localStorage.removeItem('auth_token');
 		this.showComponent("login");
 	}

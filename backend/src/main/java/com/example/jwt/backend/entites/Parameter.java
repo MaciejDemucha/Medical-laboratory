@@ -30,7 +30,11 @@ public class Parameter {
 
     //@OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "norm_range_id", referencedColumnName = "id")
-    @OneToOne(mappedBy = "parameter")
+    //@OneToOne(mappedBy = "parameter")
+    //private NormRange normRange;
+
+    @ManyToOne
+    @JoinColumn(name="norm_range_id")
     private NormRange normRange;
 
     @ManyToMany

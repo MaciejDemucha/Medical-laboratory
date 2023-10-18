@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,8 +36,11 @@ public class NormRange {
     @JoinColumn(name="gender_id", nullable = false)
     private Gender gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    /*@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameter_id", referencedColumnName = "id")
     //@OneToOne(mappedBy = "normRange")
-    private Parameter parameter;
+    private Parameter parameter;*/
+
+    @OneToMany(mappedBy="normRange")
+    private Set<Parameter> parameters;
 }

@@ -10,5 +10,4 @@ import java.util.Optional;
 
 public interface NormRangeRepository extends JpaRepository<NormRange, Long> {
 
-    Optional<NormRange> findByParameter_Id(Long parameterId);
 }

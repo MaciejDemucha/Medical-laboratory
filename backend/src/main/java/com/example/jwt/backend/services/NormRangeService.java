@@ -15,9 +15,11 @@ import java.util.List;
 public class NormRangeService {
     private final NormRangeMapper normRangeMapper;
     private final NormRangeRepository normRangeRepository;
-    public NormRangeDto getNormByParameterId(Long id) {
-        NormRange normRange = normRangeRepository.findByParameter_Id(id)
-                .orElseThrow(() -> new AppException("Unknown norm", HttpStatus.NOT_FOUND));
-        return normRangeMapper.toNormRangeDto(normRange);
-    }
+    //public NormRangeDto getNormByParameterId(Long id) {
+        //NormRange normRange = normRangeRepository.findByParameter_Id(id)
+                //.orElseThrow(() -> new AppException("Unknown norm", HttpStatus.NOT_FOUND));
+      // NormRange normRange = normRangeRepository.findOne(1L);
+        //Address address = user.getAddress();
+       // return normRangeMapper.toNormRangeDto(normRange);
+    //}
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ParameterRepository extends JpaRepository<Parameter, Long> {
     List<Parameter> findByExaminations_Id(Long id);
+
 }

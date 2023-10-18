@@ -24,8 +24,8 @@ public class ParameterController {
         return ResponseEntity.ok(parameterService.getParameterByExaminationId(id));
     }
 
-    @GetMapping("parameters/{id}")
+    @GetMapping("parameters/{id}/norms")
     public ResponseEntity<NormRangeDto> getNormByParameterId(@PathVariable Long id){
-        return ResponseEntity.ok(normRangeService.getNormByParameterId(id));
+        return ResponseEntity.ok(parameterService.getNormRangeByParameterId(id));
     }
 }
