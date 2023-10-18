@@ -1,6 +1,5 @@
 <div class="app">
-    <app-header [pageTitle]="'Laboratorium medyczne'" 
-    [logoSrc]="'assets/images/logo.png'">
+    <app-header [pageTitle]="'Laboratorium medyczne'" >
   </app-header>
   <div class="menu">
   <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Logowanie</button>
@@ -11,15 +10,7 @@
   <button (click)="onBucketTab()" mat-raised-button>Koszyk</button>
   </div>
  
-
-  <!--<app-content (examinations)="examinations"/>-->
-
   <div>
-   <!--<app-buttons *ngIf="isAuthenticated == true"
-      
-      (logoutEvent)="showComponent('login')"
-    />-->
-  
     
     <app-login-form *ngIf="componentToShow == 'login'" (onSubmitLoginEvent)="onLogin($event)" (onSubmitRegisterEvent)="onRegister($event)"/>
   
@@ -45,8 +36,11 @@
         (addItemEvent)="addItemToBucket($event)"
         [examination] = "examination"/>
   </div>
-  
+  <div class="main">
+  <router-outlet></router-outlet>
   </div>
+  </div>
+
   
 </div>
 

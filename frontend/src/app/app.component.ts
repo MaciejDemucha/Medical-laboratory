@@ -26,9 +26,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void{
-    this.http.get<ExaminationOffer[]> (
+    /*this.http.get<ExaminationOffer[]> (
       "http://localhost:8080/offers"
-    ).subscribe(data => this.offers = data);
+    ).subscribe(data => this.offers = data);*/
   }
 
   OnPatientsTab(): void{
