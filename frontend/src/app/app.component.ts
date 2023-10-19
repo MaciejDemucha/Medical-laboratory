@@ -14,7 +14,7 @@ import { ExaminationOffer } from './examinationOffer';
 export class AppComponent {
   title: string = 'Laboratorium medyczne';
 
-  offers: ExaminationOffer[] = [];
+  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", 60)];
   patients: Patient[] = [];
   componentToShow: string = "offers";
 	showError: boolean = false;

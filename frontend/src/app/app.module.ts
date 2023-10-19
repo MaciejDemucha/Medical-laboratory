@@ -24,7 +24,8 @@ import { ResultsDisplayComponent } from './results-display/results-display.compo
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginFormComponent,       
+    LoginFormComponent,  
+        
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,7 @@ import { ResultsDisplayComponent } from './results-display/results-display.compo
     PatientDisplayComponent,
     ResultsDisplayComponent,
   ],
-  providers: [AxiosService],
+  providers: [AxiosService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

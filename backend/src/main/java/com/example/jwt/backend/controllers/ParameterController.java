@@ -1,9 +1,7 @@
 package com.example.jwt.backend.controllers;
 
-import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.dtos.NormRangeDto;
 import com.example.jwt.backend.dtos.ParameterDto;
-import com.example.jwt.backend.services.NormRangeService;
 import com.example.jwt.backend.services.ParameterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import java.util.List;
 @RestController
 public class ParameterController {
     private final ParameterService parameterService;
-    private final NormRangeService normRangeService;
 
     @GetMapping("examinations/{id}/parameters")
     public ResponseEntity<List<ParameterDto>> getParametersByExaminationId(@PathVariable Long id){

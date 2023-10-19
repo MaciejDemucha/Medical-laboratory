@@ -16,9 +16,10 @@ export class PatientDisplayComponent {
   @Input() patient = new Patient(0,"", "","","");
   @Output() getItemEvent = new EventEmitter();
 
-  showPatientExaminations(): void{
-    const url = this.router.serializeUrl(this.router.createUrlTree(['/patient']));
+  showPatientExaminations(patient: Patient): void{
+    const url = this.router.serializeUrl(this.router.createUrlTree(['/patient'], { queryParams: { id: patient.id } }));
     window.open(url, '_blank');
+
   }
 
 }

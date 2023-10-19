@@ -1,7 +1,7 @@
-export class Examination {
+export class Parameter {
     constructor(
         public id: number,
         public name: string,
-        public datePerformed: string|null
+        public value: number|null
     ) {}
 }
