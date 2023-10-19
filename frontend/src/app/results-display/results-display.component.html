@@ -11,7 +11,7 @@
                         {{examination.datePerformed}}
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-                  <p *ngFor="let parameter of parameters">{{parameter.name}}: {{parameter.value}}</p>
+                  <p *ngFor="let parameter of parameters">{{parameter.name}}: {{parameter.value}}   {{parameter.norm?.min}}   {{parameter.norm?.max}}   {{parameter.norm?.unit}}</p>
                 </mat-expansion-panel>
                 
               </mat-accordion>

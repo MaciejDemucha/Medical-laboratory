@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { Parameter } from '../parameter';
 import { Patient } from '../patient';
 import { ActivatedRoute } from '@angular/router';
+import { NormRange } from '../normRange';
 
 @Component({
   selector: 'app-results-display',
@@ -22,32 +23,36 @@ export class ResultsDisplayComponent {
   patientId: number = 0;
   examinations: Examination[] = [];
   parameters: Parameter[] = [];
+  norm: NormRange = new NormRange(0, "", 0, 0);
   constructor(private http: HttpClient, private route: ActivatedRoute){
     
     }
 
   ngOnInit(): void{
-    //this.patient = this.patientService.patient;
     this.route.queryParams.subscribe(params => {
       this.patientId = params['id'];
     });
-    console.log(this.patientId);
     this.http.get<Examination[]> (
       `http://localhost:8080/patients/${this.patientId}/examinations`
     ).subscribe(data => this.examinations = data);
 
-    /*this.examinations.forEach((element) => {
-      
-      this.getExaminationParameters(element.id);
-
-    });*/
   }
 
   getExaminationParameters(id: number): void{
     this.http.get<Parameter[]> (
       `http://localhost:8080/examinations/${id}/parameters`
     ).subscribe(data => this.parameters = data);
+      this.parameters.forEach(param => {
+          this.getNormsForParameter(param.id);
+         // param.norm = this.norm;
+          //console.log(this.norm.unit);
+      });
+  }
 
-        console.log(id);
+  getNormsForParameter(id: number): void{
+    this.http.get<NormRange> (
+      `http://localhost:8080/parameters/${id}/norms`
+    ).subscribe(data => this.norm = data);
+    console.log("aaaaa: "+ this.norm.min +" "+ this.norm.max +" "+ this.norm.unit);
   }
 }

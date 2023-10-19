@@ -30,7 +30,7 @@
     <app-patient-display *ngFor="let patient of patients" [patient] = "patient"/>
 </div>
 
-  <div *ngIf="componentToShow == 'examinations'" class="main">
+  <div *ngIf="componentToShow == 'offers'" class="main">
     <h1>Oferta</h1>
     <app-examination-client *ngFor="let examination of offers" 
         (addItemEvent)="addItemToBucket($event)"

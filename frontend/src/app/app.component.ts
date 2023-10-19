@@ -16,7 +16,7 @@ export class AppComponent {
 
   offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", 60)];
   patients: Patient[] = [];
-  componentToShow: string = "offers";
+  componentToShow: string = "";
 	showError: boolean = false;
 	isAuthenticated: boolean = false;
 	message: string = " ";
