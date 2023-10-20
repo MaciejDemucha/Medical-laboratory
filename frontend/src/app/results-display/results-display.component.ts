@@ -10,6 +10,7 @@ import { Parameter } from '../parameter';
 import { Patient } from '../patient';
 import { ActivatedRoute } from '@angular/router';
 import { NormRange } from '../normRange';
+import { ParameterWithNorm } from '../parameterAndNorms';
 
 @Component({
   selector: 'app-results-display',
@@ -23,6 +24,7 @@ export class ResultsDisplayComponent {
   patientId: number = 0;
   examinations: Examination[] = [];
   parameters: Parameter[] = [];
+  parametersWithNorms: ParameterWithNorm[] = [];
   norm: NormRange = new NormRange(0, "", 0, 0);
   constructor(private http: HttpClient, private route: ActivatedRoute){
     
@@ -47,6 +49,12 @@ export class ResultsDisplayComponent {
          // param.norm = this.norm;
           //console.log(this.norm.unit);
       });
+  }
+
+  getExaminationParametersAndNorms(id: number): void{
+    this.http.get<ParameterWithNorm[]> (
+      `http://localhost:8080/examinations/${id}/parametersv2`
+    ).subscribe(data => this.parametersWithNorms = data);
   }
 
   getNormsForParameter(id: number): void{

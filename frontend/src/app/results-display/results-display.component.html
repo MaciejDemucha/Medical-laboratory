@@ -2,7 +2,7 @@
     <ul>
         <li *ngFor="let examination of examinations" >
             <mat-accordion>
-                <mat-expansion-panel hideToggle (opened)="getExaminationParameters(examination.id)">
+                <mat-expansion-panel hideToggle (opened)="getExaminationParametersAndNorms(examination.id)">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{examination.name}}
@@ -11,7 +11,7 @@
                         {{examination.datePerformed}}
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-                  <p *ngFor="let parameter of parameters">{{parameter.name}}: {{parameter.value}}   {{parameter.norm?.min}}   {{parameter.norm?.max}}   {{parameter.norm?.unit}}</p>
+                  <p *ngFor="let parameter of parametersWithNorms">{{parameter.name}}: {{parameter.value}} {{parameter.unit}}, {{parameter.min}} - {{parameter.max}} {{parameter.unit}}</p>
                 </mat-expansion-panel>
                 
               </mat-accordion>
