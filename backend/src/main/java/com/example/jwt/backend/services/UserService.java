@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,15 +37,16 @@ public class UserService {
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 
-    public UserDto register(SignUpDto userDto) {
-        Optional<User> optionalUser = userRepository.findByLogin(userDto.login());
+    public UserDto register(SignUpDto signUpDto) {
+        Optional<User> optionalUser = userRepository.findByLogin(signUpDto.login());
 
         if (optionalUser.isPresent()) {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
 
-        User user = userMapper.signUpToUser(userDto);
-        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));
+        User user = userMapper.signUpToUser(signUpDto);
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
+        //List<Role> roles =
 
         User savedUser = userRepository.save(user);
 

@@ -33,6 +33,11 @@ public class ExaminationsController {
         return ResponseEntity.ok(examinationsService.getExamination(id));
     }
 
+    @GetMapping("/examinations/result/{pesel}/{number}")
+    public ResponseEntity<ExaminationDto> getExaminationByNumber(@PathVariable String number, @PathVariable String pesel){
+        return ResponseEntity.ok(examinationsService.getExaminationByNumber(number, pesel));
+    }
+
     @PostMapping("/examinations")
     public ResponseEntity<ExaminationDto> createExamination(@Valid @RequestBody ExaminationDto examinationDto){
         ExaminationDto createdExamination = examinationsService.createExamination(examinationDto);

@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExaminationRepository extends JpaRepository<Examination, Long> {
 
     List<Examination> findByPatientId(Long patientId);
+    Optional<Examination> findByNumber(String number);
 }

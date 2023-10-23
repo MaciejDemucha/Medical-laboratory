@@ -18,6 +18,8 @@ public class ExaminationDto {
     private Long id;
     @NotNull
     private String name;
+    @NotNull
+    private String number;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datePerformed; //TODO: naprawić
 }

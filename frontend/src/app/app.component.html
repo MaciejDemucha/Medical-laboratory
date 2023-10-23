@@ -2,12 +2,13 @@
     <app-header [pageTitle]="'Laboratorium medyczne'" >
   </app-header>
   <div class="menu">
-  <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Logowanie</button>
+  <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Dla lekarza</button>
   <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-raised-button>Wyloguj się</button>
   <button *ngIf="isAuthenticated == true" (click)="showComponent('restricted')" mat-raised-button>Dodaj nowe badanie</button>
   <button *ngIf="isAuthenticated == true" (click)="OnPatientsTab()" mat-raised-button>Pacjenci</button>
-  <button (click)="onShopTab()" mat-raised-button>Oferta</button>
-  <button (click)="onBucketTab()" mat-raised-button>Koszyk</button>
+  <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-raised-button>Oferta</button>
+  <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-raised-button>Wyniki badań</button>
+  <button *ngIf="isAuthenticated == false" (click)="onBucketTab()" mat-raised-button>Koszyk</button>
   </div>
  
   <div>
@@ -28,6 +29,10 @@
   <div *ngIf="componentToShow == 'patients'" class="main">
     <h1>Pacjenci</h1>
     <app-patient-display *ngFor="let patient of patients" [patient] = "patient"/>
+</div>
+
+<div *ngIf="componentToShow == 'patient-result'" class="main">
+  <app-client-result-submit />
 </div>
 
   <div *ngIf="componentToShow == 'offers'" class="main">

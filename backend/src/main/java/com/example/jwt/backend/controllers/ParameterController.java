@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,10 +24,10 @@ public class ParameterController {
         return ResponseEntity.ok(parameterService.getParameterByExaminationId(id));
     }
 
-    @GetMapping("examinations/{id}/parametersv2")
+    @GetMapping("examinations/{id}/parameterswithnorms")
     public ResponseEntity<List<ParamWithNormDto>> getParametersAndNormsByExaminationId(@PathVariable Long id){
         List<ParameterDto> params = parameterService.getParameterByExaminationId(id);
-        List<ParamWithNormDto> paramsToSend = new ArrayList<>();
+        List<ParamWithNormDto> paramsToSend = new LinkedList<>();
         for (ParameterDto param:params) {
             NormRangeDto norm = parameterService.getNormRangeByParameterId(param.getId());
             ParamWithNormDto paramAndNorm = new ParamWithNormDto(param.getId(), param.getName(), param.getValue(),

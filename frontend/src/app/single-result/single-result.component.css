@@ -6,14 +6,6 @@
     margin-top: 50px;
   }
 
-  ul {
-    list-style-type: none;
-}
-
-li {
-  margin: 20px;
-}
-
-.info{
-  margin-top: 40px;
-}
+  .info{
+    margin-top: 40px;
+  }

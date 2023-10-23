@@ -2,6 +2,7 @@ package com.example.jwt.backend.services;
 
 import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.dtos.ParameterDto;
+import com.example.jwt.backend.dtos.PatientDto;
 import com.example.jwt.backend.entites.Examination;
 import com.example.jwt.backend.entites.Parameter;
 import com.example.jwt.backend.exceptions.AppException;
@@ -20,7 +21,7 @@ import java.util.List;
 public class ExaminationsService {
     private final ExaminationRepository examinationRepository;
     private final ExaminationMapper examinationMapper;
-    private final ParameterMapper parameterMapper;
+    private final PatientService patientService;
     public List<ExaminationDto> allExaminations(){
         return examinationMapper.toExaminationDtos(examinationRepository.findAll());
     }
@@ -33,6 +34,19 @@ public class ExaminationsService {
     public ExaminationDto getExamination(Long id){
         Examination examination = examinationRepository.findById(id)
                 .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
+
+        return examinationMapper.toExaminationDto(examination);
+    }
+
+
+    public ExaminationDto getExaminationByNumber(String number, String pesel){
+        boolean isPatient = patientService.isPatientByPesel(pesel);
+        if(!isPatient){
+            throw new AppException("Patient not found", HttpStatus.NOT_FOUND);
+        }
+        Examination examination = examinationRepository.findByNumber(number)
+                .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
+
         return examinationMapper.toExaminationDto(examination);
     }
 

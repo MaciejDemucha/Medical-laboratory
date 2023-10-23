@@ -19,12 +19,16 @@ import { ExaminationEditComponent } from './examination-edit/examination-edit.co
 import { ExaminationClientComponent } from './examination-client/examination-client.component';
 import { PatientDisplayComponent } from './patient-display/patient-display.component';
 import { ResultsDisplayComponent } from './results-display/results-display.component';
+import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
+import { SingleResultComponent } from './single-result/single-result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginFormComponent,  
+    LoginFormComponent,
+    ClientResultSubmitComponent,
+    
         
   ],
   imports: [
@@ -42,6 +46,7 @@ import { ResultsDisplayComponent } from './results-display/results-display.compo
     MatButtonModule,
     PatientDisplayComponent,
     ResultsDisplayComponent,
+    SingleResultComponent, 
   ],
   providers: [AxiosService ],
   bootstrap: [AppComponent]

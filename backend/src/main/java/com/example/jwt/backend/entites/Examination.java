@@ -23,6 +23,8 @@ public class Examination {
     @Column
     private String name;
     @Column
+    private String number;
+    @Column
     private LocalDate datePerformed;
 
     @ManyToOne

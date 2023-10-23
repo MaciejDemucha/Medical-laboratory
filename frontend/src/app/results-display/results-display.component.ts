@@ -20,8 +20,8 @@ import { ParameterWithNorm } from '../parameterAndNorms';
   imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule ]
 })
 export class ResultsDisplayComponent {
-  //patient: Patient = new Patient(0,"","","","");
   patientId: number = 0;
+  patient: Patient = new Patient(0, "", "", "", "");
   examinations: Examination[] = [];
   parameters: Parameter[] = [];
   parametersWithNorms: ParameterWithNorm[] = [];
@@ -38,29 +38,31 @@ export class ResultsDisplayComponent {
       `http://localhost:8080/patients/${this.patientId}/examinations`
     ).subscribe(data => this.examinations = data);
 
+    this.http.get<Patient> (
+      `http://localhost:8080/patients/${this.patientId}`
+    ).subscribe(data => this.patient = data);
+
   }
 
-  getExaminationParameters(id: number): void{
+  /*getExaminationParameters(id: number): void{
     this.http.get<Parameter[]> (
       `http://localhost:8080/examinations/${id}/parameters`
     ).subscribe(data => this.parameters = data);
       this.parameters.forEach(param => {
           this.getNormsForParameter(param.id);
-         // param.norm = this.norm;
-          //console.log(this.norm.unit);
       });
-  }
+  }*/
 
   getExaminationParametersAndNorms(id: number): void{
     this.http.get<ParameterWithNorm[]> (
-      `http://localhost:8080/examinations/${id}/parametersv2`
+      `http://localhost:8080/examinations/${id}/parameterswithnorms`
     ).subscribe(data => this.parametersWithNorms = data);
   }
 
-  getNormsForParameter(id: number): void{
+  /*getNormsForParameter(id: number): void{
     this.http.get<NormRange> (
       `http://localhost:8080/parameters/${id}/norms`
     ).subscribe(data => this.norm = data);
     console.log("aaaaa: "+ this.norm.min +" "+ this.norm.max +" "+ this.norm.unit);
-  }
+  }*/
 }

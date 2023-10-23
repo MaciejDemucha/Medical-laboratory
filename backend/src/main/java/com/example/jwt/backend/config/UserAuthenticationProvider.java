@@ -11,11 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -37,13 +39,18 @@ public class UserAuthenticationProvider {
         Date validity = new Date(now.getTime() + 3600000); // 1 hour
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        return JWT.create()
+
+
+        String token = JWT.create()
                 .withSubject(user.getLogin())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
+                //.withClaim("roles", user.getRoles())
                 .sign(algorithm);
+        System.out.println("token: " + token);
+        return token;
     }
 
     public Authentication validateToken(String token) {
@@ -58,9 +65,11 @@ public class UserAuthenticationProvider {
                 .login(decoded.getSubject())
                 .firstName(decoded.getClaim("firstName").asString())
                 .lastName(decoded.getClaim("lastName").asString())
+                //.roles(decoded.getClaim("roles").asList(RoleDto.class))
                 .build();
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        /*List<GrantedAuthority> authorities= */
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()/*user.getRoles()*/);
     }
 
     public Authentication validateTokenStrongly(String token) {
@@ -73,7 +82,7 @@ public class UserAuthenticationProvider {
 
         UserDto user = userService.findByLogin(decoded.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()/*user.getRoles()*/);
     }
 
 }

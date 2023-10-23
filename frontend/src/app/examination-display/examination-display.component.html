@@ -2,7 +2,7 @@
     <mat-card>
         <mat-card-header>
           <mat-card-title>{{examination.name}}</mat-card-title>
-          <mat-card-subtitle>{{examination.price}}</mat-card-subtitle>
+          <mat-card-subtitle>{{examination.price}} zł</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions align="end">
           <button (click)="removeItemEvent.emit(examination.id)" mat-button>Usuń</button>

@@ -1,6 +1,5 @@
 <div class="dropdown" >
-    <ul>
-        <li *ngFor="let examination of examinations" >
+      
             <mat-accordion>
                 <mat-expansion-panel hideToggle (opened)="getExaminationParametersAndNorms(examination.id)">
                   <mat-expansion-panel-header>
@@ -13,47 +12,45 @@
                   </mat-expansion-panel-header>
                   <p *ngFor="let parameter of parametersWithNorms">{{parameter.name}}: {{parameter.value}} {{parameter.unit}}, {{parameter.min}} - {{parameter.max}} {{parameter.unit}}</p>
                   <div class="info">
+                    <mat-panel-title>
+                      Imię i nazwisko pacjenta
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      {{patient.firstName}} {{patient.lastName}}
+                  </mat-panel-description>
                   <mat-panel-title>
-                    Imię i nazwisko pacjenta
+                    PESEL
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{patient.firstName}} {{patient.lastName}}
+                    {{patient.pesel}}
                 </mat-panel-description>
                 <mat-panel-title>
-                  PESEL
+                  Data urodzenia
               </mat-panel-title>
               <mat-panel-description>
-                  {{patient.pesel}}
+                  {{patient.birthDate}}
               </mat-panel-description>
-              <mat-panel-title>
-                Data urodzenia
-            </mat-panel-title>
-            <mat-panel-description>
-                {{patient.birthDate}}
-            </mat-panel-description>
+                    <mat-panel-title>
+                      Numer badania
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      {{examination.number}}
+                  </mat-panel-description>
                   <mat-panel-title>
-                    Numer badania
+                    Data wykonania
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{examination.number}}
+                    {{examination.datePerformed}}
                 </mat-panel-description>
                 <mat-panel-title>
-                  Data wykonania
+                  Lekarz
               </mat-panel-title>
               <mat-panel-description>
-                  {{examination.datePerformed}}
+                  -
               </mat-panel-description>
-              <mat-panel-title>
-                Lekarz
-            </mat-panel-title>
-            <mat-panel-description>
-                -
-            </mat-panel-description>
-              </div>
+                </div>
                 </mat-expansion-panel>
                 
               </mat-accordion>
-        </li>
-    </ul>
 
 </div>

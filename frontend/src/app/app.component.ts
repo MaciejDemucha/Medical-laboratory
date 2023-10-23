@@ -55,6 +55,10 @@ export class AppComponent {
 	
   }
 
+  onResultTab(): void {
+	this.componentToShow = "patient-result";
+  }
+
 	onLogin(input: any): void {
 		this.axiosService.request(
 		    "POST",

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +24,25 @@ public class PatientService {
         return patientMapper.toPatientDtos(patientRepository.findAll());
     }
 
+    public PatientDto getPatientById(Long id){
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));;
+        return patientMapper.toPatientDto(patient);
+    }
 
+    public PatientDto getPatientByPesel(String pesel){
+        Patient patient = patientRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));;
+        return patientMapper.toPatientDto(patient);
+    }
+
+    public boolean isPatientByPesel(String pesel){
+
+        if(patientRepository.existsByPesel(pesel)){
+            return true;
+        }
+        else{
+            throw new AppException("Unknown user", HttpStatus.NOT_FOUND);
+        }
+    }
 }
