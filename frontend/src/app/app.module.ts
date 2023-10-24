@@ -21,6 +21,7 @@ import { PatientDisplayComponent } from './patient-display/patient-display.compo
 import { ResultsDisplayComponent } from './results-display/results-display.component';
 import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 import { SingleResultComponent } from './single-result/single-result.component';
+import { AddExaminationComponent } from './add-examination/add-examination.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SingleResultComponent } from './single-result/single-result.component';
     HeaderComponent,
     LoginFormComponent,
     ClientResultSubmitComponent,
+    AddExaminationComponent,
     
         
   ],

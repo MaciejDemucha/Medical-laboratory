@@ -1,0 +1,7 @@
+<div>
+    <h1>Dodaj nowe badanie</h1>
+        <app-examination-input (newDataEvent)="appendData($event)"/>
+        <app-examination-wrapper *ngFor="let examination of offers" 
+        (removeItemEvent)="removeItem($event)"
+        [examination] = "examination"/>
+</div>

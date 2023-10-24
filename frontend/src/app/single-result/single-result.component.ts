@@ -39,7 +39,8 @@ ngOnInit(): void{
 
   this.http.get<Examination> (
     `http://localhost:8080/examinations/result/${this.pesel}/${this.examinationNumber}`
-  ).subscribe(data => this.examination = data);
+  ).subscribe(data => this.examination = data,
+    error => alert("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
 
   this.http.get<Patient> (
     `http://localhost:8080/patients/bypesel/${this.pesel}`

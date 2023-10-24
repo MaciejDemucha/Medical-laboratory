@@ -4,6 +4,7 @@ import { AxiosService } from './axios.service';
 import { Examination } from './examination';
 import { Patient } from './patient';
 import { ExaminationOffer } from './examinationOffer';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,8 +22,12 @@ export class AppComponent {
 	isAuthenticated: boolean = false;
 	message: string = " ";
 
-  constructor(private http: HttpClient, private axiosService: AxiosService){
+  constructor(private http: HttpClient, private axiosService: AxiosService, private router: Router){
 	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  }
+
+  navigateToHome() {
+	this.router.navigate(['/']);
   }
 
   ngOnInit(): void{
@@ -31,24 +36,30 @@ export class AppComponent {
     ).subscribe(data => this.offers = data);*/
   }
 
-  OnPatientsTab(): void{
-	this.componentToShow = "patients";
+  onPatientsTab(): void{
+	this.router.navigate(['/patients']);
     this.http.get<Patient[]> (
       "http://localhost:8080/patients"
     ).subscribe(data => this.patients = data);
 
   }
 
+  onAddTab(): void {
+	this.router.navigate(['/addExamination']);
+	//this.showComponent("addExamination");
+  }
+
   showComponent(componentToShow: string): void {
+	this.navigateToHome();
     this.componentToShow = componentToShow;
   }
 
   onLoginTab(): void {
-	this.componentToShow = "login";
+	this.showComponent("login");
   }
 
   onShopTab(): void {
-	this.componentToShow = "offers";
+	this.showComponent("offers");
   }
 
   onBucketTab(): void {
@@ -56,7 +67,7 @@ export class AppComponent {
   }
 
   onResultTab(): void {
-	this.componentToShow = "patient-result";
+	this.showComponent("patient-result");
   }
 
 	onLogin(input: any): void {

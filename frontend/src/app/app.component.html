@@ -4,8 +4,8 @@
   <div class="menu">
   <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-raised-button>Dla lekarza</button>
   <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-raised-button>Wyloguj się</button>
-  <button *ngIf="isAuthenticated == true" (click)="showComponent('restricted')" mat-raised-button>Dodaj nowe badanie</button>
-  <button *ngIf="isAuthenticated == true" (click)="OnPatientsTab()" mat-raised-button>Pacjenci</button>
+  <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-raised-button>Dodaj nowe badanie</button>
+  <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-raised-button>Pacjenci</button>
   <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-raised-button>Oferta</button>
   <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-raised-button>Wyniki badań</button>
   <button *ngIf="isAuthenticated == false" (click)="onBucketTab()" mat-raised-button>Koszyk</button>
@@ -18,18 +18,18 @@
     <div *ngIf="showError" class="error">{{message}}</div>
   
     
-    <div *ngIf="componentToShow == 'restricted'" class="main">
+    <!--<div *ngIf="componentToShow == 'addExamination'" class="main">
         <h1>Dodaj nowe badanie</h1>
         <app-examination-input (newDataEvent)="appendData($event)"/>
         <app-examination-wrapper *ngFor="let examination of offers" 
         (removeItemEvent)="removeItem($event)"
         [examination] = "examination"/>
-  </div>
+  </div>-->
 
-  <div *ngIf="componentToShow == 'patients'" class="main">
+ <!-- <div *ngIf="componentToShow == 'patients'" class="main">
     <h1>Pacjenci</h1>
     <app-patient-display *ngFor="let patient of patients" [patient] = "patient"/>
-</div>
+</div>-->
 
 <div *ngIf="componentToShow == 'patient-result'" class="main">
   <app-client-result-submit />

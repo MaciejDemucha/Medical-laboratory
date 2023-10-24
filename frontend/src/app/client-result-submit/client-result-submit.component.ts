@@ -20,14 +20,18 @@ export class ClientResultSubmitComponent {
 
   onSubmitResult(): void{
 
-    /*this.http.get<Examination> (
-      "http://localhost:8080/examinations/result/" + this.number
-    ).subscribe(data => this.examination = data);*/
-
-    
+    this.http.get<Examination> (
+      `http://localhost:8080/examinations/result/${this.pesel}/${this.number}`
+    ).subscribe(data => {
+      this.examination = data;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/singleresult'], { queryParams: { number: this.number, pesel: this.pesel } }));
       window.open(url, '_blank');
-  
+    },
+      error => {
+        alert("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone");
+        return;
+      }
+      );
     
   }
 
