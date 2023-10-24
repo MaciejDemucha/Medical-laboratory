@@ -12,13 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 import { NormRange } from '../normRange';
 import { ParameterWithNorm } from '../parameterAndNorms';
 import { AxiosService } from '../axios.service';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-single-result',
   templateUrl: './single-result.component.html',
   styleUrls: ['./single-result.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule ]
+  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule,MatTableModule ]
 })
 export class SingleResultComponent {
   examinationNumber: string = "";
@@ -26,6 +27,7 @@ export class SingleResultComponent {
   patient: Patient = new Patient(0, "", "", "", "");
   examination: Examination = new Examination(0, "", "", "");
   parametersWithNorms: ParameterWithNorm[] = [];
+  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
 
   constructor(private http: HttpClient, private route: ActivatedRoute){
     
@@ -37,9 +39,14 @@ ngOnInit(): void{
     this.pesel = params['pesel'];
   });
 
+  
+
   this.http.get<Examination> (
     `http://localhost:8080/examinations/result/${this.pesel}/${this.examinationNumber}`
-  ).subscribe(data => this.examination = data,
+  ).subscribe(data => {
+    this.examination = data;
+    this.getExaminationParametersAndNorms(this.examination.id);
+  },
     error => alert("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
 
   this.http.get<Patient> (
@@ -61,4 +68,15 @@ ngOnInit(): void{
     ).subscribe(data => this.newDataEvent.emit(data));
   }*/
   
+}
+
+export class TableBasicExample {
+  
+}
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
 }

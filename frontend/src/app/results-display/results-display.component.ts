@@ -11,21 +11,22 @@ import { Patient } from '../patient';
 import { ActivatedRoute } from '@angular/router';
 import { NormRange } from '../normRange';
 import { ParameterWithNorm } from '../parameterAndNorms';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-results-display',
   templateUrl: './results-display.component.html',
   styleUrls: ['./results-display.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule ]
+  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule]
 })
 export class ResultsDisplayComponent {
   patientId: number = 0;
   patient: Patient = new Patient(0, "", "", "", "");
   examinations: Examination[] = [];
-  parameters: Parameter[] = [];
-  parametersWithNorms: ParameterWithNorm[] = [];
-  norm: NormRange = new NormRange(0, "", 0, 0);
+  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
+  parameters: { [key: number]: any } = {};
+
   constructor(private http: HttpClient, private route: ActivatedRoute){
     
     }
@@ -44,25 +45,11 @@ export class ResultsDisplayComponent {
 
   }
 
-  /*getExaminationParameters(id: number): void{
-    this.http.get<Parameter[]> (
-      `http://localhost:8080/examinations/${id}/parameters`
-    ).subscribe(data => this.parameters = data);
-      this.parameters.forEach(param => {
-          this.getNormsForParameter(param.id);
-      });
-  }*/
-
   getExaminationParametersAndNorms(id: number): void{
     this.http.get<ParameterWithNorm[]> (
       `http://localhost:8080/examinations/${id}/parameterswithnorms`
-    ).subscribe(data => this.parametersWithNorms = data);
+    ).subscribe(data => this.parameters[id] = data);
+
   }
 
-  /*getNormsForParameter(id: number): void{
-    this.http.get<NormRange> (
-      `http://localhost:8080/parameters/${id}/norms`
-    ).subscribe(data => this.norm = data);
-    console.log("aaaaa: "+ this.norm.min +" "+ this.norm.max +" "+ this.norm.unit);
-  }*/
 }

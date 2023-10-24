@@ -1,3 +1,9 @@
+<div class="patient-info">
+<h2>{{patient.firstName}} {{patient.lastName}}</h2>
+<h3>Pesel: {{patient.pesel}}</h3>
+<h3>Data urodzenia: {{patient.birthDate}}</h3>
+</div>
+
 <div class="dropdown" >
     <ul>
         <li *ngFor="let examination of examinations" >
@@ -11,7 +17,34 @@
                         {{examination.datePerformed}}
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-                  <p *ngFor="let parameter of parametersWithNorms">{{parameter.name}}: {{parameter.value}} {{parameter.unit}}, {{parameter.min}} - {{parameter.max}} {{parameter.unit}}</p>
+                  <table mat-table [dataSource]="parameters[examination.id]" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="Nazwa">
+                      <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                  
+                  
+                    <ng-container matColumnDef="Wartość">
+                      <th mat-header-cell *matHeaderCellDef> Wartość </th>
+                      <td mat-cell *matCellDef="let element"> {{element.value}} {{element.unit}}</td>
+                    </ng-container>
+                  
+                    
+                    <ng-container matColumnDef="Przedział">
+                      <th mat-header-cell *matHeaderCellDef> Przedział </th>
+                      <td mat-cell *matCellDef="let element"> {{element.min}} - {{element.max}} {{element.unit}} </td>
+                    </ng-container>
+                  
+                   
+                    <ng-container matColumnDef="Wykres">
+                      <th mat-header-cell *matHeaderCellDef> Wykres </th>
+                      <td mat-cell *matCellDef="let element">  </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
                   <div class="info">
                   <mat-panel-title>
                     Imię i nazwisko pacjenta

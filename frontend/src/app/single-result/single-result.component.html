@@ -1,56 +1,78 @@
-<div class="dropdown" >
+<div class="main" >
+
+  <h1>{{examination.name}}</h1>
+  <h2> {{examination.datePerformed}}</h2>
       
-            <mat-accordion>
-                <mat-expansion-panel hideToggle (opened)="getExaminationParametersAndNorms(examination.id)">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{examination.name}}
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{examination.datePerformed}}
-                    </mat-panel-description>
-                  </mat-expansion-panel-header>
-                  <p *ngFor="let parameter of parametersWithNorms">{{parameter.name}}: {{parameter.value}} {{parameter.unit}}, {{parameter.min}} - {{parameter.max}} {{parameter.unit}}</p>
-                  <div class="info">
-                    <mat-panel-title>
-                      Imię i nazwisko pacjenta
-                  </mat-panel-title>
-                  <mat-panel-description>
-                      {{patient.firstName}} {{patient.lastName}}
-                  </mat-panel-description>
-                  <mat-panel-title>
-                    PESEL
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{patient.pesel}}
-                </mat-panel-description>
-                <mat-panel-title>
-                  Data urodzenia
-              </mat-panel-title>
-              <mat-panel-description>
-                  {{patient.birthDate}}
-              </mat-panel-description>
-                    <mat-panel-title>
-                      Numer badania
-                  </mat-panel-title>
-                  <mat-panel-description>
-                      {{examination.number}}
-                  </mat-panel-description>
-                  <mat-panel-title>
-                    Data wykonania
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{examination.datePerformed}}
-                </mat-panel-description>
-                <mat-panel-title>
-                  Lekarz
-              </mat-panel-title>
-              <mat-panel-description>
-                  -
-              </mat-panel-description>
-                </div>
-                </mat-expansion-panel>
-                
-              </mat-accordion>
+                  <table mat-table [dataSource]="parametersWithNorms" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="Nazwa">
+                      <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                  
+                  
+                    <ng-container matColumnDef="Wartość">
+                      <th mat-header-cell *matHeaderCellDef> Wartość </th>
+                      <td mat-cell *matCellDef="let element"> {{element.value}} {{element.unit}}</td>
+                    </ng-container>
+                  
+                    
+                    <ng-container matColumnDef="Przedział">
+                      <th mat-header-cell *matHeaderCellDef> Przedział </th>
+                      <td mat-cell *matCellDef="let element"> {{element.min}} - {{element.max}} {{element.unit}} </td>
+                    </ng-container>
+                  
+                   
+                    <ng-container matColumnDef="Wykres">
+                      <th mat-header-cell *matHeaderCellDef> Wykres </th>
+                      <td mat-cell *matCellDef="let element">  </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  
+
+              <mat-card class="card-info">
+                <!--<mat-card-content>Simple card</mat-card-content>-->
+                <div class="info">
+                  <mat-card-title>
+                    Imię i nazwisko pacjenta
+                </mat-card-title>
+                <mat-card-subtitle>
+                    {{patient.firstName}} {{patient.lastName}}
+                </mat-card-subtitle>
+                <mat-card-title>
+                  PESEL
+              </mat-card-title>
+              <mat-card-subtitle>
+                  {{patient.pesel}}
+              </mat-card-subtitle>
+              <mat-card-title>
+                Data urodzenia
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{patient.birthDate}}
+            </mat-card-subtitle>
+                  <mat-card-title>
+                    Numer badania
+                </mat-card-title>
+                <mat-card-subtitle>
+                    {{examination.number}}
+                </mat-card-subtitle>
+                <mat-card-title>
+                  Data wykonania
+              </mat-card-title>
+              <mat-card-subtitle>
+                  {{examination.datePerformed}}
+              </mat-card-subtitle>
+              <mat-card-title>
+                Lekarz
+            </mat-card-title>
+            <mat-card-subtitle>
+                -
+            </mat-card-subtitle>
+              </div>
+              </mat-card>
 
 </div>
