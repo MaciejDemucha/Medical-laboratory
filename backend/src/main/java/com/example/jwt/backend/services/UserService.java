@@ -3,6 +3,7 @@ package com.example.jwt.backend.services;
 import com.example.jwt.backend.dtos.CredentialsDto;
 import com.example.jwt.backend.dtos.SignUpDto;
 import com.example.jwt.backend.dtos.UserDto;
+import com.example.jwt.backend.entites.Patient;
 import com.example.jwt.backend.entites.User;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.UserMapper;
@@ -16,6 +17,7 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -58,5 +60,8 @@ public class UserService {
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
         return userMapper.toUserDto(user);
     }
+
+
+
 
 }

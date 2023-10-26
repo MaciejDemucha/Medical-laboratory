@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Patient } from '../patient';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -14,14 +14,20 @@ import { CommonModule } from '@angular/common';
   imports: [MatCardModule, MatButtonModule, CommonModule]
 })
 export class PatientDisplayComponent {
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
   @Input() patient = new Patient(0,"", "","","");
   @Output() getItemEvent = new EventEmitter();
   patients: Patient[] = [];
+  doctorId: number|null = null;
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.doctorId = params['id'];
+    });
+
+
     this.http.get<Patient[]> (
-      "http://localhost:8080/patients"
+      `http://localhost:8080/${this.doctorId}/patients`
     ).subscribe(data => this.patients = data);
   }
 

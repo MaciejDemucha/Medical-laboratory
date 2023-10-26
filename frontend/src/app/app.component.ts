@@ -17,6 +17,7 @@ export class AppComponent {
   patients: Patient[] = [];
   componentToShow: string = "";
   isAuthenticated: boolean = false;
+  loggedId: number|null = null;
 
   constructor(private http: HttpClient, private axiosService: AxiosService, private router: Router){
 	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
@@ -33,11 +34,8 @@ export class AppComponent {
 
   onPatientsTab(): void{
 	this.componentToShow = "";
-	this.router.navigate(['/patients']);
-    this.http.get<Patient[]> (
-      "http://localhost:8080/patients"
-    ).subscribe(data => this.patients = data);
-
+	const url = this.router.serializeUrl(this.router.createUrlTree(['/patients'], { queryParams: { id: this.loggedId} }));
+	this.router.navigateByUrl(url);
   }
 
   onAddTab(): void {
@@ -81,6 +79,7 @@ export class AppComponent {
 		    }).then(
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
+				this.loggedId = response.data.id;
 		        this.componentToShow = "restricted";
 				this.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');

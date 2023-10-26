@@ -3,6 +3,7 @@ package com.example.jwt.backend.controllers;
 import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.dtos.PatientDto;
 import com.example.jwt.backend.services.PatientService;
+import com.example.jwt.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,11 @@ public class PatientsController {
     @GetMapping("/patients")
     public ResponseEntity<List<PatientDto>> allPatients(){
         return ResponseEntity.ok(patientService.allPatients());
+    }
+
+    @GetMapping("{doctorId}/patients")
+    public ResponseEntity<List<PatientDto>> allPatientsByDoctorId(@PathVariable Long doctorId){
+        return ResponseEntity.ok(patientService.getPatientsByDoctorId(doctorId));
     }
 
     @GetMapping("/patients/{id}")
