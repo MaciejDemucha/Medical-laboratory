@@ -4,12 +4,16 @@ import { PatientDisplayComponent } from './patient-display/patient-display.compo
 import { ResultsDisplayComponent } from './results-display/results-display.component';
 import { SingleResultComponent } from './single-result/single-result.component';
 import { AddExaminationComponent } from './add-examination/add-examination.component';
+import { ExaminationClientComponent } from './examination-client/examination-client.component';
+import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 
 const routes: Routes = [
   {path: 'patients', component: PatientDisplayComponent},
-  {path: 'results', component: ResultsDisplayComponent},
+  {path: 'patients/results', component: ResultsDisplayComponent},
   {path: 'addExamination', component: AddExaminationComponent},
-  {path: 'singleresult', component: SingleResultComponent}
+  {path: 'singleresult/result', component: SingleResultComponent},
+  {path: 'shop', component: ExaminationClientComponent},
+  {path: 'singleresult', component: ClientResultSubmitComponent},
 ];
 
 @NgModule({

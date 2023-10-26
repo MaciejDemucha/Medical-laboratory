@@ -22,6 +22,11 @@ import { ResultsDisplayComponent } from './results-display/results-display.compo
 import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 import { SingleResultComponent } from './single-result/single-result.component';
 import { AddExaminationComponent } from './add-examination/add-examination.component';
+import { AddDiagnosisComponent } from './add-diagnosis/add-diagnosis.component';
+import { DiagnosisDisplayComponent } from './diagnosis-display/diagnosis-display.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -30,8 +35,7 @@ import { AddExaminationComponent } from './add-examination/add-examination.compo
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddExaminationComponent,
-    
-        
+    AddDiagnosisComponent, 
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,10 @@ import { AddExaminationComponent } from './add-examination/add-examination.compo
     PatientDisplayComponent,
     ResultsDisplayComponent,
     SingleResultComponent, 
+    DiagnosisDisplayComponent,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule
   ],
   providers: [AxiosService ],
   bootstrap: [AppComponent]

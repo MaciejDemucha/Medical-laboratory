@@ -26,7 +26,7 @@ export class PatientDisplayComponent {
   }
 
   showPatientExaminations(patient: Patient): void{
-    const url = this.router.serializeUrl(this.router.createUrlTree(['/results'], { queryParams: { id: patient.id } }));
+    const url = this.router.serializeUrl(this.router.createUrlTree(['/patients/results'], { queryParams: { id: patient.id } }));
     window.open(url, '_blank');
 
   }

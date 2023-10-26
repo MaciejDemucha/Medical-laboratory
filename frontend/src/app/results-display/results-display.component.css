@@ -20,3 +20,8 @@ li {
 .patient-info{
   margin-top: 50px;
 }
+
+.button-add {
+  text-align: right;
+  margin-top: 10px;
+}

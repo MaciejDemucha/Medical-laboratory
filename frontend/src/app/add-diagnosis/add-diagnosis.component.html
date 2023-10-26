@@ -1,0 +1,6 @@
+<div>
+    <h1>Dodaj diagnozę</h1>
+        <app-examination-input (newDataEvent)="appendData($event)"/>
+        <app-diagnosis-display *ngFor="let diagnosis of diagnosises"/>
+        
+</div>

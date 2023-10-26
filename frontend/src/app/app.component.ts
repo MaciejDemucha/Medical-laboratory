@@ -14,29 +14,25 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title: string = 'Laboratorium medyczne';
-
-  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", 60)];
   patients: Patient[] = [];
   componentToShow: string = "";
-	showError: boolean = false;
-	isAuthenticated: boolean = false;
-	message: string = " ";
+  isAuthenticated: boolean = false;
 
   constructor(private http: HttpClient, private axiosService: AxiosService, private router: Router){
 	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   }
 
-  navigateToHome() {
-	this.router.navigate(['/']);
+  homeIcon() {
+	this.componentToShow = "";
+	this.router.navigate(['/shop']);
   }
 
   ngOnInit(): void{
-    /*this.http.get<ExaminationOffer[]> (
-      "http://localhost:8080/offers"
-    ).subscribe(data => this.offers = data);*/
+    //this.router.navigate(['/shop'])
   }
 
   onPatientsTab(): void{
+	this.componentToShow = "";
 	this.router.navigate(['/patients']);
     this.http.get<Patient[]> (
       "http://localhost:8080/patients"
@@ -45,30 +41,35 @@ export class AppComponent {
   }
 
   onAddTab(): void {
+	this.componentToShow = "";
 	this.router.navigate(['/addExamination']);
-	//this.showComponent("addExamination");
   }
 
   showComponent(componentToShow: string): void {
-	this.navigateToHome();
+	this.router.navigate(['/'])
     this.componentToShow = componentToShow;
   }
 
   onLoginTab(): void {
+	this.componentToShow = "";
 	this.showComponent("login");
   }
 
+  onResultTab(): void {
+	this.componentToShow = "";
+	this.router.navigate(['/singleresult']);
+  }
+
   onShopTab(): void {
-	this.showComponent("offers");
+	this.componentToShow = "";
+	this.router.navigate(['/shop']);
   }
 
   onBucketTab(): void {
+	this.componentToShow = "";
 	
   }
 
-  onResultTab(): void {
-	this.showComponent("patient-result");
-  }
 
 	onLogin(input: any): void {
 		this.axiosService.request(
@@ -81,7 +82,6 @@ export class AppComponent {
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
 		        this.componentToShow = "restricted";
-				this.showError = false;
 				this.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
 
@@ -89,8 +89,6 @@ export class AppComponent {
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				//this.showError = true;
-				//this.message = "Invalid username or password"
 				alert("Błędne dane logowania");
 				
 		    }
@@ -111,7 +109,6 @@ export class AppComponent {
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
 		        this.componentToShow = "restricted";
-				this.showError = false;
 				this.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
 				
@@ -119,8 +116,6 @@ export class AppComponent {
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				//this.showError = true;
-				//this.message = "Error with register"
 				alert("Błąd rejestracji")
 				
 		    }
@@ -134,21 +129,9 @@ export class AppComponent {
 		this.showComponent("login");
 	}
 
-	appendData(newExamination: any): void {
-		this.offers.push(newExamination);
-	}
+	
 
-	removeItem(examinationId: number): void {
-		this.http.delete(
-			"http://localhost:8080/offers/" + examinationId
-		).subscribe(data => 
-			this.offers = this.offers.filter((examination: ExaminationOffer) =>
-			examination.id != examinationId));
-	}
-
-	addItemToBucket(examinationId: number): void {
-		
-	}
+	
 
 
 }
