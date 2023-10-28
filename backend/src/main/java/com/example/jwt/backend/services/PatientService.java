@@ -55,4 +55,17 @@ public class PatientService {
         List<Patient> patients = patientRepository.findByDoctor_Id(id);
         return patientMapper.toPatientDtos(patients);
     }
+
+    public PatientDto assignDoctor(Long patientId, Long doctorId) {
+        Patient patient = patientRepository.findById(patientId).orElse(null);
+        User doctor = userRepository.findById(doctorId).orElse(null);
+
+        if (patient != null && doctor != null) {
+            patient.setDoctor(doctor);
+           patientRepository.save(patient);
+           return patientMapper.toPatientDto(patient);
+        }
+
+        throw new AppException("Unknown user or patient", HttpStatus.NOT_FOUND); // Handle cases where either the patient or doctor is not found
+    }
 }

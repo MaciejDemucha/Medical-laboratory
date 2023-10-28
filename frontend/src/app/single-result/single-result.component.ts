@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -13,13 +12,18 @@ import { NormRange } from '../normRange';
 import { ParameterWithNorm } from '../parameterAndNorms';
 import { AxiosService } from '../axios.service';
 import {MatTableModule} from '@angular/material/table';
+import {Component, Inject} from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
+import {NgIf} from '@angular/common';
+import { Doctor } from '../doctor';
+import { DialogDataComponent } from '../dialog-data/dialog-data.component';
 
 @Component({
   selector: 'app-single-result',
   templateUrl: './single-result.component.html',
   styleUrls: ['./single-result.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule,MatTableModule ]
+  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule,MatTableModule, MatDialogModule]
 })
 export class SingleResultComponent {
   examinationNumber: string = "";
@@ -28,8 +32,9 @@ export class SingleResultComponent {
   examination: Examination = new Examination(0, "", "", "");
   parametersWithNorms: ParameterWithNorm[] = [];
   displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
+  doctors: Doctor[] = [];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute){
+  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
   }
 
@@ -53,6 +58,10 @@ ngOnInit(): void{
     `http://localhost:8080/patients/bypesel/${this.pesel}`
   ).subscribe(data => this.patient = data);
 
+  this.http.get<Doctor[]> (
+    `http://localhost:8080/doctors`
+  ).subscribe(data => this.doctors = data);
+
 
 }
   getExaminationParametersAndNorms(id: number): void{
@@ -67,8 +76,19 @@ ngOnInit(): void{
       this.examinationForm.value
     ).subscribe(data => this.newDataEvent.emit(data));
   }*/
+
   
+
+  consultationDialog() {
+    this.dialog.open(DialogDataComponent, {
+      data: {
+        patientId: this.patient.id,
+        doctorList: this.doctors
+      },
+    });
+  }
 }
+  
 
 export class TableBasicExample {
   
@@ -80,3 +100,5 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+
+

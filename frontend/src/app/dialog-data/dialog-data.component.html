@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Wybierz lekarza</h1>
+<div mat-dialog-content>
+  <ul>
+    <li *ngFor="let doctor of data.doctorList">
+      {{doctor.firstName}} {{doctor.lastName}}
+    </li>
+   
+  </ul>
+  <button mat-flat-button>Potwierdź</button>
+  <button mat-flat-button>Anuluj</button>
+</div>

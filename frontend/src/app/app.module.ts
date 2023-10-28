@@ -27,6 +27,7 @@ import { DiagnosisDisplayComponent } from './diagnosis-display/diagnosis-display
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
+import { DialogDataComponent } from './dialog-data/dialog-data.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {MatCardModule} from '@angular/material/card';
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddExaminationComponent,
-    AddDiagnosisComponent, 
+    AddDiagnosisComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +57,8 @@ import {MatCardModule} from '@angular/material/card';
     DiagnosisDisplayComponent,
     MatToolbarModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    DialogDataComponent, 
   ],
   providers: [AxiosService ],
   bootstrap: [AppComponent]

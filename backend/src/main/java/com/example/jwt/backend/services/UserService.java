@@ -8,16 +8,13 @@ import com.example.jwt.backend.entites.User;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.UserMapper;
 import com.example.jwt.backend.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -48,7 +45,6 @@ public class UserService {
 
         User user = userMapper.signUpToUser(signUpDto);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
-        //List<Role> roles =
 
         User savedUser = userRepository.save(user);
 
@@ -59,6 +55,25 @@ public class UserService {
         User user = userRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
         return userMapper.toUserDto(user);
+    }
+
+    public List<doctorName> getAll(){
+        List<UserDto> doctors = userMapper.toUserDtos(userRepository.findAll());
+        List<doctorName> doctorNames = new LinkedList<>();
+        for (UserDto doctor:doctors) {
+            doctorNames.add(new doctorName(doctor.getId(),doctor.getFirstName(),doctor.getLastName()));
+        }
+        return doctorNames;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class doctorName{
+        private long id;
+        private String firstName;
+        private String lastname;
     }
 
 
