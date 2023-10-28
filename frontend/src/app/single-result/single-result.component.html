@@ -69,9 +69,13 @@
               <mat-card-title>
                 Lekarz
             </mat-card-title>
-            <mat-card-subtitle>
-                -
+            <mat-card-subtitle *ngIf="patientsDoctor.firstName !== '' && patientsDoctor.lastName !== '';">
+               dr. {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
             </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="patientsDoctor.firstName == '' && patientsDoctor.lastName == '';">
+              -
+            </mat-card-subtitle>
+
             <p>Niepokoją cię wyniki? Skonsultuj się z lekarzem:</p>
             <button mat-button (click)="consultationDialog()">Zamów</button>
               </div>

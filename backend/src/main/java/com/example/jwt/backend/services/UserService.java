@@ -3,7 +3,7 @@ package com.example.jwt.backend.services;
 import com.example.jwt.backend.dtos.CredentialsDto;
 import com.example.jwt.backend.dtos.SignUpDto;
 import com.example.jwt.backend.dtos.UserDto;
-import com.example.jwt.backend.entites.Patient;
+import com.example.jwt.backend.dtos.DoctorNameDto;
 import com.example.jwt.backend.entites.User;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.UserMapper;
@@ -57,26 +57,14 @@ public class UserService {
         return userMapper.toUserDto(user);
     }
 
-    public List<doctorName> getAll(){
+    public List<DoctorNameDto> getAll(){
         List<UserDto> doctors = userMapper.toUserDtos(userRepository.findAll());
-        List<doctorName> doctorNames = new LinkedList<>();
+        List<DoctorNameDto> doctorNames = new LinkedList<>();
         for (UserDto doctor:doctors) {
-            doctorNames.add(new doctorName(doctor.getId(),doctor.getFirstName(),doctor.getLastName()));
+            doctorNames.add(new DoctorNameDto(doctor.getId(),doctor.getFirstName(),doctor.getLastName()));
         }
         return doctorNames;
     }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class doctorName{
-        private long id;
-        private String firstName;
-        private String lastname;
-    }
-
-
 
 
 }

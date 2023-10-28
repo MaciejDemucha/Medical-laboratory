@@ -29,6 +29,7 @@ export class SingleResultComponent {
   examinationNumber: string = "";
   pesel: string = "";
   patient: Patient = new Patient(0, "", "", "", "");
+  patientsDoctor = new Doctor(0, "", "");
   examination: Examination = new Examination(0, "", "", "");
   parametersWithNorms: ParameterWithNorm[] = [];
   displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
@@ -56,11 +57,19 @@ ngOnInit(): void{
 
   this.http.get<Patient> (
     `http://localhost:8080/patients/bypesel/${this.pesel}`
-  ).subscribe(data => this.patient = data);
+  ).subscribe(data => {
+    this.patient = data;
+    this.getPatientsDoctor();
+  });
+
+
 
   this.http.get<Doctor[]> (
     `http://localhost:8080/doctors`
-  ).subscribe(data => this.doctors = data);
+  ).subscribe(data => {
+    this.doctors = data
+    
+  });
 
 
 }
@@ -68,6 +77,12 @@ ngOnInit(): void{
     this.http.get<ParameterWithNorm[]> (
       `http://localhost:8080/examinations/${id}/parameterswithnorms`
     ).subscribe(data => this.parametersWithNorms = data);
+  }
+
+  getPatientsDoctor() :void{
+    this.http.get<Doctor> (
+      `http://localhost:8080/patients/${this.patient.id}/doctor`
+    ).subscribe(data => this.patientsDoctor = data);
   }
 
   /*sendExaminationCredentials(): void{

@@ -25,3 +25,8 @@ li {
   text-align: right;
   margin-top: 10px;
 }
+
+table {
+  width: 100%;
+  box-shadow: none;
+}

@@ -1,5 +1,6 @@
 package com.example.jwt.backend.services;
 
+import com.example.jwt.backend.dtos.DoctorNameDto;
 import com.example.jwt.backend.dtos.PatientDto;
 import com.example.jwt.backend.entites.Patient;
 import com.example.jwt.backend.entites.User;
@@ -37,7 +38,7 @@ public class PatientService {
 
     public PatientDto getPatientByPesel(String pesel){
         Patient patient = patientRepository.findByPesel(pesel)
-                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));;
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
         return patientMapper.toPatientDto(patient);
     }
 
@@ -57,8 +58,10 @@ public class PatientService {
     }
 
     public PatientDto assignDoctor(Long patientId, Long doctorId) {
-        Patient patient = patientRepository.findById(patientId).orElse(null);
-        User doctor = userRepository.findById(doctorId).orElse(null);
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
+        User doctor = userRepository.findById(doctorId)
+                .orElseThrow(() -> new AppException("Doctor not found", HttpStatus.NOT_FOUND));
 
         if (patient != null && doctor != null) {
             patient.setDoctor(doctor);
@@ -66,6 +69,18 @@ public class PatientService {
            return patientMapper.toPatientDto(patient);
         }
 
-        throw new AppException("Unknown user or patient", HttpStatus.NOT_FOUND); // Handle cases where either the patient or doctor is not found
+        throw new AppException("Unknown doctor or patient", HttpStatus.NOT_FOUND); // Handle cases where either the patient or doctor is not found
+    }
+
+    public DoctorNameDto getPatientsDoctor(Long patientId){
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
+
+        User doctor = patient.getDoctor();
+        if(doctor != null){
+            return new DoctorNameDto(doctor.getId(), doctor.getFirstName(), doctor.getLastName());
+        }
+
+        throw new AppException("Unknown doctor or patient", HttpStatus.NOT_FOUND);
     }
 }

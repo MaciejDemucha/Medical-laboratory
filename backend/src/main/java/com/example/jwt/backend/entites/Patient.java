@@ -36,7 +36,7 @@ public class Patient {
     private String lastName;
 
     @Column(name = "birth_date", nullable = false)
-    @Size(max = 100)
+    //@Size(max = 100)
     private Date birthDate; //TODO poprawic
 
     @ManyToOne
