@@ -52,4 +52,8 @@ export class ResultsDisplayComponent {
 
   }
 
+  addDiagnosis(): void{
+    
+  }
+
 }

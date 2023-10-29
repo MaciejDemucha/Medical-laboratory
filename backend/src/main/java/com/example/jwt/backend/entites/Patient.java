@@ -38,6 +38,7 @@ public class Patient {
     @Column(name = "birth_date", nullable = false)
     //@Size(max = 100)
     private Date birthDate; //TODO poprawic
+    //private LocalDate birthDate;
 
     @ManyToOne
     @JoinColumn(name="doctor_id")

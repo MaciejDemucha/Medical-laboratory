@@ -20,4 +20,8 @@ public class Diagnosis {
     @Column(name = "description", nullable = false)
     @Size(max = 100)
     private String description;
+
+    @OneToOne
+    @JoinColumn(name="examination_id", nullable = false)
+    private Examination examination;
 }

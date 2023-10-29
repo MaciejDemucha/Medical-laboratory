@@ -31,6 +31,9 @@ public class Examination {
     @JoinColumn(name="patient_id", nullable = false)
     private Patient patient;
 
+    @OneToOne(mappedBy = "examination")
+    private Diagnosis diagnosis;
+
     //@ManyToMany
     //@JoinTable(name = "examination_parameter", joinColumns = @JoinColumn(name = "examination_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"))
     //private Collection<Parameter> parameters;
