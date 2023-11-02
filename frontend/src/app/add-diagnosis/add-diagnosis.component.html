@@ -1,6 +1,13 @@
-<div>
+<div class="content">
     <h1>Dodaj diagnozę</h1>
-        <app-examination-input (newDataEvent)="appendData($event)"/>
-        <app-diagnosis-display *ngFor="let diagnosis of diagnosises"/>
+    <form #diagnosisForm="ngForm" class="diagnosis-form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field getValue class="form-full-width">
+            <mat-label>Diagnoza</mat-label>
+            <textarea id="desc" class="description" matInput></textarea>
+          </mat-form-field>
+    
+          <button [matDialogClose] type="submit" mat-raised-button>Zapisz</button>
+    </form>
         
 </div>

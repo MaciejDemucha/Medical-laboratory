@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,9 +17,19 @@ public class DiagnosisController {
 
     private final DiagnosisService diagnosisService;
 
+    @GetMapping("/diagnosis")
+    public ResponseEntity<List<DiagnosisDto>> getAllDiagnosis(){
+        return ResponseEntity.ok(diagnosisService.allDiagnosis());
+    }
+
+    @GetMapping("/diagnosis/{id}")
+    public ResponseEntity<DiagnosisDto> getDiagnosisByExaminationId(@PathVariable Long id){
+        return ResponseEntity.ok(diagnosisService.getDiagnosisByExaminationId(id));
+    }
+
     @PostMapping("/diagnosis")
-    public ResponseEntity<DiagnosisDto> createDiagnosis(@Valid @RequestBody DiagnosisDto diagnosisDto, @RequestBody Long examinationId){
-        DiagnosisDto createdDiagnosis = diagnosisService.createDiagnosis(diagnosisDto, examinationId);
+    public ResponseEntity<DiagnosisDto> createDiagnosis(@Valid @RequestBody DiagnosisDto diagnosisDto){
+        DiagnosisDto createdDiagnosis = diagnosisService.createDiagnosis(diagnosisDto);
         return ResponseEntity.created(URI.create("/diagnosis/" + createdDiagnosis.getId())).body(createdDiagnosis);
     }
 

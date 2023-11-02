@@ -14,5 +14,6 @@ public class DiagnosisDto {
     private Long id;
     @NotNull
     private String description;
+    private Long examinationId;
 
 }

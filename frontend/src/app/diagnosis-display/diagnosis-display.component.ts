@@ -11,5 +11,5 @@ import {MatCardModule} from '@angular/material/card';
   imports: [MatCardModule, MatButtonModule],
 })
 export class DiagnosisDisplayComponent {
-  @Input() diagnosis = new Diagnosis(0, "");
+  @Input() diagnosis = new Diagnosis(0,0, "");
 }

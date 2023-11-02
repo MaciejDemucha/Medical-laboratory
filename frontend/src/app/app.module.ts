@@ -36,7 +36,6 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddExaminationComponent,
-    AddDiagnosisComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +58,7 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
     MatIconModule,
     MatCardModule,
     DialogDataComponent, 
+    AddDiagnosisComponent,
   ],
   providers: [AxiosService ],
   bootstrap: [AppComponent]

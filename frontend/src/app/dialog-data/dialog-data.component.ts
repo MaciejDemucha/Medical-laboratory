@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,7 @@ export class DialogDataComponent {
     );
 
   }
+
 
 }
 

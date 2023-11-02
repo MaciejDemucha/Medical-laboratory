@@ -95,11 +95,15 @@ ngOnInit(): void{
   
 
   consultationDialog() {
-    this.dialog.open(DialogDataComponent, {
+    const dialogRef = this.dialog.open(DialogDataComponent, {
       data: {
         patientId: this.patient.id,
         doctorList: this.doctors
       },
+    });
+   
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPatientsDoctor()
     });
   }
 }

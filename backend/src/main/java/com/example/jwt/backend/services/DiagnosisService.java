@@ -22,9 +22,10 @@ public class DiagnosisService {
     private final DiagnosisRepository diagnosisRepository;
     private final ExaminationRepository examinationRepository;
 
-    public DiagnosisDto getDiagnosis(Long id){
-        Diagnosis diagnosis = diagnosisRepository.findById(id)
+    public DiagnosisDto getDiagnosisByExaminationId(Long id){
+        Diagnosis diagnosis = diagnosisRepository.findByExamination_Id(id)
                 .orElseThrow(() -> new AppException("Diagnosis not found", HttpStatus.NOT_FOUND));
+
 
         return diagnosisMapper.toDiagnosisDto(diagnosis);
     }
@@ -33,9 +34,9 @@ public class DiagnosisService {
         return diagnosisMapper.toDiagnosisDtos(diagnosisRepository.findAll());
     }
 
-    public DiagnosisDto createDiagnosis(DiagnosisDto diagnosisDto, Long examinationId) {
+    public DiagnosisDto createDiagnosis(DiagnosisDto diagnosisDto) {
         Diagnosis diagnosis = diagnosisMapper.toDiagnosis(diagnosisDto);
-        Examination examination = examinationRepository.findById(examinationId)
+        Examination examination = examinationRepository.findById(diagnosisDto.getExaminationId())
                 .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
         diagnosis.setExamination(examination);
         Diagnosis createdDiagnosis =  diagnosisRepository.save(diagnosis);

@@ -7,6 +7,6 @@
     </mat-list-option>
   </mat-selection-list>
   <button mat-stroked-button disabled *ngIf="!doctors.selectedOptions.hasValue()">Potwierdź</button>
-  <button *ngIf="doctors.selectedOptions.hasValue()" (click)="assignDoctor(data.patientId, doctors.selectedOptions.selected[0].value.id)" mat-flat-button>Potwierdź</button>
-  <button mat-flat-button>Anuluj</button>
+  <button [matDialogClose] *ngIf="doctors.selectedOptions.hasValue()" (click)="assignDoctor(data.patientId, doctors.selectedOptions.selected[0].value.id)" mat-flat-button>Potwierdź</button>
+  <button [matDialogClose] mat-flat-button>Anuluj</button>
 </div>

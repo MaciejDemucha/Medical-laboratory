@@ -30,3 +30,19 @@ table {
   width: 100%;
   box-shadow: none;
 }
+
+.diagnosis-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  padding: 30px;
+}
+
+.diagnosis-full-width {
+  width: 100%;
+ 
+}
+
+.diagnosis-input {
+  height: auto;
+}

@@ -1,0 +1,24 @@
+.content {
+    width: 100%;
+    height: 100%;
+    
+}
+
+h1 {
+    padding: 20px;
+}
+
+.diagnosis-form {
+    width: 100%;
+    padding: 20px;
+    height: 400px;
+  }
+  
+  .form-full-width {
+    width: 100%;
+    height: 100%;
+  }
+
+  .description {
+    height: 300px;
+  }

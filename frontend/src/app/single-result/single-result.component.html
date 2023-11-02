@@ -76,8 +76,10 @@
               -
             </mat-card-subtitle>
 
+            <div *ngIf="patientsDoctor.firstName == '' && patientsDoctor.lastName == '';">
             <p>Niepokoją cię wyniki? Skonsultuj się z lekarzem:</p>
             <button mat-button (click)="consultationDialog()">Zamów</button>
+          </div>
               </div>
               </mat-card>
 

@@ -8,7 +8,7 @@
     <ul>
         <li *ngFor="let examination of examinations" >
             <mat-accordion>
-                <mat-expansion-panel hideToggle (opened)="getExaminationParametersAndNorms(examination.id)">
+                <mat-expansion-panel hideToggle (opened)="getExaminationData(examination.id)">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                         {{examination.name}}
@@ -77,7 +77,22 @@
                   {{examination.datePerformed}}
               </mat-panel-description>
               </div>
-              <button (click)="addDiagnosis()" class="button-add" mat-button>Dodaj diagnozę</button>
+              
+             <!-- <p *ngIf="diagnosisList[examination.id].description !== null">
+                <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>Diagnoza</mat-card-title>
+                      <mat-card-subtitle>{{diagnosisList[examination.id].description}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-actions align="end">
+                      <button (click)="removeItemEvent.emit(examination.id)" mat-button>Usuń</button>
+                      <button (click)="editItemEvent.emit(examination.id)" mat-button>Edytuj</button>
+                    </mat-card-actions>
+                </mat-card>
+            </p>-->
+            
+              <button (click)="addDiagnosis(examination.id)" class="button-add" mat-button>Dodaj diagnozę</button>
+            
                 </mat-expansion-panel>
                 
               </mat-accordion>
