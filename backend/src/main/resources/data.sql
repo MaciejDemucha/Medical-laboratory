@@ -92,6 +92,8 @@ INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (2
                                                                            FROM patient
                                                                            WHERE pesel = '01310688261'), 'Żelazo, ferrytyna','0987', '2023-01-01');
 
+INSERT INTO diagnosis (id, examination_id, description) VALUES (1, 1, "masz raka");
+
 INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 1);
 INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 2);
 INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 5);

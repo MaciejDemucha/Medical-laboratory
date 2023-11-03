@@ -12,7 +12,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface DiagnosisMapper {
-
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "examinationId", target = "examination.id")
     Diagnosis toDiagnosis(DiagnosisDto diagnosisDto);
     DiagnosisDto toDiagnosisDto(Diagnosis diagnosis);
 

@@ -77,25 +77,15 @@
                   {{examination.datePerformed}}
               </mat-panel-description>
               </div>
-              
-             <!-- <p *ngIf="diagnosisList[examination.id].description !== null">
-                <mat-card>
-                    <mat-card-header>
-                      <mat-card-title>Diagnoza</mat-card-title>
-                      <mat-card-subtitle>{{diagnosisList[examination.id].description}}</mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-actions align="end">
-                      <button (click)="removeItemEvent.emit(examination.id)" mat-button>Usuń</button>
-                      <button (click)="editItemEvent.emit(examination.id)" mat-button>Edytuj</button>
-                    </mat-card-actions>
-                </mat-card>
-            </p>-->
             
-              <button (click)="addDiagnosis(examination.id)" class="button-add" mat-button>Dodaj diagnozę</button>
+              <button *ngIf="!diagnosisList[examination.id]?.description" (click)="addDiagnosis(examination.id)" class="button-add" mat-button>Dodaj diagnozę</button>
+              <button *ngIf="diagnosisList[examination.id]?.description" (click)="editDiagnosis(examination.id)" class="button-add" mat-button>Edytuj diagnozę</button>
             
                 </mat-expansion-panel>
                 
               </mat-accordion>
+
+               
         </li>
     </ul>
 

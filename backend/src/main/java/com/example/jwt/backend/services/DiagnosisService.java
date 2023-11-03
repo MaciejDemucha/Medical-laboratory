@@ -54,7 +54,7 @@ public class DiagnosisService {
     }
 
     public DiagnosisDto updateDiagnosis(Long id, DiagnosisDto diagnosisDto) {
-        Diagnosis diagnosis = diagnosisRepository.findById(id)
+        Diagnosis diagnosis = diagnosisRepository.findByExamination_Id(id)
                 .orElseThrow(() -> new AppException("Diagnosis not found", HttpStatus.NOT_FOUND));
 
         diagnosisMapper.updateDiagnosis(diagnosis, diagnosisMapper.toDiagnosis(diagnosisDto));

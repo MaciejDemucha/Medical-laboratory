@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Diagnosis } from '../diagnosis';
 import { HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,28 +19,17 @@ import { MAT_DIALOG_DATA , MatDialogModule} from '@angular/material/dialog';
 })
 export class AddDiagnosisComponent {
 
-  constructor(private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){}
+  constructor(private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
+	const textareaElement = document.getElementById('desc') as HTMLTextAreaElement;
+    if (textareaElement && data.isNewExamination === false) {
+      textareaElement.value = data.oldDesc;
+    }
+  }
 
-  diagnosises: Diagnosis[] = [];
+  /*diagnosises: Diagnosis[] = [];
 
   appendData(newDiagnosis: any): void {
 		this.diagnosises.push(newDiagnosis);
-	}
-
-	onSubmit(): void{
-		const descRef = this.desc.nativeElement.querySelector('#desc');
-		if(descRef){
-			this.http.post("http://localhost:8080/diagnosis", {
-			examinationId: this.data.examinationId,
-			description: descRef.value
-		}).subscribe((response) => {
-			console.log(response);
-		  }, (error) => {
-			console.log(error);
-			console.log(descRef)
-		  });
-		}
-		
 	}
 
 	removeItem(diagnosisId: number): void {
@@ -49,11 +38,43 @@ export class AddDiagnosisComponent {
 		).subscribe(data => 
 			this.diagnosises = this.diagnosises.filter((diagnosis: Diagnosis) =>
 			diagnosis.id != diagnosisId));
-	}
-	
+	}*/
+
+	onSubmit(): void{
+		const descRef = this.desc.nativeElement.querySelector('#desc');
+		if(this.data.isNewExamination === true){
+			if(descRef){
+				this.http.post("http://localhost:8080/diagnosis", {
+				examinationId: this.data.examinationId,
+				description: descRef.value
+			}).subscribe((response) => {
+				console.log(response);
+			  }, (error) => {
+				console.log(error);
+			  });
+			}
+		} else if(this.data.isNewExamination === false){
+			if(descRef){
+				this.http.put(`http://localhost:8080/diagnosis/${this.data.examinationId}`, {
+				id: this.data.diagnosisId,
+				examinationId: this.data.examinationId,
+				description: descRef.value
+			}).subscribe((response) => {
+				console.log(response);
+			  }, (error) => {
+				console.log(error);
+			  });
+			}
+		}
+		
+		
+	}	
 
 }
 
 export interface DiagnosisDialogData {
-	examinationId: any;
+	diagnosisId: number | null;
+	examinationId: number;
+	isNewExamination: boolean;
+	oldDesc: string
   }

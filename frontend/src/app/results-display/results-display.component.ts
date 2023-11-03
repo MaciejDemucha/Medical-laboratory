@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AddDiagnosisComponent } from '../add-diagnosis/add-diagnosis.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Diagnosis } from '../diagnosis';
+import { catchError, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-results-display',
@@ -51,26 +52,51 @@ export class ResultsDisplayComponent {
 
   }
 
-  getExaminationData(id: number): void{
-    this.http.get<ParameterWithNorm[]> (
+  getExaminationData(id: number): void {
+    this.http.get<ParameterWithNorm[]>(
       `http://localhost:8080/examinations/${id}/parameterswithnorms`
-    ).subscribe(data => {
-      this.parameters[id] = data;
-      this.getDiagnosis(id);
-    });
-
+    ).subscribe(
+      (data) => {
+        this.parameters[id] = data;
+        this.getDiagnosis(id);
+      },
+      (error) => {
+        // Handle errors for the first request here.
+        console.error('Error occurred while fetching examination data:', error);
+      }
+    );
   }
-
-  getDiagnosis(examinationId: number): void{
-    this.http.get<Diagnosis> (
+  
+  getDiagnosis(examinationId: number): void {
+    this.http.get<Diagnosis>(
       `http://localhost:8080/diagnosis/${examinationId}`
-    ).subscribe(data => this.diagnosisList[examinationId] = data);
+    ).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          console.error('Diagnosis not found for examinationId:', examinationId);
+          if (!this.diagnosisList[examinationId]) {
+            this.diagnosisList[examinationId] = new Diagnosis(null, 0, "");
+          }
+          return of(null);
+        } else {
+          console.error('An error occurred while fetching diagnosis:', error);
+          return throwError('Error occurred.');
+        }
+      })
+    ).subscribe(
+      (data) => {
+        if (!this.diagnosisList[examinationId]) {
+          this.diagnosisList[examinationId] = data;
+        }
+      }
+    );
   }
 
   addDiagnosis(id: number): void{
       const dialogRef = this.dialog.open(AddDiagnosisComponent, {
         data: {
-         examinationId: id
+         examinationId: id,
+         isNewExamination: true
         },
         height: '80%',
         width: '80%'
@@ -81,4 +107,23 @@ export class ResultsDisplayComponent {
       });
   }
 
+  editDiagnosis(id: number): void {
+    const oldDesc = this.diagnosisList[id].description;
+    const diagnosisId = this.diagnosisList[id].id;
+    const dialogRef = this.dialog.open(AddDiagnosisComponent, {
+      data: {
+       diagnosisId: diagnosisId,
+       examinationId: id,
+       isNewExamination: false,
+       oldDesc: oldDesc
+      },
+      height: '80%',
+      width: '80%'
+    });
+   
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+  
 }
