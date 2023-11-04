@@ -83,4 +83,18 @@
               </div>
               </mat-card>
 
+              <mat-accordion class="diagnosis" *ngIf="diagnosis?.description;">
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Diagnoza
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      dr. {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>{{diagnosis?.description}}</p>
+                </mat-expansion-panel>  
+              </mat-accordion>   
+
 </div>

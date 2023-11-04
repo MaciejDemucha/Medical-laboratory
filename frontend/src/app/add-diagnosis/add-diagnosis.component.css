@@ -11,7 +11,7 @@ h1 {
 .diagnosis-form {
     width: 100%;
     padding: 20px;
-    height: 400px;
+    min-height: 400px;
   }
   
   .form-full-width {
@@ -20,5 +20,5 @@ h1 {
   }
 
   .description {
-    height: 300px;
+    min-height: 300px;
   }

@@ -17,6 +17,8 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dia
 import {NgIf} from '@angular/common';
 import { Doctor } from '../doctor';
 import { DialogDataComponent } from '../dialog-data/dialog-data.component';
+import { Diagnosis } from '../diagnosis';
+import { catchError, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-single-result',
@@ -31,6 +33,7 @@ export class SingleResultComponent {
   patient: Patient = new Patient(0, "", "", "", "");
   patientsDoctor = new Doctor(0, "", "");
   examination: Examination = new Examination(0, "", "", "");
+  diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
   parametersWithNorms: ParameterWithNorm[] = [];
   displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
   doctors: Doctor[] = [];
@@ -52,6 +55,7 @@ ngOnInit(): void{
   ).subscribe(data => {
     this.examination = data;
     this.getExaminationParametersAndNorms(this.examination.id);
+    this.getDiagnosis(this.examination.id);
   },
     error => alert("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
 
@@ -106,6 +110,26 @@ ngOnInit(): void{
       this.getPatientsDoctor()
     });
   }
+
+  getDiagnosis(examinationId: number): void {
+    this.http.get<Diagnosis>(
+      `http://localhost:8080/diagnosis/${examinationId}`
+    ).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          console.error('Diagnosis not found for examinationId:', examinationId);
+          return of(null);
+        } else {
+          console.error('An error occurred while fetching diagnosis:', error);
+          return throwError('Error occurred.');
+        }
+      })
+    ).subscribe(
+      (data) => {
+        this.diagnosis = data;
+      }
+    );
+  }
 }
   
 
@@ -113,11 +137,11 @@ export class TableBasicExample {
   
 }
 
-export interface PeriodicElement {
+/*export interface PeriodicElement {
   name: string;
   position: number;
   weight: number;
   symbol: string;
-}
+}*/
 
 
