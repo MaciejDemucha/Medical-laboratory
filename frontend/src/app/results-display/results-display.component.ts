@@ -18,13 +18,14 @@ import { AddDiagnosisComponent } from '../add-diagnosis/add-diagnosis.component'
 import { MatDialog } from '@angular/material/dialog';
 import { Diagnosis } from '../diagnosis';
 import { catchError, of, throwError } from 'rxjs';
+import {MatSliderModule} from '@angular/material/slider';
 
 @Component({
   selector: 'app-results-display',
   templateUrl: './results-display.component.html',
   styleUrls: ['./results-display.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule, MatFormFieldModule, MatInputModule]
+  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule, MatFormFieldModule, MatInputModule, MatSliderModule]
 })
 export class ResultsDisplayComponent {
   patientId: number = 0;

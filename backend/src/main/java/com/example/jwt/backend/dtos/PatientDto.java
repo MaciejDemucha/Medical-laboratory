@@ -23,7 +23,7 @@ public class PatientDto {
     @NotNull
     private String lastName;
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthDate;
     //private LocalDate birthDate;
 

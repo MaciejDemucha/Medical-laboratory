@@ -29,6 +29,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { DialogDataComponent } from './dialog-data/dialog-data.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +37,7 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddExaminationComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
     MatCardModule,
     DialogDataComponent, 
     AddDiagnosisComponent,
+    
   ],
   providers: [AxiosService ],
   bootstrap: [AppComponent]

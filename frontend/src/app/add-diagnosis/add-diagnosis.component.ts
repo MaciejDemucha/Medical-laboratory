@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { DialogData } from '../dialog-data/dialog-data.component';
 import { MAT_DIALOG_DATA , MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { catchError, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-diagnosis',
@@ -22,12 +23,13 @@ export class AddDiagnosisComponent implements OnInit {
 	@ViewChild('desc') input?: ElementRef<HTMLInputElement>;
 	oldDesc: string = "";
 	activeButton: boolean = true;
+	diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
 
   constructor(private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
   }
 
   ngOnInit() {
-	this.oldDesc = this.data.oldDesc;
+	this.getDiagnosis(this.data.examinationId);
   }
 
   onTextChange(value: any): void {
@@ -38,6 +40,28 @@ export class AddDiagnosisComponent implements OnInit {
 	else{
 		this.activeButton = false;
 	}
+  }
+
+  getDiagnosis(examinationId: number): void {
+    this.http.get<Diagnosis>(
+      `http://localhost:8080/diagnosis/${examinationId}`
+    ).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          console.error('Diagnosis not found for examinationId:', examinationId);
+          return of(null);
+        } else {
+          console.error('An error occurred while fetching diagnosis:', error);
+          return throwError('Error occurred.');
+        }
+      })
+    ).subscribe(
+      (data) => {  
+          this.diagnosis = data;
+		  if(this.diagnosis)
+		  	this.oldDesc = this.diagnosis?.description;
+      }
+    );
   }
 
   /*diagnosises: Diagnosis[] = [];

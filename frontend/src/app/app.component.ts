@@ -25,7 +25,11 @@ export class AppComponent {
 
   homeIcon() {
 	this.componentToShow = "";
-	this.router.navigate(['/shop']);
+	if(this.isAuthenticated === false)
+		this.router.navigate(['/shop']);
+	else
+		this.router.navigate(['/']);
+	
   }
 
   ngOnInit(): void{

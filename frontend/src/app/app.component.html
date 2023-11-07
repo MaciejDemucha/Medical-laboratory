@@ -6,12 +6,6 @@
       <mat-toolbar-row>
         <span>Laboratorium medyczne</span>
         <span class="example-spacer"></span>
-        <button (click)="homeIcon()" mat-icon-button color="white" aria-label="Example icon button with a home icon">
-          <mat-icon>home</mat-icon>
-        </button>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row>
         <span class="example-spacer"></span>
         <div class="menu-buttons">
           <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-flat-button color="primary">Dla lekarza</button>
@@ -22,7 +16,12 @@
           <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>
           <button *ngIf="isAuthenticated == false" (click)="onBucketTab()" mat-flat-button color="primary">Koszyk</button>
           </div>
+        <button (click)="homeIcon()" mat-icon-button color="white" aria-label="Example icon button with a home icon">
+          <mat-icon>home</mat-icon>
+        </button>
       </mat-toolbar-row>
+
+      
     </mat-toolbar>
   </p>
 </div>
