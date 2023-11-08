@@ -79,13 +79,13 @@ ngOnInit(): void{
 }
   getExaminationParametersAndNorms(id: number): void{
     this.http.get<ParameterWithNorm[]> (
-      `http://localhost:8080/examinations/${id}/parameterswithnorms`
+      `http://localhost:8080/examinations/parameterswithnorms/${id}`
     ).subscribe(data => this.parametersWithNorms = data);
   }
 
   getPatientsDoctor() :void{
     this.http.get<Doctor> (
-      `http://localhost:8080/patients/${this.patient.id}/doctor`
+      `http://localhost:8080/patients/doctor/${this.patient.id}`
     ).subscribe(data => this.patientsDoctor = data);
   }
 

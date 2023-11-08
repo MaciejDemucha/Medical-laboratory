@@ -10,7 +10,7 @@
         <div class="menu-buttons">
           <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-flat-button color="primary">Dla lekarza</button>
           <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-flat-button color="primary">Wyloguj się</button>
-          <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-flat-button color="primary">Dodaj nowe badanie</button>
+         <!-- <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-flat-button color="primary">Dodaj nowe badanie</button>-->
           <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Pacjenci</button>
           <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-flat-button color="primary">Oferta</button>
           <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>

@@ -24,7 +24,7 @@ public class PatientsController {
         return ResponseEntity.ok(patientService.allPatients());
     }
 
-    @GetMapping("{doctorId}/patients")
+    @GetMapping("/doctor/{doctorId}/patients")
     public ResponseEntity<List<PatientDto>> allPatientsByDoctorId(@PathVariable Long doctorId){
         return ResponseEntity.ok(patientService.getPatientsByDoctorId(doctorId));
     }
@@ -34,7 +34,7 @@ public class PatientsController {
         return ResponseEntity.ok(patientService.getPatientById(id));
     }
 
-    @GetMapping("/patients/{id}/doctor")
+    @GetMapping("/patients/doctor/{id}")
     public ResponseEntity<DoctorNameDto> getPatientsDoctor(@PathVariable Long id){
         return ResponseEntity.ok(patientService.getPatientsDoctor(id));
     }

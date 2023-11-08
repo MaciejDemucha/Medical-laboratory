@@ -19,12 +19,8 @@ import java.util.List;
 public class ParameterController {
     private final ParameterService parameterService;
 
-    @GetMapping("examinations/{id}/parameters")
-    public ResponseEntity<List<ParameterDto>> getParametersByExaminationId(@PathVariable Long id){
-        return ResponseEntity.ok(parameterService.getParameterByExaminationId(id));
-    }
 
-    @GetMapping("examinations/{id}/parameterswithnorms")
+    @GetMapping("examinations/parameterswithnorms/{id}")
     public ResponseEntity<List<ParamWithNormDto>> getParametersAndNormsByExaminationId(@PathVariable Long id){
         List<ParameterDto> params = parameterService.getParameterByExaminationId(id);
         List<ParamWithNormDto> paramsToSend = new LinkedList<>();
@@ -37,8 +33,4 @@ public class ParameterController {
         return ResponseEntity.ok(paramsToSend);
     }
 
-    @GetMapping("parameters/{id}/norms")
-    public ResponseEntity<NormRangeDto> getNormByParameterId(@PathVariable Long id){
-        return ResponseEntity.ok(parameterService.getNormRangeByParameterId(id));
-    }
 }

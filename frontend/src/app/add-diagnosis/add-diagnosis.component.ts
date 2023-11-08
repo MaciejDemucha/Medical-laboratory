@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Diagnosis } from '../diagnosis';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { DialogData } from '../dialog-data/dialog-data.component';
 import { MAT_DIALOG_DATA , MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { catchError, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-diagnosis',
@@ -25,7 +26,7 @@ export class AddDiagnosisComponent implements OnInit {
 	activeButton: boolean = true;
 	diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
 
-  constructor(private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
+  constructor(private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
   }
 
   ngOnInit() {
@@ -42,15 +43,31 @@ export class AddDiagnosisComponent implements OnInit {
 	}
   }
 
+  onAuthFailure(){
+	localStorage.setItem('isAuthenticated', 'false');
+	this.router.navigate(['/']);
+	location.reload();
+  }
+
   getDiagnosis(examinationId: number): void {
+	const authToken = localStorage.getItem('auth_token');
+	const headers = new HttpHeaders({
+		'Authorization': `Bearer ${authToken}`
+	  });
+	  
     this.http.get<Diagnosis>(
-      `http://localhost:8080/diagnosis/${examinationId}`
+      `http://localhost:8080/diagnosis/${examinationId}`, 
+	  { headers }
     ).pipe(
       catchError((error) => {
         if (error.status === 404) {
           console.error('Diagnosis not found for examinationId:', examinationId);
           return of(null);
-        } else {
+        } else if (error.status === 401) {
+			this.onAuthFailure();
+			return of(null);
+		} 
+		else {
           console.error('An error occurred while fetching diagnosis:', error);
           return throwError('Error occurred.');
         }
@@ -79,6 +96,11 @@ export class AddDiagnosisComponent implements OnInit {
 	}*/
 
 	onSubmit(): void{
+		const authToken = localStorage.getItem('auth_token');
+		const headers = new HttpHeaders({
+			'Authorization': `Bearer ${authToken}`
+		  });
+
 		const descRef = this.desc.nativeElement.querySelector('#desc');
 		if(descRef){
 			this.data.oldDesc = descRef.value;
@@ -87,10 +109,13 @@ export class AddDiagnosisComponent implements OnInit {
 				this.http.post("http://localhost:8080/diagnosis", {
 				examinationId: this.data.examinationId,
 				description: descRef.value
-			}).subscribe((response) => {
+			}, {headers}).subscribe((response) => {
 				console.log(response);
 			  }, (error) => {
 				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
 			  });
 			
 		} else if(this.data.isNewExamination === false){
@@ -99,10 +124,13 @@ export class AddDiagnosisComponent implements OnInit {
 				id: this.data.diagnosisId,
 				examinationId: this.data.examinationId,
 				description: descRef.value
-			}).subscribe((response) => {
+			}, {headers}).subscribe((response) => {
 				console.log(response);
 			  }, (error) => {
 				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
 			  });
 		}
 	}

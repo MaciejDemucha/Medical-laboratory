@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Patient } from '../patient';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -25,10 +25,31 @@ export class PatientDisplayComponent {
       this.doctorId = params['id'];
     });
 
+    this.getPatientsByDoctorId();
+    
+  }
+
+  onAuthFailure(){
+    localStorage.setItem('isAuthenticated', 'false');
+    this.router.navigate(['/']);
+    location.reload();
+    }
+
+  getPatientsByDoctorId(){
+    const authToken = localStorage.getItem('auth_token');
+		const headers = new HttpHeaders({
+			'Authorization': `Bearer ${authToken}`
+		  });
 
     this.http.get<Patient[]> (
-      `http://localhost:8080/${this.doctorId}/patients`
-    ).subscribe(data => this.patients = data);
+      `http://localhost:8080/doctor/${this.doctorId}/patients`, {headers}
+    ).subscribe(data => this.patients = data,
+      (error) => {
+				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
+			  });
   }
 
   showPatientExaminations(patient: Patient): void{

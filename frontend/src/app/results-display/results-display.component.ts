@@ -3,12 +3,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { Examination } from '../examination';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Parameter } from '../parameter';
 import { Patient } from '../patient';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NormRange } from '../normRange';
 import { ParameterWithNorm } from '../parameterAndNorms';
 import {MatTableModule} from '@angular/material/table';
@@ -35,7 +35,7 @@ export class ResultsDisplayComponent {
   parameters: { [key: number]: any } = {};
   diagnosisList: { [key: number]: any } = {};
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
     }
 
@@ -43,19 +43,47 @@ export class ResultsDisplayComponent {
     this.route.queryParams.subscribe(params => {
       this.patientId = params['id'];
     });
-    this.http.get<Examination[]> (
-      `http://localhost:8080/patients/${this.patientId}/examinations`
-    ).subscribe(data => this.examinations = data);
 
-    this.http.get<Patient> (
-      `http://localhost:8080/patients/${this.patientId}`
-    ).subscribe(data => this.patient = data);
+   this.getPatientAndExaminationData();
 
   }
 
+  getPatientAndExaminationData(): void {
+    const authToken = localStorage.getItem('auth_token');
+		const headers = new HttpHeaders({
+			'Authorization': `Bearer ${authToken}`
+		  });
+
+    this.http.get<Examination[]> (
+      `http://localhost:8080/patients/${this.patientId}/examinations`, {headers}
+    ).subscribe(data => this.examinations = data,
+      (error) => {
+				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
+			  });
+
+    this.http.get<Patient> (
+      `http://localhost:8080/patients/${this.patientId}`, {headers}
+    ).subscribe(data => this.patient = data,
+      (error) => {
+				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
+			  });
+  }
+
+  onAuthFailure(){
+    localStorage.setItem('isAuthenticated', 'false');
+    this.router.navigate(['/']);
+    location.reload();
+    }
+
   getExaminationData(id: number): void {
     this.http.get<ParameterWithNorm[]>(
-      `http://localhost:8080/examinations/${id}/parameterswithnorms`
+      `http://localhost:8080/examinations/parameterswithnorms/${id}`
     ).subscribe(
       (data) => {
         this.parameters[id] = data;
@@ -79,7 +107,11 @@ export class ResultsDisplayComponent {
             this.diagnosisList[examinationId] = new Diagnosis(null, 0, "");
           }
           return of(null);
-        } else {
+        } else if(error.status === 401){
+          this.onAuthFailure();
+          return of(null);
+        }
+        else {
           console.error('An error occurred while fetching diagnosis:', error);
           return throwError('Error occurred.');
         }
