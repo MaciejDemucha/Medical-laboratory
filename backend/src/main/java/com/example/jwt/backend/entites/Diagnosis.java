@@ -17,8 +17,7 @@ public class Diagnosis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description", nullable = false)
-    @Size(max = 100)
+    @Column(name = "description", nullable = false, length = 65555)
     private String description;
 
     @OneToOne

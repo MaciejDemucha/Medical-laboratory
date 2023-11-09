@@ -8,17 +8,30 @@
         <span class="example-spacer"></span>
         <span class="example-spacer"></span>
         <div class="menu-buttons">
+          <mat-icon *ngIf="isAuthenticated == false">assignment_ind</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-flat-button color="primary">Dla lekarza</button>
+          <!--<button mat-button [matMenuTriggerFor]="belowMenu">Below</button>
+            <mat-menu  #belowMenu="matMenu" yPosition="below">
+              <div class="menuLogin">
+              <app-login-form (click) = "$event.stopPropagation()" (onSubmitLoginEvent)="onLogin($event)" (onSubmitRegisterEvent)="onRegister($event)"/>
+              </div>
+            </mat-menu>-->
+
+            <mat-icon *ngIf="isAuthenticated == true">power_settings_new</mat-icon>
           <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-flat-button color="primary">Wyloguj się</button>
          <!-- <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-flat-button color="primary">Dodaj nowe badanie</button>-->
-          <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Pacjenci</button>
+         <mat-icon *ngIf="isAuthenticated == true">assignment_ind</mat-icon>
+         <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Pacjenci</button>
+          <mat-icon *ngIf="isAuthenticated == false">account_balance_wallet</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-flat-button color="primary">Oferta</button>
+          <mat-icon *ngIf="isAuthenticated == false">assessment</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>
+          <mat-icon *ngIf="isAuthenticated == false">add_shopping_cart</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onBucketTab()" mat-flat-button color="primary">Koszyk</button>
           </div>
-        <button (click)="homeIcon()" mat-icon-button color="white" aria-label="Example icon button with a home icon">
+       <!-- <button (click)="homeIcon()" mat-icon-button color="white" aria-label="Example icon button with a home icon">
           <mat-icon>home</mat-icon>
-        </button>
+        </button>-->
       </mat-toolbar-row>
 
       
@@ -27,9 +40,9 @@
 </div>
  
   <div class="content">
-    
+    <div class="login-tab">
     <app-login-form *ngIf="componentToShow == 'login'" (onSubmitLoginEvent)="onLogin($event)" (onSubmitRegisterEvent)="onRegister($event)"/>
-
+  </div>
   <div class="main">
   <router-outlet></router-outlet>
   </div>

@@ -45,6 +45,26 @@
   .app{
 	position: relative;
 	min-height: 120%;
-	
-	
   }
+
+  .login-tab {
+	width: 40%;
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+  /*.menuLogin{
+	width: auto;
+  }
+
+  .mat-mdc-menu-panel {
+	min-width: 450px;
+  }
+
+  ::ng-deep {  
+	.mat-mdc-menu-panel {  
+	  max-width: unset !important;  
+	  min-width: 450px !important;
+	} 
+  } */

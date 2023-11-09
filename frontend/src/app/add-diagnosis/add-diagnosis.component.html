@@ -5,9 +5,10 @@
             <mat-label>Diagnoza</mat-label>
             <textarea [ngModelOptions]="{standalone: true}"  [(ngModel)]="oldDesc" (ngModelChange)="onTextChange($event)"  id="desc" class="description" matInput>{{oldDesc}}</textarea>
           </mat-form-field>
-    
+      <div class="buttons">
           <button [matDialogClose] type="submit" mat-raised-button *ngIf="activeButton == true">Zapisz</button>
           <button mat-stroked-button disabled *ngIf="activeButton == false">Zapisz</button>
+        </div>
     </form>
         
 </div>

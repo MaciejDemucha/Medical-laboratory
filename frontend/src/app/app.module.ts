@@ -27,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { DialogDataComponent } from './dialog-data/dialog-data.component';
+import { MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
     MatCardModule,
     DialogDataComponent, 
     AddDiagnosisComponent,
+    MatMenuModule
     
   ],
   providers: [AxiosService ],

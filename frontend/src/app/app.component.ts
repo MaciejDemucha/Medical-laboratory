@@ -28,7 +28,7 @@ export class AppComponent {
 	if(this.isAuthenticated === false)
 		this.router.navigate(['/shop']);
 	else
-		this.router.navigate(['/']);
+		this.router.navigate(['/patients']);
 	
   }
 
@@ -87,6 +87,7 @@ export class AppComponent {
 		        this.componentToShow = "restricted";
 				this.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
+				this.onPatientsTab();
 
 		    }).catch(
 		    error => {

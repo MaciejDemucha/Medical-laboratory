@@ -19,19 +19,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { Diagnosis } from '../diagnosis';
 import { catchError, of, throwError } from 'rxjs';
 import {MatSliderModule} from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-results-display',
   templateUrl: './results-display.component.html',
   styleUrls: ['./results-display.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule, MatFormFieldModule, MatInputModule, MatSliderModule]
+  imports: [MatIconModule,MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule, MatFormFieldModule, MatInputModule, MatSliderModule]
 })
 export class ResultsDisplayComponent {
   patientId: number = 0;
   patient: Patient = new Patient(0, "", "", "", "");
   examinations: Examination[] = [];
-  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres'];
+  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres', 'Powiadomienie'];
   parameters: { [key: number]: any } = {};
   diagnosisList: { [key: number]: any } = {};
 
@@ -131,8 +132,8 @@ export class ResultsDisplayComponent {
          examinationId: id,
          isNewExamination: true
         },
-        height: '80%',
-        width: '80%'
+       
+        width: '50%'
       });
      
       dialogRef.afterClosed().subscribe(result => {
@@ -150,8 +151,8 @@ export class ResultsDisplayComponent {
        isNewExamination: false,
        oldDesc: oldDesc
       },
-      height: '80%',
-      width: '80%'
+      
+      width: '50%'
     });
    
     dialogRef.afterClosed().subscribe(result => {
