@@ -19,6 +19,7 @@ export class AddExaminationComponent {
 
 	onAuthFailure(){
 		localStorage.setItem('isAuthenticated', 'false');
+		localStorage.removeItem('auth_token');
 		this.router.navigate(['/']);
 	  }
 

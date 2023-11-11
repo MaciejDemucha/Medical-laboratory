@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { AxiosService } from './axios.service';
 import { Examination } from './examination';
 import { Patient } from './patient';
 import { ExaminationOffer } from './examinationOffer';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 
 @Component({
@@ -12,15 +12,15 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: string = 'Laboratorium medyczne';
   patients: Patient[] = [];
   componentToShow: string = "";
   isAuthenticated: boolean = false;
   loggedId: number|null = null;
 
-  constructor(private http: HttpClient, private axiosService: AxiosService, private router: Router){
-	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  constructor(private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
+	//this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   }
 
   homeIcon() {
@@ -34,6 +34,17 @@ export class AppComponent {
 
   ngOnInit(): void{
     //this.router.navigate(['/shop'])
+	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+	if(this.isAuthenticated)
+	this.loggedId = parseInt(localStorage.getItem('loggedId') ?? "", 10);
+
+	this.router.events.subscribe((event) => {
+		const routeConfig = this.route.snapshot?.routeConfig;
+		if (event instanceof NavigationEnd && routeConfig && routeConfig.path === '') {
+		  // Call your function here
+		  this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+		}
+	  });
   }
 
   onPatientsTab(): void{
@@ -87,6 +98,8 @@ export class AppComponent {
 		        this.componentToShow = "restricted";
 				this.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
+				if(this.loggedId?.toString() !== undefined)
+					localStorage.setItem('loggedId', this.loggedId?.toString());
 				this.onPatientsTab();
 
 		    }).catch(

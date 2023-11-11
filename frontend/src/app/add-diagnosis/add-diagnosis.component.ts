@@ -45,6 +45,7 @@ export class AddDiagnosisComponent implements OnInit {
 
   onAuthFailure(){
 	localStorage.setItem('isAuthenticated', 'false');
+	localStorage.removeItem('auth_token');
 	this.router.navigate(['/']);
 	location.reload();
   }
