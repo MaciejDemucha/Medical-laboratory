@@ -4,7 +4,16 @@ INSERT INTO gender (name) VALUES ('male');
 INSERT INTO gender (name) VALUES ('female');
 
 
-INSERT INTO address (id, street, number, postal_code, city) VALUES (1, 'Wróblewskiego', 25, '51-627', 'Wrocław');
+INSERT INTO address (id, street, postal_code, city) VALUES (1, 'Wróblewskiego 25', '51-627', 'Wrocław');
+INSERT INTO address (id, street, postal_code, city) VALUES (2, 'plac Grunwaldzki 18-20', '50-384', 'Wrocław');
+
+INSERT INTO laboratory (id, address_id, phone) VALUES (1, 2, '122950101');
+
+INSERT INTO schedule (id, laboratory_id, day, opening_time, closing_time) VALUES (1,1,'Poniedziałek', '08:00:00', '17:00:00'),
+                                                                  (2,1,'Wtorek', '09:00:00', '18:00:00'),
+                                                                  (3,1,'Środa', '08:30:00', '17:30:00'),
+                                                                  (4,1,'Czwartek', '09:30:00', '18:30:00'),
+                                                                  (5,1,'Piątek', '10:00:00', '19:00:00');
 
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (1,(SELECT id FROM gender WHERE name = 'male'), 4.23, 9.07, 'tys/μl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (2,(SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');

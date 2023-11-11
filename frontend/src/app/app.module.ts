@@ -28,6 +28,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { DialogDataComponent } from './dialog-data/dialog-data.component';
 import { MatMenuModule} from '@angular/material/menu';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { LaboratoriesComponent } from './laboratories/laboratories.component'
 
 
 @NgModule({
@@ -37,9 +39,11 @@ import { MatMenuModule} from '@angular/material/menu';
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddExaminationComponent,
+    LaboratoriesComponent,
  
   ],
   imports: [
+    GoogleMapsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

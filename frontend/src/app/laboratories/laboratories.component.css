@@ -1,0 +1,13 @@
+.choose {
+    flex: 1; 
+    margin-left: 20px;
+}
+
+.maps {
+    display: flex; 
+    height: 400px;
+}
+
+.list {
+    margin-top: 70px;
+}

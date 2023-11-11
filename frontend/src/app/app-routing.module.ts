@@ -7,6 +7,7 @@ import { AddExaminationComponent } from './add-examination/add-examination.compo
 import { ExaminationClientComponent } from './examination-client/examination-client.component';
 import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { LaboratoriesComponent } from './laboratories/laboratories.component';
 
 const routes: Routes = [
   {path: 'patients', component: PatientDisplayComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   //{ path: '', redirectTo: '/shop', pathMatch: 'full' },
   {path: 'singleresult', component: ClientResultSubmitComponent},
   {path: 'login', component: LoginFormComponent},
+  {path: 'laboratories', component: LaboratoriesComponent},
 ];
 
 @NgModule({

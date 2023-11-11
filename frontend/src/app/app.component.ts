@@ -73,6 +73,11 @@ export class AppComponent implements OnInit {
 	this.router.navigate(['/singleresult']);
   }
 
+  onLaboratoriesTab(): void {
+	this.componentToShow = "";
+	this.router.navigate(['/laboratories']);
+  }
+
   onShopTab(): void {
 	this.componentToShow = "";
 	this.router.navigate(['/shop']);

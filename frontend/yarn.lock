@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@agm/core@^3.0.0-beta.0":
-  version "3.0.0-beta.0"
-  resolved "https://registry.npmjs.org/@agm/core/-/core-3.0.0-beta.0.tgz"
-  integrity sha512-KNmKbe89Nen7s7+mX63RgX88jBfajUZCFqkHIQ8Fd+Lf/ko/IY6yw4kPh0iYGxgPVPjpsHJ06GZ5m3ZxpEVX9A==
-  dependencies:
-    tslib "^2.0.0"
-
 "@ampproject/remapping@^2.1.0", "@ampproject/remapping@^2.2.0", "@ampproject/remapping@2.2.1":
   version "2.2.1"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.1.tgz"
@@ -166,7 +159,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^16.0.0", "@angular/common@^16.0.0 || ^17.0.0", "@angular/common@^9.1.0 || ^10.0.0", "@angular/common@16.0.0":
+"@angular/common@^15.0.0 || ^16.0.0", "@angular/common@^16.0.0", "@angular/common@^16.0.0 || ^17.0.0", "@angular/common@16.0.0":
   version "16.0.0"
   resolved "https://registry.npmjs.org/@angular/common/-/common-16.0.0.tgz"
   integrity sha512-at3/xCevf2t9swX2P7K7gaSBuQPy7ZJsf37qQkYIuczzfij69r7s9NjYeA74/q3EWG9Yl2DCrhYoCW7ViXQINQ==
@@ -194,7 +187,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^16.0.0", "@angular/core@^16.0.0 || ^17.0.0", "@angular/core@^9.1.0 || ^10.0.0", "@angular/core@16.0.0":
+"@angular/core@^15.0.0 || ^16.0.0", "@angular/core@^16.0.0", "@angular/core@^16.0.0 || ^17.0.0", "@angular/core@16.0.0":
   version "16.0.0"
   resolved "https://registry.npmjs.org/@angular/core/-/core-16.0.0.tgz"
   integrity sha512-scppDxtXubum6ZiGu3ogmReBtMuA5XXk5FL3YKLb3c9O7q9Z5PC8KNQ6SsaOwEb6oW+0BWXMV698p/zmd0J4tA==
@@ -206,6 +199,14 @@
   resolved "https://registry.npmjs.org/@angular/forms/-/forms-16.0.0.tgz"
   integrity sha512-avpreXyDYWf44RNM5hfi5cTXXiNwcajBURP5rLap8RPMSUi2ePlJsmi0O+3+GduNZFbtnRXIpKTj3W+GeNa0PA==
   dependencies:
+    tslib "^2.3.0"
+
+"@angular/google-maps@^15.0.3":
+  version "15.0.3"
+  resolved "https://registry.npmjs.org/@angular/google-maps/-/google-maps-15.0.3.tgz"
+  integrity sha512-IqpDT318GoinTZiEngoQJTcc/IqNmlqkUKAp9x2781ZkP/lyzDACrFqTNMeoCkV3ulPmh0kGnxV8okVGmC6PgA==
+  dependencies:
+    "@types/google.maps" "^3.45.6"
     tslib "^2.3.0"
 
 "@angular/material@^16.2.7":
@@ -2284,10 +2285,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/googlemaps@^3.39.8":
-  version "3.43.3"
-  resolved "https://registry.npmjs.org/@types/googlemaps/-/googlemaps-3.43.3.tgz"
-  integrity sha512-ZWNoz/O8MPEpiajvj7QiqCY8tTLFNqNZ/a+s+zTV58wFVNAvvqV4bdGfnsjTb5Cs4V6wEsLrX8XRhmnyYJ2Tdg==
+"@types/google.maps@^3.45.6":
+  version "3.54.7"
+  resolved "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.54.7.tgz"
+  integrity sha512-L4OlEOw7GMdPJb5/eVXH7ZRBILPFaGbthRSOJtnnmDVEBV3Z8Y631whvAuahJyjpld460TuachEftDPXuqSD9A==
 
 "@types/http-proxy@^1.17.8":
   version "1.17.11"
@@ -6665,7 +6666,7 @@ ts-node@>=10:
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
 
-tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@2.5.0:
+tslib@^2.1.0, tslib@^2.3.0, tslib@2.5.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==

@@ -1,0 +1,33 @@
+<div class="maps" >
+    <!-- Left side for Google Maps with width adjustment -->
+    <div style="flex: 2; margin-right: 20px;">
+      <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
+        <map-marker *ngFor="let position of markerPositions; let i = index" [position]="position" [options]="markerOptions"></map-marker>
+      </google-map>
+    </div>
+  
+    <!-- Right side for the menu with margin adjustment -->
+    <div class="choose">
+      <button mat-button [matMenuTriggerFor]="menu">Wybierz placówkę</button>
+      <mat-menu #menu="matMenu">
+        <ul>
+          <li *ngFor="let lab of labs">
+            <button (click)="chooseLab(lab)" mat-menu-item>{{lab.street}} {{lab.postalCode}} {{lab.city}}</button>
+          </li>
+        </ul>
+      </mat-menu>
+    </div>
+  </div>
+
+<div class="list">
+    <p *ngFor="let lab of labs">
+        <mat-card>
+            <mat-card-header>
+              <mat-card-title> {{lab.street}} {{lab.postalCode}} {{lab.city}}</mat-card-title>
+              <mat-card-subtitle> Telefon: {{lab.phone}}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </p>
+</div>
+  
+  

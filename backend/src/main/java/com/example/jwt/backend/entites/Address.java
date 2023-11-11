@@ -23,10 +23,6 @@ public class Address {
     @Size(max = 100)
     private String street;
 
-    @Column(name = "number", nullable = false)
-    @Size(max = 100)
-    private Long number;
-
     @Column(name = "postal_code", nullable = false)
     @Size(max = 100)
     private String postalCode;
@@ -37,4 +33,7 @@ public class Address {
 
     @OneToMany(mappedBy="address")
     private Set<Patient> patients;
+
+    @OneToMany(mappedBy="address")
+    private Set<Laboratory> laboratories;
 }
