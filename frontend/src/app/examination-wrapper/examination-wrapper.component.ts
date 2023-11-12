@@ -13,7 +13,7 @@ import { ExaminationOffer } from '../examinationOffer';
   imports: [ExaminationDisplayComponent, ExaminationEditComponent, CommonModule]
 })
 export class ExaminationWrapperComponent {
-    @Input() examination: ExaminationOffer = new ExaminationOffer(0, "", 0);
+    @Input() examination: ExaminationOffer = new ExaminationOffer(0, "", "",0);
     @Output() removeItemEvent = new EventEmitter();
 
     editable: boolean = false;

@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
   imports: [MatCardModule, MatButtonModule, CommonModule],
 })
 export class ExaminationClientComponent {
-  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", 60), new ExaminationOffer(1, "Badanie xyz", 60), new ExaminationOffer(1, "Badanie xyz", 60), new ExaminationOffer(1, "Badanie xyz", 60), new ExaminationOffer(1, "Badanie xyz", 60), new ExaminationOffer(1, "Badanie xyz", 60)];
+  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60)];
  // @Input() examination = new ExaminationOffer(0, "", 0);
  // @Output() addItemEvent = new EventEmitter();
 

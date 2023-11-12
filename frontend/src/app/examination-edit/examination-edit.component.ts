@@ -18,7 +18,7 @@ import { ExaminationOffer } from '../examinationOffer';
 })
 export class ExaminationEditComponent {
   
-  @Input() examination: ExaminationOffer = new ExaminationOffer(0, "", 0.0);
+  @Input() examination: ExaminationOffer = new ExaminationOffer(0, "","", 0.0);
 
     @Output() editDataEvent = new EventEmitter();
 

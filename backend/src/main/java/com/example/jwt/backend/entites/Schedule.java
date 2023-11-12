@@ -24,10 +24,10 @@ public class Schedule {
     private String day;
 
     @Column(name = "opening_time", nullable = false)
-    private LocalTime openingTime;
+    private String openingTime;
 
     @Column(name = "closing_time", nullable = false)
-    private LocalTime closingTime;
+    private String closingTime;
 
     @ManyToOne
     @JoinColumn(name="laboratory_id", nullable = false)

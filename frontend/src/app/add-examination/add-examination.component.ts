@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AddExaminationComponent {
   constructor(private router: Router, private http: HttpClient){}
-  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", 60)];
+  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz", "Opis", 60)];
 
 
   appendData(newExamination: any): void {

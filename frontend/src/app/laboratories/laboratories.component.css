@@ -11,3 +11,10 @@
 .list {
     margin-top: 70px;
 }
+mat-card-title {
+    margin-bottom: 20px;
+}
+
+mat-card-header {
+    margin-bottom: 20px;
+}

@@ -12,7 +12,7 @@ import { ExaminationOffer } from '../examinationOffer';
   imports: [MatCardModule, MatButtonModule],
 })
 export class ExaminationDisplayComponent {
-    @Input() examination = new ExaminationOffer(0, "", 0);
+    @Input() examination = new ExaminationOffer(0, "","", 0);
     @Output() removeItemEvent = new EventEmitter();
     @Output() editItemEvent = new EventEmitter();
 }

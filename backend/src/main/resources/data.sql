@@ -6,14 +6,21 @@ INSERT INTO gender (name) VALUES ('female');
 
 INSERT INTO address (id, street, postal_code, city) VALUES (1, 'Wróblewskiego 25', '51-627', 'Wrocław');
 INSERT INTO address (id, street, postal_code, city) VALUES (2, 'plac Grunwaldzki 18-20', '50-384', 'Wrocław');
+INSERT INTO address (id, street, postal_code, city) VALUES (3, 'Oławska 14', '50-123', 'Wrocław');
 
 INSERT INTO laboratory (id, address_id, phone) VALUES (1, 2, '122950101');
+INSERT INTO laboratory (id, address_id, phone) VALUES (2, 3, '122950103');
 
-INSERT INTO schedule (id, laboratory_id, day, opening_time, closing_time) VALUES (1,1,'Poniedziałek', '08:00:00', '17:00:00'),
-                                                                  (2,1,'Wtorek', '09:00:00', '18:00:00'),
-                                                                  (3,1,'Środa', '08:30:00', '17:30:00'),
-                                                                  (4,1,'Czwartek', '09:30:00', '18:30:00'),
-                                                                  (5,1,'Piątek', '10:00:00', '19:00:00');
+INSERT INTO schedule (id, laboratory_id, day, opening_time, closing_time) VALUES (1,1,'Poniedziałek', '08:00', '17:00'),
+                                                                  (2,1,'Wtorek', '09:00', '18:00'),
+                                                                  (3,1,'Środa', '08:30', '17:30'),
+                                                                  (4,1,'Czwartek', '09:30', '18:30'),
+                                                                  (5,1,'Piątek', '10:00', '19:00'),
+                                                                  (6,2,'Poniedziałek', '08:00', '16:00'),
+                                                                  (7,2,'Wtorek', '09:00', '18:00'),
+                                                                  (8,2,'Środa', '08:30', '16:30'),
+                                                                  (9,2,'Czwartek', '09:30', '18:30'),
+                                                                  (10,2,'Piątek', '10:00', '19:00');
 
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (1,(SELECT id FROM gender WHERE name = 'male'), 4.23, 9.07, 'tys/μl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (2,(SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');

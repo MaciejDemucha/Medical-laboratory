@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register", "/error/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/examinations/result/**","/examinations/parameterswithnorms/**",
-                                "/doctors/**", "/patients/bypesel/**", "/patients/doctor/**", "/diagnosis/**").permitAll()
+                                "/doctors/**", "/patients/bypesel/**", "/patients/doctor/**", "/diagnosis/**","/laboratories/**", "/schedule/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/assign-doctor/**").permitAll()
                         //.requestMatchers(HttpMethod.DELETE,).permitAll()
                         .anyRequest().authenticated())

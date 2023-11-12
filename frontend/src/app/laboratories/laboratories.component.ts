@@ -4,6 +4,7 @@ import { Schedule } from '../schedule';
 import { MapMarker } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { Address } from '../address';
 
 @Component({
   selector: 'app-laboratories',
@@ -11,20 +12,17 @@ import { map } from 'rxjs';
   styleUrls: ['./laboratories.component.css']
 })
 export class LaboratoriesComponent implements OnInit {
-  schedule: Schedule[] = [new Schedule(1,'Poniedziałek', '08:00:00', '17:00:00'),
-  new Schedule(2,'Wtorek', '08:00:00', '17:00:00'),
-  new Schedule(3,'Środa', '08:00:00', '17:00:00'),
-  new Schedule(4,'Czwartek', '08:00:00', '17:00:00'),
-  new Schedule(5,'Piątek', '08:00:00', '17:00:00'),]
-  labs: Laboratory[] = [new Laboratory(1, '121334423','plac Grunwaldzki 18-20', '50-384', 'Wrocław', this.schedule),
-  new Laboratory(1, '121334423','plac Grunwaldzki 18-20', '50-384', 'Wrocław', this.schedule)]
   
-  center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
-  zoom = 4;
+  addressList: { [key: number]: any } = {};
+  labs: Laboratory[] = [];
+  scheduleList: { [key: number]: any } = {};
+  
+  center: google.maps.LatLngLiteral = {lat: 51.107482, lng: 17.010159};
+  zoom = 10;
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
 
-  constructor(private httpClient: HttpClient){}
+  constructor(private http: HttpClient){}
   
   ngOnInit() {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -33,6 +31,39 @@ export class LaboratoriesComponent implements OnInit {
         lng: position.coords.longitude,
       };
     });
+
+    this.http.get<Laboratory[]> (
+      `http://localhost:8080/laboratories`
+    ).subscribe(data => {
+      this.labs = data
+      this.labs.forEach((lab) => {
+         this.getLaboratorySchedule(lab.id);
+         this.getLaboratoryAddress(lab.id);
+     });
+    }
+      ,
+      (error) => {
+				console.log(error);
+			  });
+
+  }
+
+  getLaboratorySchedule(id: number): void {
+    this.http.get<Schedule[]> (
+      `http://localhost:8080/schedule/${id}`
+    ).subscribe(data => this.scheduleList[id] = data,
+      (error) => {
+        console.log(error);
+        });
+  }
+
+  getLaboratoryAddress(id: number): void {
+    this.http.get<Address[]> (
+      `http://localhost:8080/laboratories/address/${id}`
+    ).subscribe(data => this.addressList[id] = data,
+      (error) => {
+        console.log(error);
+        });
   }
 
   chooseLab(lab: any): void {
@@ -47,7 +78,7 @@ export class LaboratoriesComponent implements OnInit {
       address
     )}&key=${apiKey}`;
 
-     this.httpClient.get(geocodingApiUrl).pipe(
+     this.http.get(geocodingApiUrl).pipe(
       map((response: any) => {
         const location = response.results[0].geometry.location;
         const position: google.maps.LatLngLiteral = { lat: location.lat, lng: location.lng };

@@ -10,4 +10,10 @@ export class Schedule{
     
     }
 
+    public toString (): string {
+        return `${this.day}: ${this.openingTime}-${this.closingTime}`;
+    }
+
+    
+
 }

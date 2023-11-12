@@ -2,8 +2,11 @@
     <mat-card>
         <mat-card-header>
           <mat-card-title>{{examination.name}}</mat-card-title>
-          <mat-card-subtitle>{{examination.price}} zł</mat-card-subtitle>
+          <mat-card-subtitle>Cena: {{examination.price}} zł</mat-card-subtitle>
         </mat-card-header>
+        <mat-card-content>
+          <p>{{examination.description}}</p>
+        </mat-card-content>
         <mat-card-actions align="end">
           <button (click)="addItemToBucket(examination.id)" mat-button>Dodaj do koszyka</button>
         </mat-card-actions>

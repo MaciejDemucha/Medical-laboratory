@@ -12,7 +12,7 @@
       <mat-menu #menu="matMenu">
         <ul>
           <li *ngFor="let lab of labs">
-            <button (click)="chooseLab(lab)" mat-menu-item>{{lab.street}} {{lab.postalCode}} {{lab.city}}</button>
+            <button (click)="chooseLab(lab)" mat-menu-item>{{addressList[lab.id].street}} {{addressList[lab.id].postalCode}} {{addressList[lab.id].city}}</button>
           </li>
         </ul>
       </mat-menu>
@@ -23,8 +23,14 @@
     <p *ngFor="let lab of labs">
         <mat-card>
             <mat-card-header>
-              <mat-card-title> {{lab.street}} {{lab.postalCode}} {{lab.city}}</mat-card-title>
-              <mat-card-subtitle> Telefon: {{lab.phone}}</mat-card-subtitle>
+              <mat-card-title> {{addressList[lab.id].street}}, {{addressList[lab.id].postalCode}} {{addressList[lab.id].city}}</mat-card-title>
+              <mat-card-title> Telefon: {{lab.phone}}</mat-card-title> 
+              <mat-card-subtitle>Godziny otwarcia: </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[lab.id][0].day}}: {{scheduleList[lab.id][0].openingTime}}-{{scheduleList[lab.id][0].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[lab.id][1].day}}: {{scheduleList[lab.id][1].openingTime}}-{{scheduleList[lab.id][1].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[lab.id][2].day}}: {{scheduleList[lab.id][2].openingTime}}-{{scheduleList[lab.id][2].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[lab.id][3].day}}: {{scheduleList[lab.id][3].openingTime}}-{{scheduleList[lab.id][3].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[lab.id][4].day}}: {{scheduleList[lab.id][4].openingTime}}-{{scheduleList[lab.id][4].closingTime}} </mat-card-subtitle>
             </mat-card-header>
         </mat-card>
     </p>
