@@ -17,19 +17,23 @@ export class LaboratoriesComponent implements OnInit {
   labs: Laboratory[] = [];
   scheduleList: { [key: number]: any } = {};
   
-  center: google.maps.LatLngLiteral = {lat: 51.107482, lng: 17.010159};
-  zoom = 10;
+  
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
+  geocoder: google.maps.Geocoder = new google.maps.Geocoder();
+  map?: google.maps.Map = undefined;
+  marker: google.maps.Marker = new google.maps.Marker({
+    
+  });
+
 
   constructor(private http: HttpClient){}
   
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+    this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+      zoom: 10,
+      center: { lat: 51.107482, lng: 17.010159 },
+      mapTypeControl: false,
     });
 
     this.http.get<Laboratory[]> (
@@ -66,47 +70,33 @@ export class LaboratoriesComponent implements OnInit {
         });
   }
 
-  chooseLab(lab: any): void {
-    if(this.markerPositions.length > 0){
-      this.markerPositions = [];
-    }
-
-    const address: string = `${lab.street} ${lab.postalCode} ${lab.city}`; 
-
-    const apiKey = 'AIzaSyCjr0X1g_VEnZTKerF1_szlhiJRrcTz5-g';
-    const geocodingApiUrl = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      address
-    )}&key=${apiKey}`;
-
-     this.http.get(geocodingApiUrl).pipe(
-      map((response: any) => {
-        const location = response.results[0].geometry.location;
-        const position: google.maps.LatLngLiteral = { lat: location.lat, lng: location.lng };
-        this.markerPositions.push(position);
-        console.log(this.markerPositions)
-      })
-    );
-    
-    /*const position: google.maps.LatLngLiteral = { lat: 49.70396911336614, lng: 10.287894531249998 };
-    this.markerPositions.push(position);
-    console.log(this.markerPositions)*/
+  chooseLabGeocode(address: string): void{ 
+    this.geocode({ address: address });
   }
 
-  
-    
-  
-
-
-  /*addMarker(event: google.maps.MapMouseEvent) {
+  geocode(request: google.maps.GeocoderRequest): void {
     if(this.markerPositions.length > 0){
       this.markerPositions = [];
     }
+  
+    this.geocoder
+      .geocode(request)
+      .then((result) => {
+        const { results } = result;
 
-    if(event.latLng)
-    this.markerPositions.push(event.latLng.toJSON());
-  }*/
+        if(this.map){
+          this.map.setCenter(results[0].geometry.location);
+          this.marker.setPosition(results[0].geometry.location);
+          this.marker.setMap(this.map);
+        }
+        
+      
+        return results;
+      })
+      .catch((e) => {
+        alert("Geocode was not successful for the following reason: " + e);
+      });
+  }
 
-  /*removeMarker(index: number) {
-    this.markerPositions.splice(index, 1);
-  }*/
+ 
 }
