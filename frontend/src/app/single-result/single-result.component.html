@@ -76,10 +76,10 @@
                   {{examination.datePerformed}}
               </mat-card-subtitle>
               <mat-card-title>
-                Lekarz
+                Diagnosta
             </mat-card-title>
             <mat-card-subtitle *ngIf="patientsDoctor.firstName !== '' && patientsDoctor.lastName !== '';">
-               dr. {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
+               {{patientsDoctor.title}} {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
             </mat-card-subtitle>
             <mat-card-subtitle *ngIf="patientsDoctor.firstName == '' && patientsDoctor.lastName == '';">
               -
@@ -99,7 +99,7 @@
                       Diagnoza
                     </mat-panel-title>
                     <mat-panel-description>
-                      dr. {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
+                      {{patientsDoctor.title}} {{patientsDoctor.firstName}} {{patientsDoctor.lastName}}
                     </mat-panel-description>
                   </mat-expansion-panel-header>
                   <p>{{diagnosis?.description}}</p>

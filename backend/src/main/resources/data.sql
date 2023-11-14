@@ -1,7 +1,10 @@
-INSERT INTO doctor (id, first_name, last_name, login, password) VALUES ('1', 'Jan', 'Nowak', 'sd', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.');
+INSERT INTO employee (id,title, first_name, last_name, login, password) VALUES ('1','dr', 'Jan', 'Nowak', 'sd', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.');
 
 INSERT INTO gender (name) VALUES ('male');
 INSERT INTO gender (name) VALUES ('female');
+
+INSERT INTO examination_offer(id, name, description, price) VALUES (1, 'Morfologia krwi','Opis',19.99),
+                                                             (2, 'Żelazo, ferrytyna','Opis',15.99);
 
 
 INSERT INTO address (id, street, postal_code, city) VALUES (1, 'Wróblewskiego 25', '51-627', 'Wrocław');
@@ -91,7 +94,7 @@ INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (31,3, 'Żelazo', 
 INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (32,4, 'Ferrytyna', 92.0);
 
 
-INSERT INTO patient (gender_id, address_id, doctor_id, pesel, first_name, last_name, birth_date) VALUES ((SELECT id
+INSERT INTO patient (gender_id, address_id, employee_id, pesel, first_name, last_name, birth_date) VALUES ((SELECT id
                                                                                    FROM gender
                                                                                    WHERE name = 'male'), 1, 1, '01300703817', 'Maciej', 'Demucha', '2001-10-07');
 INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_date) VALUES ((SELECT id

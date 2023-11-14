@@ -29,7 +29,8 @@ import {MatCardModule} from '@angular/material/card';
 import { DialogDataComponent } from './dialog-data/dialog-data.component';
 import { MatMenuModule} from '@angular/material/menu';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { LaboratoriesComponent } from './laboratories/laboratories.component'
+import { LaboratoriesComponent } from './laboratories/laboratories.component';
+import { BucketComponent } from './bucket/bucket.component'
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { LaboratoriesComponent } from './laboratories/laboratories.component'
     ClientResultSubmitComponent,
     AddExaminationComponent,
     LaboratoriesComponent,
+    BucketComponent,
  
   ],
   imports: [

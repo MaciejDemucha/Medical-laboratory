@@ -11,5 +11,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Optional<Patient> findByPesel(String pesel);
     boolean existsByPesel(String pesel);
 
-    List<Patient> findByDoctor_Id(Long id);
+    List<Patient> findByEmployee_Id(Long id);
 }

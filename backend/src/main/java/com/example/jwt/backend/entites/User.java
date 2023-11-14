@@ -16,12 +16,16 @@ import java.util.Set;
 @Builder
 @Data
 @Entity
-@Table(name = "doctor")
+@Table(name = "employee")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
+    @Size(max = 100)
+    private String title;
 
     @Column(name = "first_name", nullable = false)
     @Size(max = 100)
@@ -39,7 +43,7 @@ public class User {
     @Size(max = 100)
     private String password;
 
-    @OneToMany(mappedBy="doctor")
+    @OneToMany(mappedBy="employee")
     private Set<Patient> patients;
 
     /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

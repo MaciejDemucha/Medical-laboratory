@@ -1,0 +1,25 @@
+<div *ngIf="bucket.length == 0"><h3>Koszyk jest pusty</h3></div>
+
+<p *ngFor="let examination of bucket">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{examination.name}}</mat-card-title>
+          <mat-card-subtitle>Cena: {{examination.price}} zł</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{examination.description}}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button (click)="removeFromBucket(examination)" mat-button>Usuń</button>
+        </mat-card-actions>
+    </mat-card>
+</p>
+
+<mat-card>
+
+<mat-card-content>Suma: {{sumToPay}} zł</mat-card-content>
+<mat-card-actions align="end">
+    <button *ngIf="bucket.length > 0" (click)="inputCredentials()" mat-button>Dalej</button>
+    <button *ngIf="bucket.length == 0" mat-stroked-button disabled>Dalej</button>
+  </mat-card-actions>
+</mat-card>

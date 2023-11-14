@@ -31,7 +31,7 @@ export class SingleResultComponent {
   examinationNumber: string = "";
   pesel: string = "";
   patient: Patient = new Patient(0, "", "", "", "");
-  patientsDoctor = new Doctor(0, "", "");
+  patientsDoctor = new Doctor(0, "", "", "");
   examination: Examination = new Examination(0, "", "", "");
   diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
   parametersWithNorms: ParameterWithNorm[] = [];

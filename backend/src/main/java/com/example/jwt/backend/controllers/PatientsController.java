@@ -50,6 +50,6 @@ public class PatientsController {
 
     @PutMapping("/assign-doctor/{doctorId}/{patientId}")
     public ResponseEntity<PatientDto> assignDoctorToPatient(@PathVariable Long patientId, @PathVariable Long doctorId) {
-        return ResponseEntity.ok(patientService.assignDoctor(patientId, doctorId));
+        return ResponseEntity.ok(patientService.assignEmployee(patientId, doctorId));
     }
 }

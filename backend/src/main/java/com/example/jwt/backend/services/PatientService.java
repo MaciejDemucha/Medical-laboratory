@@ -53,18 +53,18 @@ public class PatientService {
     }
 
     public List<PatientDto> getPatientsByDoctorId(Long id){
-        List<Patient> patients = patientRepository.findByDoctor_Id(id);
+        List<Patient> patients = patientRepository.findByEmployee_Id(id);
         return patientMapper.toPatientDtos(patients);
     }
 
-    public PatientDto assignDoctor(Long patientId, Long doctorId) {
+    public PatientDto assignEmployee(Long patientId, Long doctorId) {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
-        User doctor = userRepository.findById(doctorId)
+        User employee = userRepository.findById(doctorId)
                 .orElseThrow(() -> new AppException("Doctor not found", HttpStatus.NOT_FOUND));
 
-        if (patient != null && doctor != null) {
-            patient.setDoctor(doctor);
+        if (patient != null && employee != null) {
+            patient.setEmployee(employee);
            patientRepository.save(patient);
            return patientMapper.toPatientDto(patient);
         }
@@ -76,11 +76,11 @@ public class PatientService {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
 
-        User doctor = patient.getDoctor();
-        if(doctor != null){
-            return new DoctorNameDto(doctor.getId(), doctor.getFirstName(), doctor.getLastName());
+        User employee = patient.getEmployee();
+        if(employee != null){
+            return new DoctorNameDto(employee.getId(), employee.getTitle(), employee.getFirstName(), employee.getLastName());
         }
 
-        throw new AppException("Unknown doctor or patient", HttpStatus.NOT_FOUND);
+        throw new AppException("Unknown employee or patient", HttpStatus.NOT_FOUND);
     }
 }

@@ -5,6 +5,8 @@ import { Examination } from '../examination';
 import { ExaminationOffer } from '../examinationOffer';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
+import { ShoppingcartService } from '../shoppingcart.service';
 
 
 @Component({
@@ -15,32 +17,35 @@ import { CommonModule } from '@angular/common';
   imports: [MatCardModule, MatButtonModule, CommonModule],
 })
 export class ExaminationClientComponent {
-  offers: ExaminationOffer[] = [new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60), new ExaminationOffer(1, "Badanie xyz","Opis", 60)];
+  offers: ExaminationOffer[] = [];
+  
+  
  // @Input() examination = new ExaminationOffer(0, "", 0);
  // @Output() addItemEvent = new EventEmitter();
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private shopService: ShoppingcartService){}
 
   ngOnInit(): void{
-    /*this.http.get<ExaminationOffer[]> (
+    this.http.get<ExaminationOffer[]> (
       "http://localhost:8080/offers"
-    ).subscribe(data => this.offers = data);*/
+    ).subscribe(data => this.offers = data);
   }
 
   appendData(newExamination: any): void {
 		this.offers.push(newExamination);
 	}
 
-	removeItem(examinationId: number): void {
+	/*removeItem(examinationId: number): void {
 		this.http.delete(
 			"http://localhost:8080/offers/" + examinationId
 		).subscribe(data => 
 			this.offers = this.offers.filter((examination: ExaminationOffer) =>
 			examination.id != examinationId));
-	}
+	}*/
 
-  addItemToBucket(examinationId: number|null): void {
-		
+  addItemToBucket(examination: ExaminationOffer): void {
+		this.shopService.addToCart(examination);
+    alert("Dodano pozycję do koszyka");
 	}
 
 }

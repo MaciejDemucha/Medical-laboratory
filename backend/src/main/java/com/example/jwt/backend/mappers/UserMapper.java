@@ -15,6 +15,7 @@ public interface UserMapper {
 
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
+    @Mapping(source = "title", target = "title")
     List<UserDto> toUserDtos(List<User> users);
 
     @Mapping(target = "password", ignore = true)

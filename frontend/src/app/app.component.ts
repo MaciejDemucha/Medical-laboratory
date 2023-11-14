@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
 
   onBucketTab(): void {
 	this.componentToShow = "";
-	
+	this.router.navigate(['/bucket']);
   }
 
 

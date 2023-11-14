@@ -61,7 +61,7 @@ public class UserService {
         List<UserDto> doctors = userMapper.toUserDtos(userRepository.findAll());
         List<DoctorNameDto> doctorNames = new LinkedList<>();
         for (UserDto doctor:doctors) {
-            doctorNames.add(new DoctorNameDto(doctor.getId(),doctor.getFirstName(),doctor.getLastName()));
+            doctorNames.add(new DoctorNameDto(doctor.getId(),doctor.getTitle(),doctor.getFirstName(),doctor.getLastName()));
         }
         return doctorNames;
     }

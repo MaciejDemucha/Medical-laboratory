@@ -41,13 +41,13 @@ public class Patient {
     //private LocalDate birthDate;
 
     @ManyToOne
-    @JoinColumn(name="doctor_id")
-    private User doctor;
+    @JoinColumn(name="employee_id")
+    private User employee;
 
     //@OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "address_id", referencedColumnName = "id")
     @ManyToOne
-    @JoinColumn(name="address_id", nullable = false)
+    @JoinColumn(name="address_id")
     private Address address;
 
     @ManyToOne

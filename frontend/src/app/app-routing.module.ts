@@ -8,6 +8,7 @@ import { ExaminationClientComponent } from './examination-client/examination-cli
 import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LaboratoriesComponent } from './laboratories/laboratories.component';
+import { BucketComponent } from './bucket/bucket.component';
 
 const routes: Routes = [
   {path: 'patients', component: PatientDisplayComponent},
@@ -15,10 +16,11 @@ const routes: Routes = [
   {path: 'addExamination', component: AddExaminationComponent},
   {path: 'singleresult/result', component: SingleResultComponent},
   {path: 'shop', component: ExaminationClientComponent},
-  //{ path: '', redirectTo: '/shop', pathMatch: 'full' },
   {path: 'singleresult', component: ClientResultSubmitComponent},
   {path: 'login', component: LoginFormComponent},
   {path: 'laboratories', component: LaboratoriesComponent},
+  {path: 'bucket', component: BucketComponent},
+  //{ path: '', redirectTo: '/shop', pathMatch: 'full' },
 ];
 
 @NgModule({
