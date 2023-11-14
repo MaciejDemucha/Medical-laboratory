@@ -1,3 +1,4 @@
+<div *ngIf="cardToShow === 'summary'">
 <div *ngIf="bucket.length == 0"><h3>Koszyk jest pusty</h3></div>
 
 <p *ngFor="let examination of bucket">
@@ -15,11 +16,66 @@
     </mat-card>
 </p>
 
-<mat-card>
 
-<mat-card-content>Suma: {{sumToPay}} zł</mat-card-content>
+<mat-card>
+  <mat-card-header><h4>Do zapłaty</h4></mat-card-header>
+<mat-card-content><h6>Suma: {{sumToPay}} zł</h6></mat-card-content>
 <mat-card-actions align="end">
-    <button *ngIf="bucket.length > 0" (click)="inputCredentials()" mat-button>Dalej</button>
+    <button (click)="setCard('credentials')" *ngIf="bucket.length > 0" (click)="inputCredentials()" mat-button>Dalej</button>
     <button *ngIf="bucket.length == 0" mat-stroked-button disabled>Dalej</button>
   </mat-card-actions>
 </mat-card>
+</div>
+
+<div *ngIf="cardToShow === 'credentials'">
+  <mat-card>
+    <mat-card-content>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Imię</mat-label>
+        <input [formControl]="firstNameFormControl" [errorStateMatcher]="matcher" matInput placeholder="Imię" value="" [(ngModel)]="firstName">
+        <mat-error *ngIf="firstNameFormControl.hasError('required')">
+          Imię jest <strong>wymagane</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Nazwisko</mat-label>
+        <input [formControl]="lastNameFormControl" [errorStateMatcher]="matcher" matInput placeholder="Nazwisko" value="" [(ngModel)]="lastName">
+        <mat-error *ngIf="lastNameFormControl.hasError('required')">
+          Nazwisko jest <strong>wymagane</strong>
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="email"
+               placeholder="Ex. pat@example.com">
+        
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Podaj prawidłowy email
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email jest <strong>wymagany</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Powtórz email</mat-label>
+        <input type="email" matInput [formControl]="repeatEmailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="repeatedEmail"
+               placeholder="Ex. pat@example.com">
+        
+        <mat-error *ngIf="repeatEmailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Podaj prawidłowy email
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email jest <strong>wymagany</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-flat-button color="primary" (click)="submitOrder()" mat-button>Zamów</button>
+  </mat-card-actions>
+  </mat-card>
+</div>
+

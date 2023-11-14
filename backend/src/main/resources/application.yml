@@ -1,6 +1,18 @@
 security.jwt.token.secret-key: my-secret-key
 
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ciejmuciej@gmail.com
+    password: ibsw qmai bgod esqm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   sql:
     init:
       mode: always

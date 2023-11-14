@@ -1,16 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingcartService } from '../shoppingcart.service';
 import { ExaminationOffer } from '../examinationOffer';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-bucket',
   templateUrl: './bucket.component.html',
-  styleUrls: ['./bucket.component.css']
+  styleUrls: ['./bucket.component.css'],
+  standalone: true,
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
 export class BucketComponent implements OnInit{
   bucket: any[] = [];
   sumToPay: number = 0;
-    constructor(private shopService: ShoppingcartService){}
+  cardToShow = "summary";
+
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  repeatEmailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  firstNameFormControl = new FormControl('', [Validators.required]);
+  lastNameFormControl = new FormControl('', [Validators.required]);
+
+  email : string = "";
+  repeatedEmail : string = "";
+  firstName : string = "";
+  lastName : string = "";
+
+  matcher = new MyErrorStateMatcher();
+
+    constructor(private shopService: ShoppingcartService, private http: HttpClient){}
 
     ngOnInit(){
       this.bucket = this.shopService.getCart();
@@ -30,4 +61,39 @@ export class BucketComponent implements OnInit{
     inputCredentials(){
       
     }
+
+    setCard(name: string){
+        this.cardToShow = name;
+    }
+
+    submitOrder(){
+        if(this.email === this.repeatedEmail){
+          const data = {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            sumToPay: this.sumToPay,
+            bucket: this.bucket
+          };
+
+          const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http.post<any>(`http://localhost:8080/order`, data, { headers }).subscribe(
+      (response) => {
+        console.log('Success:', response);
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+        }
+    }
+}
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }

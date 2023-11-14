@@ -41,7 +41,7 @@ import { BucketComponent } from './bucket/bucket.component'
     ClientResultSubmitComponent,
     AddExaminationComponent,
     LaboratoriesComponent,
-    BucketComponent,
+   
  
   ],
   imports: [
@@ -66,7 +66,8 @@ import { BucketComponent } from './bucket/bucket.component'
     MatCardModule,
     DialogDataComponent, 
     AddDiagnosisComponent,
-    MatMenuModule
+    MatMenuModule,
+    BucketComponent,
     
   ],
   providers: [AxiosService ],
