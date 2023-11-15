@@ -5,6 +5,7 @@ import { Examination } from './examination';
 import { Patient } from './patient';
 import { ExaminationOffer } from './examinationOffer';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   loggedId: number|null = null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
+  constructor(private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
 	//this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
   }
 
@@ -111,7 +112,7 @@ export class AppComponent implements OnInit {
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				alert("Błędne dane logowania");
+				this.openSnackBar("Błędne dane logowania");
 				
 		    }
 		);
@@ -138,11 +139,15 @@ export class AppComponent implements OnInit {
 		    error => {
 		        this.axiosService.setAuthToken(null);
 		        this.componentToShow = "login";
-				alert("Błąd rejestracji")
+				this.openSnackBar("Błąd rejestracji");
 				
 		    }
 		);
 	}
+
+	openSnackBar(message: string) {
+		this._snackBar.open(message);
+	  }
 
 	onLogout(): void {
 		this.isAuthenticated = false;

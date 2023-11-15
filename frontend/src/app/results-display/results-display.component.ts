@@ -20,6 +20,7 @@ import { Diagnosis } from '../diagnosis';
 import { catchError, of, throwError } from 'rxjs';
 import {MatSliderModule} from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-results-display',
@@ -36,7 +37,7 @@ export class ResultsDisplayComponent {
   parameters: { [key: number]: any } = {};
   diagnosisList: { [key: number]: any } = {};
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
+  constructor(private _snackBar: MatSnackBar,private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
     }
 
@@ -138,7 +139,7 @@ export class ResultsDisplayComponent {
       });
      
       dialogRef.afterClosed().subscribe(result => {
-        
+       
       });
   }
 
@@ -157,8 +158,12 @@ export class ResultsDisplayComponent {
     });
    
     dialogRef.afterClosed().subscribe(result => {
-      
+     
     });
   }
+
+  openSnackBar(message: string) {
+		this._snackBar.open(message);
+	  }
   
 }

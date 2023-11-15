@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingcartService } from '../shoppingcart.service';
 import { ExaminationOffer } from '../examinationOffer';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {
   FormControl,
   FormGroupDirective,
@@ -16,13 +17,15 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-bucket',
   templateUrl: './bucket.component.html',
   styleUrls: ['./bucket.component.css'],
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
+  imports: [MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
 export class BucketComponent implements OnInit{
   bucket: any[] = [];
@@ -41,7 +44,7 @@ export class BucketComponent implements OnInit{
 
   matcher = new MyErrorStateMatcher();
 
-    constructor(private shopService: ShoppingcartService, private http: HttpClient){}
+    constructor(private shopService: ShoppingcartService, private http: HttpClient, public dialog: MatDialog, private _snackBar: MatSnackBar){}
 
     ngOnInit(){
       this.bucket = this.shopService.getCart();
@@ -57,10 +60,6 @@ export class BucketComponent implements OnInit{
     calculateSumOfPrices(exams: ExaminationOffer[]) {
       this.sumToPay = exams.reduce((sum, exam) => sum + exam.price, 0); 
   }
-
-    inputCredentials(){
-      
-    }
 
     setCard(name: string){
         this.cardToShow = name;
@@ -86,13 +85,17 @@ export class BucketComponent implements OnInit{
       },
       (error) => {
         
-        alert(error);
+        console.error(error);
       }
     );
         }
         else if (this.email != this.repeatedEmail){
-            alert("Podane adresy muszą być takie same")
+            this.openSnackBar("Podane adresy email muszą być takie same"); 
         }
+    }
+
+    openSnackBar(message: string) {
+      this._snackBar.open(message);
     }
 }
 

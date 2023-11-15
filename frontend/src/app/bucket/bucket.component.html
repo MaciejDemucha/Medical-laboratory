@@ -21,7 +21,7 @@
   <mat-card-header><h4>Do zapłaty</h4></mat-card-header>
 <mat-card-content><h6>Suma: {{sumToPay}} zł</h6></mat-card-content>
 <mat-card-actions align="end">
-    <button (click)="setCard('credentials')" *ngIf="bucket.length > 0" (click)="inputCredentials()" mat-button>Dalej</button>
+    <button (click)="setCard('credentials')" *ngIf="bucket.length > 0"  mat-button>Dalej</button>
     <button *ngIf="bucket.length == 0" mat-stroked-button disabled>Dalej</button>
   </mat-card-actions>
 </mat-card>

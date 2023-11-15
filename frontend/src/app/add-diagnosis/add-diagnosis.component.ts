@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA , MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { catchError, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-diagnosis',
@@ -26,7 +27,7 @@ export class AddDiagnosisComponent implements OnInit {
 	activeButton: boolean = true;
 	diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
 
-  constructor(private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
+  constructor(private _snackBar: MatSnackBar, private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
   }
 
   ngOnInit() {
@@ -112,6 +113,7 @@ export class AddDiagnosisComponent implements OnInit {
 				description: descRef.value
 			}, {headers}).subscribe((response) => {
 				console.log(response);
+				this.openSnackBar("Diagnoza została dodana");
 			  }, (error) => {
 				console.log(error);
 				if(error.status === 401){
@@ -127,6 +129,7 @@ export class AddDiagnosisComponent implements OnInit {
 				description: descRef.value
 			}, {headers}).subscribe((response) => {
 				console.log(response);
+				this.openSnackBar("Diagnoza została zmieniona");
 			  }, (error) => {
 				console.log(error);
 				if(error.status === 401){
@@ -138,6 +141,10 @@ export class AddDiagnosisComponent implements OnInit {
 		
 		
 	}	
+
+	openSnackBar(message: string) {
+		this._snackBar.open(message);
+	  }
 
 }
 

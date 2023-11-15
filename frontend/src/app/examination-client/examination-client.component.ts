@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingcartService } from '../shoppingcart.service';
+import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -14,16 +15,13 @@ import { ShoppingcartService } from '../shoppingcart.service';
   templateUrl: './examination-client.component.html',
   styleUrls: ['./examination-client.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, CommonModule],
+  imports: [MatCardModule, MatButtonModule, CommonModule, MatSnackBarModule],
 })
 export class ExaminationClientComponent {
   offers: ExaminationOffer[] = [];
-  
-  
- // @Input() examination = new ExaminationOffer(0, "", 0);
- // @Output() addItemEvent = new EventEmitter();
+  bucket: any[] = [];
 
-  constructor(private http: HttpClient, private shopService: ShoppingcartService){}
+  constructor(private http: HttpClient, private shopService: ShoppingcartService, private _snackBar: MatSnackBar){}
 
   ngOnInit(): void{
     this.http.get<ExaminationOffer[]> (
@@ -35,17 +33,31 @@ export class ExaminationClientComponent {
 		this.offers.push(newExamination);
 	}
 
-	/*removeItem(examinationId: number): void {
-		this.http.delete(
-			"http://localhost:8080/offers/" + examinationId
-		).subscribe(data => 
-			this.offers = this.offers.filter((examination: ExaminationOffer) =>
-			examination.id != examinationId));
-	}*/
+  isInBucket(examination: ExaminationOffer){
+    let checkBucket = this.bucket;
+   const result = checkBucket.filter(f => 
+      f.id === examination.id &&
+      f.name === examination.name);
+
+      return result.length > 0;
+  }
 
   addItemToBucket(examination: ExaminationOffer): void {
-		this.shopService.addToCart(examination);
-    alert("Dodano pozycję do koszyka");
+      this.bucket = this.shopService.getCart();
+      
+    if (!this.isInBucket(examination)) {
+      this.shopService.addToCart(examination);
+      this.bucket = this.shopService.getCart();
+      this.openSnackBar("Dodano pozycję do koszyka"); 
+    }
+    else {
+      this.openSnackBar("Pozycja już jest w koszyku"); 
+    }
+		
 	}
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message);
+  }
 
 }

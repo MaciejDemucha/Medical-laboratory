@@ -5,4 +5,9 @@ export class ExaminationOffer {
         public description: string,
         public price: number
     ) {}
+
+    equals(other: ExaminationOffer): boolean {
+        
+        return this.id === other.id && this.name === other.name
+      }
 }

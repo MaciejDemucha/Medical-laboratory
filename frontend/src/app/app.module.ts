@@ -30,7 +30,9 @@ import { DialogDataComponent } from './dialog-data/dialog-data.component';
 import { MatMenuModule} from '@angular/material/menu';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { LaboratoriesComponent } from './laboratories/laboratories.component';
-import { BucketComponent } from './bucket/bucket.component'
+import { BucketComponent } from './bucket/bucket.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component'
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -41,8 +43,6 @@ import { BucketComponent } from './bucket/bucket.component'
     ClientResultSubmitComponent,
     AddExaminationComponent,
     LaboratoriesComponent,
-   
- 
   ],
   imports: [
     GoogleMapsModule,
@@ -68,9 +68,11 @@ import { BucketComponent } from './bucket/bucket.component'
     AddDiagnosisComponent,
     MatMenuModule,
     BucketComponent,
+    ErrorDialogComponent,
     
   ],
-  providers: [AxiosService ],
+  providers: [AxiosService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
