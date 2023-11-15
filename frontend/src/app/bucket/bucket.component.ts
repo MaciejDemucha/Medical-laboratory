@@ -67,7 +67,7 @@ export class BucketComponent implements OnInit{
     }
 
     submitOrder(){
-        if(this.email === this.repeatedEmail){
+        if(this.email === this.repeatedEmail && this.email != ""){
           const data = {
             email: this.email,
             firstName: this.firstName,
@@ -80,12 +80,18 @@ export class BucketComponent implements OnInit{
 
     this.http.post<any>(`http://localhost:8080/order`, data, { headers }).subscribe(
       (response) => {
-        console.log('Success:', response);
+        this.setCard("confirm");
+        this.bucket = [];
+        this.shopService.clearCart();
       },
       (error) => {
-        console.error('Error:', error);
+        
+        alert(error);
       }
     );
+        }
+        else if (this.email != this.repeatedEmail){
+            alert("Podane adresy muszą być takie same")
         }
     }
 }

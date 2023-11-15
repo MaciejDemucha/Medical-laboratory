@@ -32,10 +32,10 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<String> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException {
+    public ResponseEntity<OrderDetailsDto> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException {
         byte[] attachment = pdfService.generatePdf(details);
 
-        emailService.sendEmailWithAttachment(details.getEmail(), "Laboratorium medyczne - zamówienie","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher");
-        return ResponseEntity.ok("Data received successfully!");
+        emailService.sendEmailWithAttachment(details.getEmail(), "Laboratorium medyczne - zamówienie","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher.pdf");
+        return ResponseEntity.ok(details);
     }
 }
