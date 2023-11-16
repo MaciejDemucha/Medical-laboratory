@@ -9,6 +9,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { LaboratoriesComponent } from './laboratories/laboratories.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { AddPatientComponent } from './add-patient/add-patient.component';
+import { AddResultsComponent } from './add-results/add-results.component';
 
 const routes: Routes = [
   {path: 'patients', component: PatientDisplayComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'laboratories', component: LaboratoriesComponent},
   {path: 'bucket', component: BucketComponent},
   {path: 'addpatient', component: AddPatientComponent},
+  {path: 'addresult', component: AddResultsComponent},
   //{ path: '', redirectTo: '/shop', pathMatch: 'full' },
 ];
 

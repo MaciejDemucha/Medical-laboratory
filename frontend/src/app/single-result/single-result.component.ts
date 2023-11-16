@@ -133,9 +133,9 @@ ngOnInit(): void{
 }
   
 
-export class TableBasicExample {
+/*export class TableBasicExample {
   
-}
+}*/
 
 /*export interface PeriodicElement {
   name: string;

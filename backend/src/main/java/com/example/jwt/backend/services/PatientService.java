@@ -91,6 +91,10 @@ public class PatientService {
     }
 
     public PatientDto createPatient(PatientDto patientDto) {
+        if(patientRepository.existsByPesel(patientDto.getPesel())){
+            throw new AppException("Patient with this PESEL already exists", HttpStatus.BAD_REQUEST);
+        }
+
         Patient patient = patientMapper.toPatient(patientDto);
         if(patient.getGender() == null){
             String checkName = patient.getFirstName();

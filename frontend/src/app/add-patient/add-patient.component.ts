@@ -55,7 +55,16 @@ export class AddPatientComponent {
     }
 
   addPatient(){
-    if(this.email != "" && this.firstName != "" && this.lastName != "" && this.pesel != "" && this.address != "" && this.phone != "" && this.city != "" && this.postal != ""){
+    if(!this.emailFormControl.hasError('email') && 
+    !this.emailFormControl.hasError('required') &&  
+    !this.firstNameFormControl.hasError('required') && 
+    !this.lastNameFormControl.hasError('required')  && 
+    this.pesel.length == 11 && 
+    !this.addressFormControl.hasError('required')  && 
+    this.phone.length >= 9  && 
+    !this.cityFormControl.hasError('required')  && 
+    !this.postalFormControl.hasError('required') ) {
+      
       var birthDate = this.getBirthDateFromPesel(this.pesel)
       const data = {
         email: this.email,
@@ -85,6 +94,9 @@ this.http.post<any>(`http://localhost:8080/patients`, data, { headers }).subscri
     this.openSnackBar("Nie podano wymaganych danych lub są one niewłaściwe"); 
   }
 );
+    }
+    else {
+      this.openSnackBar("Nie podano wymaganych danych lub są one niewłaściwe"); 
     }
     
   }

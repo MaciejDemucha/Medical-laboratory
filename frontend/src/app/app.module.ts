@@ -29,6 +29,7 @@ import { BucketComponent } from './bucket/bucket.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component'
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { AddPatientComponent } from './add-patient/add-patient.component';
+import { AddResultsComponent } from './add-results/add-results.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { AddPatientComponent } from './add-patient/add-patient.component';
     LoginFormComponent,
     ClientResultSubmitComponent,
     LaboratoriesComponent,
+    
    
   ],
   imports: [
@@ -62,6 +64,7 @@ import { AddPatientComponent } from './add-patient/add-patient.component';
     BucketComponent,
     ErrorDialogComponent,
     AddPatientComponent,
+    AddResultsComponent,
   ],
   providers: [AxiosService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],
