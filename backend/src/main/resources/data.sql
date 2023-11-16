@@ -94,12 +94,12 @@ INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (31,3, 'Żelazo', 
 INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (32,4, 'Ferrytyna', 92.0);
 
 
-INSERT INTO patient (gender_id, address_id, employee_id, pesel, first_name, last_name, birth_date) VALUES ((SELECT id
+INSERT INTO patient (gender_id, address_id, employee_id, pesel, first_name, last_name, birth_date,phone, email) VALUES ((SELECT id
                                                                                    FROM gender
-                                                                                   WHERE name = 'male'), 1, 1, '01300703817', 'Maciej', 'Demucha', '2001-10-07');
-INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_date) VALUES ((SELECT id
+                                                                                   WHERE name = 'male'), 1, 1, '01300703817', 'Maciej', 'Demucha', '2001-10-07', '098765432', 'maciej.demucha@interia.pl');
+INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_date, phone, email) VALUES ((SELECT id
                                                                                                FROM gender
-                                                                                               WHERE name = 'female'), 1, '01310688261', 'Anna', 'Nowak', '2001-11-06');
+                                                                                               WHERE name = 'female'), 1, '01310688261', 'Anna', 'Nowak', '2001-11-06', '123456789', 'anna.nowak@gmail.com');
 
 INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (1, (SELECT id
                                                                     FROM patient

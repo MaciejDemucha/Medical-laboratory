@@ -21,8 +21,12 @@
           <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-flat-button color="primary">Wyloguj się</button>
          <!-- <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-flat-button color="primary">Dodaj nowe badanie</button>-->
          <mat-icon *ngIf="isAuthenticated == true">assignment_ind</mat-icon>
-         <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Pacjenci</button>
-          <mat-icon *ngIf="isAuthenticated == false">account_balance_wallet</mat-icon>
+         <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Moi Pacjenci</button>
+         <mat-icon *ngIf="isAuthenticated == true">person_add</mat-icon>
+         <button *ngIf="isAuthenticated == true" (click)="onAddPatientTab()" mat-flat-button color="primary">Dodaj pacjenta</button>
+         <mat-icon *ngIf="isAuthenticated == true">note_add</mat-icon>
+         <button *ngIf="isAuthenticated == true" (click)="onAddResultTab()" mat-flat-button color="primary">Dodaj wyniki badań</button>
+         <mat-icon *ngIf="isAuthenticated == false">account_balance_wallet</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-flat-button color="primary">Oferta</button>
           <mat-icon *ngIf="isAuthenticated == false">assessment</mat-icon>
           <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>

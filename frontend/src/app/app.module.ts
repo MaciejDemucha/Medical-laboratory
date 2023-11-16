@@ -11,17 +11,12 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { AxiosService } from './axios.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExaminationDisplayComponent } from './examination-display/examination-display.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ExaminationInputComponent } from './examination-input/examination-input.component';
-import { ExaminationWrapperComponent } from './examination-wrapper/examination-wrapper.component';
-import { ExaminationEditComponent } from './examination-edit/examination-edit.component';
 import { ExaminationClientComponent } from './examination-client/examination-client.component';
 import { PatientDisplayComponent } from './patient-display/patient-display.component';
 import { ResultsDisplayComponent } from './results-display/results-display.component';
 import { ClientResultSubmitComponent } from './client-result-submit/client-result-submit.component';
 import { SingleResultComponent } from './single-result/single-result.component';
-import { AddExaminationComponent } from './add-examination/add-examination.component';
 import { AddDiagnosisComponent } from './add-diagnosis/add-diagnosis.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -33,6 +28,7 @@ import { LaboratoriesComponent } from './laboratories/laboratories.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component'
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { AddPatientComponent } from './add-patient/add-patient.component';
 
 
 @NgModule({
@@ -41,8 +37,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     HeaderComponent,
     LoginFormComponent,
     ClientResultSubmitComponent,
-    AddExaminationComponent,
     LaboratoriesComponent,
+   
   ],
   imports: [
     GoogleMapsModule,
@@ -52,10 +48,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     BrowserAnimationsModule,
     MatFormFieldModule,
     HttpClientModule,
-    ExaminationDisplayComponent,
-    ExaminationInputComponent,
-    ExaminationWrapperComponent,
-    ExaminationEditComponent,
     ExaminationClientComponent,
     MatButtonModule,
     PatientDisplayComponent,
@@ -69,7 +61,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     MatMenuModule,
     BucketComponent,
     ErrorDialogComponent,
-    
+    AddPatientComponent,
   ],
   providers: [AxiosService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],

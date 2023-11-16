@@ -1,8 +1,0 @@
-<app-examination-edit *ngIf="editable == true" 
-(editDataEvent)="handleSaveEdition($event)"
-[examination] = "examination"/>
-
-<app-examination-display *ngIf="editable == false"
-(removeItemEvent)="removeItemEvent.emit($event)"
-(editItemEvent)="handleEditClick()"
-[examination] = "examination"/>

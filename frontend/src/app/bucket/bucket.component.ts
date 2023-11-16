@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './bucket.component.html',
   styleUrls: ['./bucket.component.css'],
   standalone: true,
-  imports: [MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
+  imports: [FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
 export class BucketComponent implements OnInit{
   bucket: any[] = [];

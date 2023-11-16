@@ -1,0 +1,80 @@
+<form class="example-form">
+
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Imię</mat-label>
+        <input matInput [formControl]="firstNameFormControl" [errorStateMatcher]="matcher" [(ngModel)]="firstName">
+        <mat-error *ngIf="firstNameFormControl.hasError('required')">
+            Imię jest <strong>wymagane</strong>
+          </mat-error>
+    </mat-form-field></td>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Nazwisko</mat-label>
+        <input matInput [formControl]="lastNameFormControl" [errorStateMatcher]="matcher" [(ngModel)]="lastName">
+        <mat-error *ngIf="lastNameFormControl.hasError('required')">
+            Nazwisko jest <strong>wymagane</strong>
+          </mat-error>
+    </mat-form-field></td>
+    </tr></table>
+
+    <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>PESEL</mat-label>
+          <input pattern="\d*" maxlength="11" matInput [formControl]="peselFormControl" [errorStateMatcher]="matcher" [(ngModel)]="pesel">
+          <mat-error *ngIf="peselFormControl.hasError('required')">
+              PESEL jest <strong>wymagany</strong>
+            </mat-error>
+      </mat-form-field></td>
+      </tr></table>
+  
+    <p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Ulica i numer</mat-label>
+        <textarea matInput placeholder="np. Polna 1/40" [formControl]="addressFormControl" [errorStateMatcher]="matcher" [(ngModel)]="address"></textarea>
+        <mat-error *ngIf="addressFormControl.hasError('required')">
+            Adres jest <strong>wymagany</strong>
+          </mat-error>
+    </mat-form-field>
+    </p>
+  
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Miasto</mat-label>
+        <input matInput placeholder="" [formControl]="cityFormControl" [errorStateMatcher]="matcher" [(ngModel)]="city">
+        <mat-error *ngIf="cityFormControl.hasError('required')">
+            Miasto jest <strong>wymagane</strong>
+          </mat-error>
+      </mat-form-field></td>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Kod pocztowy</mat-label>
+        <input matInput #postalCode maxlength="6" placeholder="xx-xxx" value="" [formControl]="postalFormControl" [errorStateMatcher]="matcher" [(ngModel)]="postal">
+        <mat-error *ngIf="postalFormControl.hasError('required')">
+            Kod pocztowy jest <strong>wymagany</strong>
+          </mat-error>
+        <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
+      </mat-form-field></td>
+    </tr></table>
+
+    <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="" [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="email">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Podaj prawidłowy email
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email jest <strong>wymagany</strong>
+          </mat-error>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+            <mat-label>Telefon</mat-label>
+            <input maxlength="9" pattern="\d*" type="tel" matInput placeholder="555-555-555" [formControl]="phoneFormControl" [errorStateMatcher]="matcher" [(ngModel)]="phone">
+            <mat-error *ngIf="phoneFormControl.hasError('required')">
+                Numer telefonu jest <strong>wymagany</strong>
+              </mat-error>
+        </mat-form-field>
+          </td>
+      </tr></table>
+      <button mat-flat-button color="primary" (click)="addPatient()" mat-button>Dodaj</button>
+  </form>
+  

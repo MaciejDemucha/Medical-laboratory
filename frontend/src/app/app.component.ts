@@ -89,6 +89,15 @@ export class AppComponent implements OnInit {
 	this.router.navigate(['/bucket']);
   }
 
+  onAddPatientTab(): void {
+	this.componentToShow = "";
+	this.router.navigate(['/addpatient']);
+  }
+  onAddResultTab(): void {
+	this.componentToShow = "";
+	this.router.navigate(['/addresult']);
+  }
+
 
 	onLogin(input: any): void {
 		this.axiosService.request(

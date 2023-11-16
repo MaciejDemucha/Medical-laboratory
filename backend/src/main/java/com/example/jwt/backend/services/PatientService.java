@@ -1,11 +1,14 @@
 package com.example.jwt.backend.services;
 
+import com.example.jwt.backend.dtos.AddressDto;
 import com.example.jwt.backend.dtos.DoctorNameDto;
+import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.dtos.PatientDto;
-import com.example.jwt.backend.entites.Patient;
-import com.example.jwt.backend.entites.User;
+import com.example.jwt.backend.entites.*;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.PatientMapper;
+import com.example.jwt.backend.repositories.AddressRepository;
+import com.example.jwt.backend.repositories.GenderRepository;
 import com.example.jwt.backend.repositories.PatientRepository;
 import com.example.jwt.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,9 @@ public class PatientService {
     private final PatientMapper patientMapper;
     private final PatientRepository patientRepository;
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final GenderRepository genderRepository;
+
 
     //TODO: register
 
@@ -83,4 +89,40 @@ public class PatientService {
 
         throw new AppException("Unknown employee or patient", HttpStatus.NOT_FOUND);
     }
+
+    public PatientDto createPatient(PatientDto patientDto) {
+        Patient patient = patientMapper.toPatient(patientDto);
+        if(patient.getGender() == null){
+            String checkName = patient.getFirstName();
+            Gender gender;
+            if(checkName.charAt(checkName.length() - 1) == 'a'){
+                gender = genderRepository.findById(2L).orElseThrow(() -> new AppException("Gender not found", HttpStatus.NOT_FOUND));
+            }
+            else {
+                gender = genderRepository.findById(1L).orElseThrow(() -> new AppException("Gender not found", HttpStatus.NOT_FOUND));
+            }
+            patient.setGender(gender);
+        }
+        Patient createdPatient =  patientRepository.save(patient);
+
+        return patientMapper.toPatientDto(createdPatient);
+
+    }
+
+    public PatientDto assignAddress(Long patientId, Long addressId) {
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new AppException("Patient not found", HttpStatus.NOT_FOUND));
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new AppException("Address not found", HttpStatus.NOT_FOUND));
+
+        if (patient != null && address != null) {
+            patient.setAddress(address);
+            patientRepository.save(patient);
+            return patientMapper.toPatientDto(patient);
+        }
+
+        throw new AppException("Unknown address or patient", HttpStatus.NOT_FOUND);
+    }
+
+
 }

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -13,9 +12,7 @@ import java.time.LocalDate;
 @Builder
 @Getter
 @Setter
-public class PatientDto {
-
-    private Long id;
+public class addPatientDto {
     @NotNull
     private String pesel;
     @NotNull
@@ -29,6 +26,13 @@ public class PatientDto {
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthDate;
-    //private LocalDate birthDate;
 
+    @NotNull
+    private String street;
+
+    @NotNull
+    private String postalCode;
+
+    @NotNull
+    private String city;
 }

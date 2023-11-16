@@ -35,6 +35,14 @@ public class Patient {
     @Size(max = 100)
     private String lastName;
 
+    @Column(name = "phone", nullable = false)
+    @Size(max = 100)
+    private String phone;
+
+    @Column(name = "email", nullable = false)
+    @Size(max = 100)
+    private String email;
+
     @Column(name = "birth_date", nullable = false)
     //@Size(max = 100)
     private Date birthDate; //TODO poprawic

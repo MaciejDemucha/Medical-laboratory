@@ -1,16 +1,16 @@
 package com.example.jwt.backend.controllers;
 
-import com.example.jwt.backend.dtos.PatientDto;
-import com.example.jwt.backend.dtos.DoctorNameDto;
+import com.example.jwt.backend.dtos.*;
+import com.example.jwt.backend.services.AddressService;
 import com.example.jwt.backend.services.PatientService;
 import com.example.jwt.backend.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +18,7 @@ import java.util.List;
 public class PatientsController {
     private final PatientService patientService;
     private final UserService userService;
+    private final AddressService addressService;
 
     @GetMapping("/patients")
     public ResponseEntity<List<PatientDto>> allPatients(){
@@ -46,6 +47,15 @@ public class PatientsController {
     @GetMapping("/doctors")
     public ResponseEntity<List<DoctorNameDto>> getDoctors(){
         return ResponseEntity.ok(userService.getAll());
+    }
+
+    @PostMapping("/patients")
+    public ResponseEntity<PatientDto> addPatient(@RequestBody @Valid addPatientDto details) {
+        PatientDto patientDto = new PatientDto(null, details.getPesel(), details.getFirstName(), details.getLastName(), details.getPhone(), details.getEmail(), details.getBirthDate());
+        PatientDto createdPatient = patientService.createPatient(patientDto);
+        AddressDto createdAddress = addressService.createAddress(new AddressDto(null, details.getStreet(), details.getPostalCode(), details.getCity()));
+        patientService.assignAddress(createdPatient.getId(), createdAddress.getId());
+        return ResponseEntity.created(URI.create("/patients/" + createdPatient.getId())).body(createdPatient);
     }
 
     @PutMapping("/assign-doctor/{doctorId}/{patientId}")
