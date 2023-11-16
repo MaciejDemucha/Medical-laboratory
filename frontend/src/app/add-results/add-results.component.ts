@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Patient } from '../patient';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -22,14 +22,14 @@ export interface PeriodicElement {
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule],
 })
-export class AddResultsComponent implements OnInit{
+export class AddResultsComponent implements OnInit, AfterViewInit{
   patients: Patient[] = [];
   displayedColumns: string[] = ['Pesel', 'Imię', 'Nazwisko', 'Dodaj'];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  dataSource: MatTableDataSource<Patient>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: MatTableDataSource<Patient> = new MatTableDataSource(this.patients);
 
   constructor(private http: HttpClient, private router: Router){
-    this.dataSource = new MatTableDataSource(this.patients);
+    
   }
 
   applyFilter(event: Event) {
@@ -57,7 +57,11 @@ export class AddResultsComponent implements OnInit{
 
     this.http.get<Patient[]> (
       `http://localhost:8080/patients`, {headers}
-    ).subscribe(data => this.patients = data,
+    ).subscribe(data => {
+      this.patients = data;
+      this.dataSource = new MatTableDataSource(this.patients);
+
+    },
       (error) => {
 				console.log(error);
 				if(error.status === 401){
@@ -74,6 +78,7 @@ export class AddResultsComponent implements OnInit{
     localStorage.setItem('isAuthenticated', 'false');
     localStorage.removeItem('auth_token');
     this.router.navigate(['/']);
+    //location.reload();
     }
 
 }

@@ -66,7 +66,7 @@ export class BucketComponent implements OnInit{
     }
 
     submitOrder(){
-        if(this.email === this.repeatedEmail && this.email != ""){
+        if(this.email === this.repeatedEmail && !this.emailFormControl.hasError('required') && !this.emailFormControl.hasError('email')){
           const data = {
             email: this.email,
             firstName: this.firstName,
@@ -96,6 +96,10 @@ export class BucketComponent implements OnInit{
 
     openSnackBar(message: string) {
       this._snackBar.open(message);
+    }
+
+    executeDelay(callback: () => void, seconds: number): void {
+      setTimeout(callback, 1000*seconds); // 5000 milliseconds = 5 seconds
     }
 }
 

@@ -4,8 +4,9 @@
     <mat-label>Filtruj</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
   </mat-form-field>
-  
-  <table mat-table [dataSource]="patients" class="mat-elevation-z8">
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   
     <ng-container matColumnDef="Pesel">
       <th mat-header-cell *matHeaderCellDef> Pesel </th>
@@ -35,3 +36,4 @@
     </tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

@@ -5,6 +5,8 @@ import com.example.jwt.backend.dtos.OrderDetailsDto;
 import com.example.jwt.backend.dtos.SignUpDto;
 import com.example.jwt.backend.dtos.UserDto;
 import com.example.jwt.backend.entites.ExaminationOffer;
+import com.example.jwt.backend.entites.Voucher;
+import com.example.jwt.backend.repositories.VoucherRepository;
 import com.example.jwt.backend.services.EmailService;
 import com.example.jwt.backend.services.OrderService;
 import com.example.jwt.backend.services.PdfService;
@@ -26,6 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final EmailService emailService;
     private final PdfService pdfService;
+    private final VoucherRepository voucherRepository;
     @GetMapping("/offers")
     public ResponseEntity<List<ExaminationOffer>> allOffers(){
         return ResponseEntity.ok(orderService.getOffers());
@@ -33,7 +36,10 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseEntity<OrderDetailsDto> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException {
-        byte[] attachment = pdfService.generatePdf(details);
+        Voucher voucher = new Voucher(null, details.getFirstName(), details.getLastName(), details.getBucket());
+        Voucher savedVoucher = voucherRepository.save(voucher);
+
+        byte[] attachment = pdfService.export(details, savedVoucher.getId());
 
         emailService.sendEmailWithAttachment(details.getEmail(), "Laboratorium medyczne - zamówienie","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher.pdf");
         return ResponseEntity.ok(details);
