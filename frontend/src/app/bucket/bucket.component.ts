@@ -92,6 +92,9 @@ export class BucketComponent implements OnInit{
         else if (this.email != this.repeatedEmail){
             this.openSnackBar("Podane adresy email muszą być takie same"); 
         }
+        else {
+          this.openSnackBar("Nie wypełniłeś wymaganych danych lub są one niewłaściwe"); 
+        }
     }
 
     openSnackBar(message: string) {

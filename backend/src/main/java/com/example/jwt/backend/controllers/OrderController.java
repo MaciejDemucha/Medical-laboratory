@@ -39,9 +39,10 @@ public class OrderController {
         Voucher voucher = new Voucher(null, details.getFirstName(), details.getLastName(), details.getBucket());
         Voucher savedVoucher = voucherRepository.save(voucher);
 
-        byte[] attachment = pdfService.export(details, savedVoucher.getId());
+        //byte[] attachment = pdfService.export(details, savedVoucher.getId());
+        byte[] attachment = PdfService.generateVoucher(details, savedVoucher.getId());
 
-        emailService.sendEmailWithAttachment(details.getEmail(), "Laboratorium medyczne - zamówienie","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher.pdf");
+        emailService.sendEmailWithAttachment(details.getEmail(), "Sklep Laboratorium medyczne - potwierdzenie zamówienia","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher.pdf");
         return ResponseEntity.ok(details);
     }
 }
