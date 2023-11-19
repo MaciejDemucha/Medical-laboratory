@@ -34,9 +34,10 @@ export class ResultsDisplayComponent {
   patientId: number = 0;
   patient: Patient = new Patient(0, "", "", "", "");
   examinations: Examination[] = [];
-  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres', 'Powiadomienie'];
+  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', /*'Wykres',*/ 'Powiadomienie'];
   parameters: { [key: number]: any } = {};
   diagnosisList: { [key: number]: any } = {};
+  canWriteDiagnosis: boolean = false;
 
   constructor(private authService: AuthService,private _snackBar: MatSnackBar,private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
@@ -47,6 +48,8 @@ export class ResultsDisplayComponent {
 
     this.route.queryParams.subscribe(params => {
       this.patientId = params['id'];
+      this.canWriteDiagnosis = params['canWriteDiagnosis'];
+      console.log(this.canWriteDiagnosis)
     });
 
    this.getPatientAndExaminationData();
@@ -61,7 +64,12 @@ export class ResultsDisplayComponent {
 
     this.http.get<Examination[]> (
       `http://localhost:8080/patients/${this.patientId}/examinations`, {headers}
-    ).subscribe(data => this.examinations = data,
+    ).subscribe(data => {
+      this.examinations = data;
+      for(let exam of this.examinations){
+        this.getDiagnosis(exam.id);
+      }
+    },
       (error) => {
 				console.log(error);
 				if(error.status === 401){

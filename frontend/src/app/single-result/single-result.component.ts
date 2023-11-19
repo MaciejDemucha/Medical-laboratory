@@ -35,7 +35,7 @@ export class SingleResultComponent {
   examination: Examination = new Examination(0, "", "", "");
   diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
   parametersWithNorms: ParameterWithNorm[] = [];
-  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', 'Wykres', 'Powiadomienie'];
+  displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', /*'Wykres',*/ 'Powiadomienie'];
   doctors: Doctor[] = [];
 
   constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){

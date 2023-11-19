@@ -106,7 +106,7 @@ INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (1
                                                                     WHERE pesel = '01300703817'), 'Morfologia krwi','1234', '2023-07-10');
 INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (3, (SELECT id
                                                                                    FROM patient
-                                                                                   WHERE pesel = '01300703817'), 'Żelazo, ferrytyna','5678', '2023-01-02');
+                                                                                   WHERE pesel = '01300703817'), 'Żelazo, ferrytyna','5678', '2023-12-02');
 INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (2, (SELECT id
                                                                            FROM patient
                                                                            WHERE pesel = '01310688261'), 'Żelazo, ferrytyna','0987', '2023-01-01');

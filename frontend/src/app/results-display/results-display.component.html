@@ -10,6 +10,8 @@
             <mat-accordion>
                 <mat-expansion-panel hideToggle (opened)="getExaminationData(examination.id)">
                   <mat-expansion-panel-header>
+                    <p *ngIf="!diagnosisList[examination.id]?.description" style="font-size: 12px;">Oczekuje na diagnozę</p>
+                    <span *ngIf="!diagnosisList[examination.id]?.description" class="material-icons" style="color: rgb(255, 115, 0); transform: rotate(0deg);">warning</span>
                     <mat-panel-title>
                         {{examination.name}}
                     </mat-panel-title>
@@ -37,17 +39,15 @@
                     </ng-container>
                   
                    
-                    <ng-container matColumnDef="Wykres">
+                    <!--<ng-container matColumnDef="Wykres">
                       <th mat-header-cell *matHeaderCellDef> Wykres </th>
                       <td mat-cell *matCellDef="let element"> 
-                      
-                        
-                        
+  
                       </td>
-                    </ng-container>
+                    </ng-container>-->
 
                     <ng-container matColumnDef="Powiadomienie">
-                      <th mat-header-cell *matHeaderCellDef></th>
+                      <th mat-header-cell *matHeaderCellDef>Uwagi</th>
                       <td mat-cell *matCellDef="let element" > 
                         <div *ngIf="element.value > element.max || element.value < element.min">
                           <span class="material-icons" style="color: rgb(255, 0, 0); transform: rotate(0deg);">warning</span>
@@ -90,9 +90,10 @@
                   {{examination.datePerformed}}
               </mat-panel-description>
               </div>
-            
+            <div *ngIf="canWriteDiagnosis">
               <button *ngIf="!diagnosisList[examination.id]?.description" (click)="addDiagnosis(examination.id)" class="button-add" mat-button>Dodaj diagnozę</button>
               <button *ngIf="diagnosisList[examination.id]?.description" (click)="editDiagnosis(examination.id)" class="button-add" mat-button>Edytuj diagnozę</button>
+            </div>
               <button class="button-pdf" mat-button (click)="getPdfResults(examination.id, patient.id)">Pobierz PDF</button>
                 </mat-expansion-panel>
                 

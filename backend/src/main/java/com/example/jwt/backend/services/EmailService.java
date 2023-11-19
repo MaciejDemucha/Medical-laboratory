@@ -33,7 +33,6 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(text);
 
-            // Attach the PDF
             helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
 
             emailSender.send(message);

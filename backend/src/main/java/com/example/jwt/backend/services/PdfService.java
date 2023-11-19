@@ -51,8 +51,6 @@ public class PdfService {
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
         pdfDocument.setDefaultPageSize(PageSize.A4);
-        //PdfWriter.getInstance(document, response.getOutputStream());
-
 
         FontProgram fontProgram = FontProgramFactory.createFont(ARIMO);
         PdfFont font = PdfFontFactory.createFont(fontProgram, PdfEncodings.IDENTITY_H, true);

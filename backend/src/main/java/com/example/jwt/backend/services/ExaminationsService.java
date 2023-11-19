@@ -11,6 +11,7 @@ import com.example.jwt.backend.mappers.ParameterMapper;
 import com.example.jwt.backend.repositories.ExaminationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,8 @@ public class ExaminationsService {
     }
 
     public List<ExaminationDto> getExaminationByPatientId(Long id){
-        return examinationMapper.toExaminationDtos(examinationRepository.findByPatientId(id));
+        Sort sortDate = Sort.by(Sort.Direction.DESC, "datePerformed");
+        return examinationMapper.toExaminationDtos(examinationRepository.findByPatientId(id, sortDate));
     }
 
 

@@ -25,7 +25,7 @@ export interface PeriodicElement {
 })
 export class AddResultsComponent implements OnInit, AfterViewInit{
   patients: Patient[] = [];
-  displayedColumns: string[] = ['Pesel', 'Imię', 'Nazwisko', 'Dodaj'];
+  displayedColumns: string[] = ['Pesel', 'Imię', 'Nazwisko', 'Dodaj', 'Badania'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Patient> = new MatTableDataSource(this.patients);
 
@@ -89,6 +89,13 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
 					this.onAuthFailure();
 				}
 			  });
+  }
+
+  showPatientExaminations(patient: Patient): void{
+    const url = this.router.serializeUrl(this.router.createUrlTree(['/patients/results'], { queryParams: { id: patient.id, canWriteDiagnosis: false } }));
+    this.router.navigateByUrl(url);
+    //window.open(url, '_blank');
+
   }
 
   onAuthFailure(){
