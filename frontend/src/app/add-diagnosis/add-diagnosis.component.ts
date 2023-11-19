@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { catchError, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-add-diagnosis',
@@ -27,10 +28,11 @@ export class AddDiagnosisComponent implements OnInit {
 	activeButton: boolean = true;
 	diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
 
-  constructor(private _snackBar: MatSnackBar, private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
+  constructor(private authService: AuthService,private _snackBar: MatSnackBar, private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
   }
 
   ngOnInit() {
+	this.authService.checkAuthentication();
 	this.getDiagnosis(this.data.examinationId);
   }
 
@@ -46,9 +48,9 @@ export class AddDiagnosisComponent implements OnInit {
 
   onAuthFailure(){
 	localStorage.setItem('isAuthenticated', 'false');
-	localStorage.removeItem('auth_token');
-	this.router.navigate(['/']);
-	location.reload();
+    this.authService.isAuthenticated = false;
+    localStorage.removeItem('auth_token');
+    this.router.navigate(['/']);
   }
 
   getDiagnosis(examinationId: number): void {

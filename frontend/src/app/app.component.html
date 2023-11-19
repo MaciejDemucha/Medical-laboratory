@@ -8,8 +8,8 @@
         <span class="example-spacer"></span>
         <span class="example-spacer"></span>
         <div class="menu-buttons">
-          <mat-icon *ngIf="isAuthenticated == false">assignment_ind</mat-icon>
-          <button *ngIf="isAuthenticated == false" (click)="onLoginTab()" mat-flat-button color="primary">Dla lekarza</button>
+          <mat-icon *ngIf="getIsAuthenticated() == false">assignment_ind</mat-icon>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onLoginTab()" mat-flat-button color="primary">Dla lekarza</button>
           <!--<button mat-button [matMenuTriggerFor]="belowMenu">Below</button>
             <mat-menu  #belowMenu="matMenu" yPosition="below">
               <div class="menuLogin">
@@ -17,23 +17,23 @@
               </div>
             </mat-menu>-->
 
-            <mat-icon *ngIf="isAuthenticated == true">power_settings_new</mat-icon>
-          <button *ngIf="isAuthenticated == true" (click)="onLogout()" mat-flat-button color="primary">Wyloguj się</button>
+            <mat-icon *ngIf=" getIsAuthenticated() == true">power_settings_new</mat-icon>
+          <button *ngIf="getIsAuthenticated() == true" (click)="onLogout()" mat-flat-button color="primary">Wyloguj się</button>
          <!-- <button *ngIf="isAuthenticated == true" (click)="onAddTab()" mat-flat-button color="primary">Dodaj nowe badanie</button>-->
-         <mat-icon *ngIf="isAuthenticated == true">assignment_ind</mat-icon>
-         <button *ngIf="isAuthenticated == true" (click)="onPatientsTab()" mat-flat-button color="primary">Moi Pacjenci</button>
-         <mat-icon *ngIf="isAuthenticated == true">person_add</mat-icon>
-         <button *ngIf="isAuthenticated == true" (click)="onAddPatientTab()" mat-flat-button color="primary">Dodaj pacjenta</button>
-         <mat-icon *ngIf="isAuthenticated == true">note_add</mat-icon>
-         <button *ngIf="isAuthenticated == true" (click)="onAddResultTab()" mat-flat-button color="primary">Dodaj wyniki badań</button>
-         <mat-icon *ngIf="isAuthenticated == false">account_balance_wallet</mat-icon>
-          <button *ngIf="isAuthenticated == false" (click)="onShopTab()" mat-flat-button color="primary">Oferta</button>
-          <mat-icon *ngIf="isAuthenticated == false">assessment</mat-icon>
-          <button *ngIf="isAuthenticated == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>
-          <mat-icon *ngIf="isAuthenticated == false"> add_location</mat-icon>
-          <button *ngIf="isAuthenticated == false" (click)="onLaboratoriesTab()" mat-flat-button color="primary">Nasze laboratoria</button>
-          <mat-icon *ngIf="isAuthenticated == false">add_shopping_cart</mat-icon>
-          <button *ngIf="isAuthenticated == false" (click)="onBucketTab()" mat-flat-button color="primary">Koszyk</button>
+         <mat-icon *ngIf="getIsAuthenticated() == true">assignment_ind</mat-icon>
+         <button *ngIf="getIsAuthenticated() == true" (click)="onPatientsTab()" mat-flat-button color="primary">Moi Pacjenci</button>
+         <mat-icon *ngIf="getIsAuthenticated() == true">person_add</mat-icon>
+         <button *ngIf="getIsAuthenticated() == true" (click)="onAddPatientTab()" mat-flat-button color="primary">Dodaj pacjenta</button>
+         <mat-icon *ngIf="getIsAuthenticated() == true">note_add</mat-icon>
+         <button *ngIf="getIsAuthenticated() == true" (click)="onAddResultTab()" mat-flat-button color="primary">Dodaj wyniki badań</button>
+         <mat-icon *ngIf="getIsAuthenticated() == false">account_balance_wallet</mat-icon>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onShopTab()" mat-flat-button color="primary">Oferta</button>
+          <mat-icon *ngIf="getIsAuthenticated() == false">assessment</mat-icon>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onResultTab()" mat-flat-button color="primary">Wyniki badań</button>
+          <mat-icon *ngIf="getIsAuthenticated() == false"> add_location</mat-icon>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onLaboratoriesTab()" mat-flat-button color="primary">Nasze laboratoria</button>
+          <mat-icon *ngIf="getIsAuthenticated() == false">add_shopping_cart</mat-icon>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onBucketTab()" mat-flat-button color="primary">Koszyk</button>
           </div>
        <!-- <button (click)="homeIcon()" mat-icon-button color="white" aria-label="Example icon button with a home icon">
           <mat-icon>home</mat-icon>

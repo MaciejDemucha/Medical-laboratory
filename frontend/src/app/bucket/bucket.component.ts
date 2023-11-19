@@ -19,18 +19,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-bucket',
   templateUrl: './bucket.component.html',
   styleUrls: ['./bucket.component.css'],
   standalone: true,
-  imports: [FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
+  imports: [MatProgressSpinnerModule,FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
 export class BucketComponent implements OnInit{
   bucket: any[] = [];
   sumToPay: number = 0;
   cardToShow = "summary";
+  showSpinner: boolean = false;
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   repeatEmailFormControl = new FormControl('', [Validators.required, Validators.email]);
@@ -67,6 +69,8 @@ export class BucketComponent implements OnInit{
 
     submitOrder(){
         if(this.email === this.repeatedEmail && !this.emailFormControl.hasError('required') && !this.emailFormControl.hasError('email')){
+          this.showSpinner = true;
+
           const data = {
             email: this.email,
             firstName: this.firstName,
@@ -80,12 +84,14 @@ export class BucketComponent implements OnInit{
     this.http.post<any>(`http://localhost:8080/order`, data, { headers }).subscribe(
       (response) => {
         this.setCard("confirm");
+        this.showSpinner = false;
         this.bucket = [];
         this.shopService.clearCart();
       },
       (error) => {
         
         console.error(error);
+        this.showSpinner = false;
       }
     );
         }

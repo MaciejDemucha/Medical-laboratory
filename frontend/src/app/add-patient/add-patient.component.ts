@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MyErrorStateMatcher } from '../bucket/bucket.component';
 import {
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-add-patient',
@@ -25,7 +26,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
-export class AddPatientComponent {
+export class AddPatientComponent implements OnInit {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   phoneFormControl = new FormControl('', [Validators.required]);
@@ -45,13 +46,17 @@ export class AddPatientComponent {
   postal: string = "";
   pesel: string = "";
 
-  constructor(private _snackBar: MatSnackBar, private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService,private _snackBar: MatSnackBar, private http: HttpClient, private router: Router) {}
+  
+  ngOnInit(): void {
+    this.authService.checkAuthentication();
+  }
 
   onAuthFailure(){
     localStorage.setItem('isAuthenticated', 'false');
+    this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
     this.router.navigate(['/']);
-    location.reload();
     }
 
   addPatient(){

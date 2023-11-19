@@ -90,6 +90,9 @@
             <button mat-button (click)="consultationDialog()">Zamów</button>
           </div>
               </div>
+              <mat-card-actions align="end">
+                <button mat-button (click)="getPdfResults()">Pobierz PDF</button>
+              </mat-card-actions>
               </mat-card>
 
               <mat-accordion class="diagnosis" *ngIf="diagnosis?.description;">

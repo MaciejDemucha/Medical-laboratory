@@ -26,6 +26,12 @@ li {
   margin-top: 10px;
 }
 
+.button-pdf {
+  text-align: right;
+  margin-top: 10px;
+  margin-left: auto;
+}
+
 table {
   width: 100%;
   box-shadow: none;

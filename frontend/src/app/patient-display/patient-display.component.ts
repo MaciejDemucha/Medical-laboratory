@@ -5,6 +5,7 @@ import { Patient } from '../patient';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-patient-display',
@@ -14,13 +15,15 @@ import { CommonModule } from '@angular/common';
   imports: [MatCardModule, MatButtonModule, CommonModule]
 })
 export class PatientDisplayComponent {
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService,private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
   @Input() patient = new Patient(0,"", "","","");
   @Output() getItemEvent = new EventEmitter();
   patients: Patient[] = [];
   doctorId: number|null = null;
 
   ngOnInit(): void {
+    this.authService.checkAuthentication();
+
     this.route.queryParams.subscribe(params => {
       this.doctorId = params['id'];
     });
@@ -31,9 +34,9 @@ export class PatientDisplayComponent {
 
   onAuthFailure(){
     localStorage.setItem('isAuthenticated', 'false');
+    this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
     this.router.navigate(['/']);
-    //location.reload();
     }
 
   getPatientsByDoctorId(){
@@ -55,8 +58,8 @@ export class PatientDisplayComponent {
 
   showPatientExaminations(patient: Patient): void{
     const url = this.router.serializeUrl(this.router.createUrlTree(['/patients/results'], { queryParams: { id: patient.id } }));
-    //this.router.navigateByUrl(url);
-    window.open(url, '_blank');
+    this.router.navigateByUrl(url);
+    //window.open(url, '_blank');
 
   }
 

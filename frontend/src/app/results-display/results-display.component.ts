@@ -21,6 +21,7 @@ import { catchError, of, throwError } from 'rxjs';
 import {MatSliderModule} from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-results-display',
@@ -37,11 +38,13 @@ export class ResultsDisplayComponent {
   parameters: { [key: number]: any } = {};
   diagnosisList: { [key: number]: any } = {};
 
-  constructor(private _snackBar: MatSnackBar,private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
+  constructor(private authService: AuthService,private _snackBar: MatSnackBar,private router: Router, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
     }
 
   ngOnInit(): void{
+    this.authService.checkAuthentication();
+
     this.route.queryParams.subscribe(params => {
       this.patientId = params['id'];
     });
@@ -79,9 +82,14 @@ export class ResultsDisplayComponent {
 
   onAuthFailure(){
     localStorage.setItem('isAuthenticated', 'false');
+    this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
     this.router.navigate(['/']);
-    location.reload();
+    }
+
+    getPdfResults(examinationId: number, patientId: number){
+      const url = `http://localhost:8080/pdf/generate/${patientId}/${examinationId}`;
+      window.open(url, '_blank');
     }
 
   getExaminationData(id: number): void {

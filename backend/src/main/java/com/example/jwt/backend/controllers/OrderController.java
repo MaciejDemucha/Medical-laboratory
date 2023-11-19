@@ -10,6 +10,7 @@ import com.example.jwt.backend.repositories.VoucherRepository;
 import com.example.jwt.backend.services.EmailService;
 import com.example.jwt.backend.services.OrderService;
 import com.example.jwt.backend.services.PdfService;
+import com.google.zxing.WriterException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +36,14 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<OrderDetailsDto> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException {
+    public ResponseEntity<OrderDetailsDto> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException, WriterException {
         Voucher voucher = new Voucher(null, details.getFirstName(), details.getLastName(), details.getBucket());
         Voucher savedVoucher = voucherRepository.save(voucher);
 
-        //byte[] attachment = pdfService.export(details, savedVoucher.getId());
         byte[] attachment = PdfService.generateVoucher(details, savedVoucher.getId());
 
         emailService.sendEmailWithAttachment(details.getEmail(), "Sklep Laboratorium medyczne - potwierdzenie zamówienia","Dziękujemy za skorzystanie z naszej oferty", attachment, "Voucher.pdf");
         return ResponseEntity.ok(details);
     }
+
 }

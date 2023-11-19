@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Parameter } from '../parameter';
 import { Patient } from '../patient';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NormRange } from '../normRange';
 import { ParameterWithNorm } from '../parameterAndNorms';
 import { AxiosService } from '../axios.service';
@@ -82,6 +82,7 @@ ngOnInit(): void{
       `http://localhost:8080/examinations/parameterswithnorms/${id}`
     ).subscribe(data => this.parametersWithNorms = data);
   }
+  
 
   getPatientsDoctor() :void{
     this.http.get<Doctor> (
@@ -89,14 +90,11 @@ ngOnInit(): void{
     ).subscribe(data => this.patientsDoctor = data);
   }
 
-  /*sendExaminationCredentials(): void{
-    this.http.post<Examination>(
-      `http://localhost:8080/examinations/singleresult/${this.examinationNumber}`,
-      this.examinationForm.value
-    ).subscribe(data => this.newDataEvent.emit(data));
-  }*/
+  getPdfResults(): void{
+    const url = `http://localhost:8080/pdf/generate/${this.patient.id}/${this.examination.id}`;
+    window.open(url, '_blank');
+  }
 
-  
 
   consultationDialog() {
     const dialogRef = this.dialog.open(DialogDataComponent, {
@@ -107,7 +105,7 @@ ngOnInit(): void{
     });
    
     dialogRef.afterClosed().subscribe(result => {
-      this.getPatientsDoctor()
+      this.getPatientsDoctor();
     });
   }
 

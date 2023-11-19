@@ -6,6 +6,7 @@ import { Patient } from './patient';
 import { ExaminationOffer } from './examinationOffer';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
 
 
 @Component({
@@ -17,16 +18,24 @@ export class AppComponent implements OnInit {
   title: string = 'Laboratorium medyczne';
   patients: Patient[] = [];
   componentToShow: string = "";
-  isAuthenticated: boolean = false;
-  loggedId: number|null = null;
+  //isAuthenticated: boolean = false;
+  //loggedId: number|null = null;
 
-  constructor(private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
-	//this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
+
+  }
+
+  public getIsAuthenticated(): any {
+    return this.authService.isAuthenticated;
+  }
+
+  public getLoggedId(): any{
+    return this.authService.loggedId;
   }
 
   homeIcon() {
 	this.componentToShow = "";
-	if(this.isAuthenticated === false)
+	if(this.getIsAuthenticated() === false)
 		this.router.navigate(['/shop']);
 	else
 		this.router.navigate(['/patients']);
@@ -34,23 +43,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    //this.router.navigate(['/shop'])
-	this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-	if(this.isAuthenticated)
-	this.loggedId = parseInt(localStorage.getItem('loggedId') ?? "", 10);
+	//this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+	//if(this.isAuthenticated)
+	//this.loggedId = parseInt(localStorage.getItem('loggedId') ?? "", 10);
 
-	this.router.events.subscribe((event) => {
+	/*this.router.events.subscribe((event) => {
 		const routeConfig = this.route.snapshot?.routeConfig;
 		if (event instanceof NavigationEnd && routeConfig && routeConfig.path === '') {
-		  // Call your function here
 		  this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
 		}
-	  });
+	  });*/
   }
 
   onPatientsTab(): void{
 	this.componentToShow = "";
-	const url = this.router.serializeUrl(this.router.createUrlTree(['/patients'], { queryParams: { id: this.loggedId} }));
+	const url = this.router.serializeUrl(this.router.createUrlTree(['/patients'], { queryParams: { id: this.getLoggedId()} }));
 	this.router.navigateByUrl(url);
   }
 
@@ -109,12 +116,13 @@ export class AppComponent implements OnInit {
 		    }).then(
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
-				this.loggedId = response.data.id;
+				this.authService.loggedId = response.data.id;
 		        this.componentToShow = "restricted";
-				this.isAuthenticated = true;
+				//this.isAuthenticated = true;
+				this.authService.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
-				if(this.loggedId?.toString() !== undefined)
-					localStorage.setItem('loggedId', this.loggedId?.toString());
+				if(this.authService.loggedId?.toString() !== undefined)
+					localStorage.setItem('loggedId', this.authService.loggedId?.toString());
 				this.onPatientsTab();
 
 		    }).catch(
@@ -139,10 +147,12 @@ export class AppComponent implements OnInit {
 		        password: input.password
 		    }).then(
 		    response => {
-		        this.axiosService.setAuthToken(response.data.token);
+		        /*this.axiosService.setAuthToken(response.data.token);
 		        this.componentToShow = "restricted";
-				this.isAuthenticated = true;
-				localStorage.setItem('isAuthenticated', 'true');
+				//this.isAuthenticated = true;
+				this.authService.isAuthenticated = true;
+				localStorage.setItem('isAuthenticated', 'true');*/
+				this.openSnackBar("Utworzono konto");
 				
 		    }).catch(
 		    error => {
@@ -159,7 +169,8 @@ export class AppComponent implements OnInit {
 	  }
 
 	onLogout(): void {
-		this.isAuthenticated = false;
+		//this.isAuthenticated = false;
+		this.authService.isAuthenticated = false;
 		localStorage.setItem('isAuthenticated', 'false');
 		localStorage.removeItem('auth_token');
 		this.showComponent("login");

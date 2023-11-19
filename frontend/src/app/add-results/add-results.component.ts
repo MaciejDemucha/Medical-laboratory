@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { AuthService } from '../auth.service';
 
 export interface PeriodicElement {
   name: string;
@@ -28,7 +29,7 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Patient> = new MatTableDataSource(this.patients);
 
-  constructor(private http: HttpClient, private router: Router){
+  constructor(private authService: AuthService,private http: HttpClient, private router: Router){
     
   }
 
@@ -46,6 +47,7 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.authService.checkAuthentication();
     this.getPatients();
   }
 
@@ -71,14 +73,29 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
   }
 
   addResult(patient: any) {
+    const authToken = localStorage.getItem('auth_token');
+		const headers = new HttpHeaders({
+			'Authorization': `Bearer ${authToken}`
+		  });
+    this.http.get<Patient[]> (
+      `http://localhost:8080/patients`, {headers}
+    ).subscribe(data => {
+      
 
+    },
+      (error) => {
+				console.log(error);
+				if(error.status === 401){
+					this.onAuthFailure();
+				}
+			  });
   }
 
   onAuthFailure(){
     localStorage.setItem('isAuthenticated', 'false');
+    this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
     this.router.navigate(['/']);
-    //location.reload();
     }
 
 }
