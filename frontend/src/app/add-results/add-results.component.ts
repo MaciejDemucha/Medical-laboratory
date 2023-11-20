@@ -29,10 +29,6 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Patient> = new MatTableDataSource(this.patients);
 
-  public pageSize = 10;
-  public currentPage = 0;
-  public totalSize = 0;
-
   constructor(private authService: AuthService,private http: HttpClient, private router: Router){
     
   }
@@ -66,6 +62,7 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
     ).subscribe(data => {
       this.patients = data;
       this.dataSource = new MatTableDataSource(this.patients);
+      console.log(this.dataSource.data)
       this.dataSource.paginator = this.paginator;
 
     },

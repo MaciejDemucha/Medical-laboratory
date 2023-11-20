@@ -24,9 +24,11 @@ import { CommonModule } from '@angular/common';
 export class LaboratoriesComponent implements OnInit {
   
   addressList: { [key: number]: any } = {};
+  addressArray: Address[] = [];
   labs: Laboratory[] = [];
+  labIdArray: number[] = [];
   scheduleList: { [key: number]: any } = {};
-  dataSource: MatTableDataSource<Laboratory> = new MatTableDataSource(this.labs);
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
   displayedColumns: string[] = ['Ulica', 'Kod pocztowy', 'Miasto', 'Wybierz placówkę'];
   idLabToShow: number = 0;
 
@@ -55,15 +57,11 @@ export class LaboratoriesComponent implements OnInit {
       `http://localhost:8080/laboratories`
     ).subscribe(data => {
       this.labs = data
-      this.dataSource = new MatTableDataSource(this.labs);
-      this.dataSource.paginator = this.paginator;
       this.labs.forEach((lab) => {
-         this.getLaboratorySchedule(lab.id);
-         this.getLaboratoryAddress(lab.id);
+         this.getLaboratoryAddress(lab.id);  
      });
-     console.log(this.scheduleList)
-     console.log(this.labs)
-
+    
+     this.dataSource.paginator = this.paginator;
     }
       ,
       (error) => {
@@ -72,24 +70,31 @@ export class LaboratoriesComponent implements OnInit {
 
   }
 
-  getLaboratorySchedule(id: number): void {
-    this.http.get<Schedule[]> (
-      `http://localhost:8080/schedule/${id}`
-    ).subscribe(data => this.scheduleList[id] = data,
-      (error) => {
-        console.log(error);
-        });
-  }
-
   findLabById(id: number){
     let foundLab = this.labs.find(lab => lab.id === id);
     return foundLab;
   }
 
   getLaboratoryAddress(id: number): void {
-    this.http.get<Address[]> (
+    this.http.get<Address> (
       `http://localhost:8080/laboratories/address/${id}`
-    ).subscribe(data => this.addressList[id] = data,
+    ).subscribe(data =>{
+      this.addressList[id] = data;
+      this.getLaboratorySchedule(id);
+    },
+      (error) => {
+        console.log(error);
+        });
+  }
+
+  getLaboratorySchedule(id: number): void {
+    this.http.get<Schedule[]> (
+      `http://localhost:8080/schedule/${id}`
+    ).subscribe(data => {
+      this.scheduleList[id] = data;
+      this.dataSource.data.push({labId: id, street: this.addressList[id].street, postalCode: this.addressList[id].postalCode, city: this.addressList[id].city});
+      this.applyFilterOnInit()
+    },
       (error) => {
         console.log(error);
         });
@@ -126,6 +131,15 @@ export class LaboratoriesComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  applyFilterOnInit() {
+    const filterValue = "";
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
