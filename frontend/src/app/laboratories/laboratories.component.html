@@ -5,30 +5,59 @@
       <div id="map"></div>
     </div>
   
-    <div class="choose">
-      <button mat-button [matMenuTriggerFor]="menu">Wybierz placówkę</button>
-      <mat-menu #menu="matMenu">
-        <ul>
-          <li *ngFor="let lab of labs">
-            <button (click)="chooseLabGeocode(addressList[lab.id].street + addressList[lab.id].postalCode + addressList[lab.id].city)" mat-menu-item>{{addressList[lab.id].street}} {{addressList[lab.id].postalCode}} {{addressList[lab.id].city}}</button>
-          </li>
-        </ul>
-      </mat-menu>
-    </div>
+  
   </div>
 
+  <mat-form-field>
+    <mat-label>Filtruj</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="Ulica">
+      <th mat-header-cell *matHeaderCellDef> Ulica </th>
+      <td mat-cell *matCellDef="let lab"> {{addressList[lab.id].street}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Kod pocztowy">
+      <th mat-header-cell *matHeaderCellDef> Kod pocztowy </th>
+      <td mat-cell *matCellDef="let lab"> {{addressList[lab.id].postalCode}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Miasto">
+      <th mat-header-cell *matHeaderCellDef> Miasto </th>
+      <td mat-cell *matCellDef="let lab"> {{addressList[lab.id].city}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Wybierz placówkę">
+      <th mat-header-cell *matHeaderCellDef> Pokaż na mapie </th>
+      <td mat-cell *matCellDef="let lab"> <button (click)="chooseLabGeocode(addressList[lab.id].street + addressList[lab.id].postalCode + addressList[lab.id].city, lab.id)" mat-button>Wybierz placówkę</button> </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Nie znaleziono pasujących danych "{{input.value}}"</td>
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
 <div class="list">
-    <p *ngFor="let lab of labs">
+    <p *ngIf="idLabToShow != 0">
         <mat-card>
             <mat-card-header>
-              <mat-card-title> {{addressList[lab.id].street}}, {{addressList[lab.id].postalCode}} {{addressList[lab.id].city}}</mat-card-title>
-              <mat-card-title> Telefon: {{lab.phone}}</mat-card-title> 
+              <mat-card-title> {{addressList[idLabToShow].street}}, {{addressList[idLabToShow].postalCode}} {{addressList[idLabToShow].city}}</mat-card-title>
+              <mat-card-title> Telefon: {{findLabById(idLabToShow)?.phone}}</mat-card-title> 
               <mat-card-subtitle>Godziny otwarcia: </mat-card-subtitle>
-              <mat-card-subtitle>{{scheduleList[lab.id][0].day}}: {{scheduleList[lab.id][0].openingTime}}-{{scheduleList[lab.id][0].closingTime}} </mat-card-subtitle>
-              <mat-card-subtitle>{{scheduleList[lab.id][1].day}}: {{scheduleList[lab.id][1].openingTime}}-{{scheduleList[lab.id][1].closingTime}} </mat-card-subtitle>
-              <mat-card-subtitle>{{scheduleList[lab.id][2].day}}: {{scheduleList[lab.id][2].openingTime}}-{{scheduleList[lab.id][2].closingTime}} </mat-card-subtitle>
-              <mat-card-subtitle>{{scheduleList[lab.id][3].day}}: {{scheduleList[lab.id][3].openingTime}}-{{scheduleList[lab.id][3].closingTime}} </mat-card-subtitle>
-              <mat-card-subtitle>{{scheduleList[lab.id][4].day}}: {{scheduleList[lab.id][4].openingTime}}-{{scheduleList[lab.id][4].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[idLabToShow][0].day}}: {{scheduleList[idLabToShow][0].openingTime}}-{{scheduleList[idLabToShow][0].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[idLabToShow][1].day}}: {{scheduleList[idLabToShow][1].openingTime}}-{{scheduleList[idLabToShow][1].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[idLabToShow][2].day}}: {{scheduleList[idLabToShow][2].openingTime}}-{{scheduleList[idLabToShow][2].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[idLabToShow][3].day}}: {{scheduleList[idLabToShow][3].openingTime}}-{{scheduleList[idLabToShow][3].closingTime}} </mat-card-subtitle>
+              <mat-card-subtitle>{{scheduleList[idLabToShow][4].day}}: {{scheduleList[idLabToShow][4].openingTime}}-{{scheduleList[idLabToShow][4].closingTime}} </mat-card-subtitle>
             </mat-card-header>
         </mat-card>
     </p>

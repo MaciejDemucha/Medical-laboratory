@@ -22,3 +22,13 @@ mat-card-header {
 #map {
     height: 100%;
   }
+
+  /* Structure */
+table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }

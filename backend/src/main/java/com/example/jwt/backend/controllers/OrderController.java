@@ -37,7 +37,7 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseEntity<OrderDetailsDto> generateVoucher(@RequestBody @Valid OrderDetailsDto details) throws IOException, WriterException {
-        Voucher voucher = new Voucher(null, details.getFirstName(), details.getLastName(), details.getBucket());
+        Voucher voucher = new Voucher(null, details.getFirstName(), details.getLastName(), false, details.getBucket());
         Voucher savedVoucher = voucherRepository.save(voucher);
 
         byte[] attachment = PdfService.generateVoucher(details, savedVoucher.getId());

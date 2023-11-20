@@ -1,21 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Laboratory } from '../laboratory';
 import { Schedule } from '../schedule';
 import { MapMarker } from '@angular/google-maps';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { Address } from '../address';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-laboratories',
   templateUrl: './laboratories.component.html',
-  styleUrls: ['./laboratories.component.css']
+  styleUrls: ['./laboratories.component.css'],
+  standalone: true,
+  imports: [CommonModule,MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatMenuModule, MatCardModule],
 })
 export class LaboratoriesComponent implements OnInit {
   
   addressList: { [key: number]: any } = {};
   labs: Laboratory[] = [];
   scheduleList: { [key: number]: any } = {};
+  dataSource: MatTableDataSource<Laboratory> = new MatTableDataSource(this.labs);
+  displayedColumns: string[] = ['Ulica', 'Kod pocztowy', 'Miasto', 'Wybierz placówkę'];
+  idLabToShow: number = 0;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   
   
   markerOptions: google.maps.MarkerOptions = {draggable: false};
@@ -40,10 +55,15 @@ export class LaboratoriesComponent implements OnInit {
       `http://localhost:8080/laboratories`
     ).subscribe(data => {
       this.labs = data
+      this.dataSource = new MatTableDataSource(this.labs);
+      this.dataSource.paginator = this.paginator;
       this.labs.forEach((lab) => {
          this.getLaboratorySchedule(lab.id);
          this.getLaboratoryAddress(lab.id);
      });
+     console.log(this.scheduleList)
+     console.log(this.labs)
+
     }
       ,
       (error) => {
@@ -61,6 +81,11 @@ export class LaboratoriesComponent implements OnInit {
         });
   }
 
+  findLabById(id: number){
+    let foundLab = this.labs.find(lab => lab.id === id);
+    return foundLab;
+  }
+
   getLaboratoryAddress(id: number): void {
     this.http.get<Address[]> (
       `http://localhost:8080/laboratories/address/${id}`
@@ -70,8 +95,9 @@ export class LaboratoriesComponent implements OnInit {
         });
   }
 
-  chooseLabGeocode(address: string): void{ 
+  chooseLabGeocode(address: string, id:number): void{ 
     this.geocode({ address: address });
+    this.idLabToShow = id;
   }
 
   geocode(request: google.maps.GeocoderRequest): void {
@@ -98,5 +124,13 @@ export class LaboratoriesComponent implements OnInit {
       });
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
  
 }

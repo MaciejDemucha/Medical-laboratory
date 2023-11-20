@@ -38,8 +38,7 @@ import { AddResultsComponent } from './add-results/add-results.component';
     HeaderComponent,
     LoginFormComponent,
     ClientResultSubmitComponent,
-    LaboratoriesComponent,
-    
+   
    
   ],
   imports: [
@@ -65,6 +64,7 @@ import { AddResultsComponent } from './add-results/add-results.component';
     ErrorDialogComponent,
     AddPatientComponent,
     AddResultsComponent,
+    LaboratoriesComponent,
   ],
   providers: [AxiosService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],

@@ -28,6 +28,10 @@ public class Voucher {
     @Size(max = 100)
     private String lastName;
 
+    @Column(name = "wasUsed", nullable = false)
+    @Size(max = 100)
+    private boolean wasUsed;
+
     @ManyToMany
     @JoinTable(name = "examination_offer_voucher", joinColumns = @JoinColumn(name = "voucher_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "examination_id", referencedColumnName = "id"))
     private Collection<ExaminationOffer> examinations;
