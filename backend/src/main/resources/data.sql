@@ -1,4 +1,7 @@
-INSERT INTO employee (id,title, first_name, last_name, login, password) VALUES ('1','dr', 'Jan', 'Nowak', 'sd', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.');
+
+INSERT INTO employee (id,role, title, first_name, last_name, login, password) VALUES ('1','doctor','dr', 'Jan', 'Nowak', 'sd', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.'),
+                                                                               ('2','admin', '','Andrzej', 'Nowak', 'admin', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.'),
+                                                                               ('3','employee','mgr', 'Anna', 'Nowak', 'an', '$2a$10$LmlgQsTi.m24dKZb4v0w...oeHin0qjqopDzJCt42cmhzDezOrKR.');
 
 INSERT INTO gender (name) VALUES ('male');
 INSERT INTO gender (name) VALUES ('female');
@@ -24,6 +27,14 @@ INSERT INTO schedule (id, laboratory_id, day, opening_time, closing_time) VALUES
                                                                   (8,2,'Środa', '08:30', '16:30'),
                                                                   (9,2,'Czwartek', '09:30', '18:30'),
                                                                   (10,2,'Piątek', '10:00', '19:00');
+
+
+INSERT INTO patient (gender_id, address_id, employee_id, pesel, first_name, last_name, birth_date,phone, email) VALUES ((SELECT id
+                                                                                                                         FROM gender
+                                                                                                                         WHERE name = 'male'), 1, 1, '01300703817', 'Maciej', 'Demucha', '2001-10-07', '098765432', 'maciej.demucha@interia.pl');
+INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_date, phone, email) VALUES ((SELECT id
+                                                                                                             FROM gender
+                                                                                                             WHERE name = 'female'), 1, '01310688261', 'Anna', 'Nowak', '2001-11-06', '123456789', 'anna.nowak@gmail.com');
 
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (1,(SELECT id FROM gender WHERE name = 'male'), 4.23, 9.07, 'tys/μl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (2,(SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
@@ -58,95 +69,31 @@ INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (30, (SELECT id FR
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (3,(SELECT id FROM gender WHERE name = 'female'), 33.0, 193.0, 'μg/dl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (4,(SELECT id FROM gender WHERE name = 'female'), 30.0, 400.00, 'mln/μl');
 
-INSERT INTO parameter (id, norm_range_id,  name, value) VALUES (1,1, 'Leukocyty', 9.77);
-INSERT INTO parameter (id, norm_range_id,name, value) VALUES (2,2, 'Erytrocyty', 5.44);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (5, 5, 'Name 5', 5.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (6, 6, 'Name 6', 6.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (7, 7, 'Name 7', 7.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (8, 8, 'Name 8', 8.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (9, 9, 'Name 9', 9.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (10, 10, 'Name 10', 10.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (11, 11, 'Name 11', 11.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (12, 12, 'Name 12', 12.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (13, 13, 'Name 13', 13.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (14, 14, 'Name 14', 14.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (15, 15, 'Name 15', 15.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (16, 16, 'Name 16', 16.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (17, 17, 'Name 17', 17.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (18, 18, 'Name 18', 18.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (19, 19, 'Name 19', 19.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (20, 20, 'Name 20', 20.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (21, 21, 'Name 21', 21.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (22, 22, 'Name 22', 22.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (23, 23, 'Name 23', 23.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (24, 24, 'Name 24', 24.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (25, 25, 'Name 25', 25.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (26, 26, 'Name 26', 26.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (27, 27, 'Name 27', 27.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (28, 28, 'Name 28', 28.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (29, 29, 'Name 29', 29.0);
-INSERT INTO parameter (id, norm_range_id, name, value) VALUES (30, 30, 'Name 30', 30.0);
+INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (1234, (SELECT id
+                                                                               FROM patient
+                                                                               WHERE pesel = '01300703817'), 'Morfologia krwi', '2023-07-10');
+INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (5678, (SELECT id
+                                                                               FROM patient
+                                                                               WHERE pesel = '01300703817'), 'Żelazo, ferrytyna', '2023-12-02');
+INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (9876, (SELECT id
+                                                                               FROM patient
+                                                                               WHERE pesel = '01310688261'), 'Żelazo, ferrytyna', '2023-01-01');
 
 
-INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (3,3, 'Żelazo', 174.0);
-INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (4,4, 'Ferrytyna', 106.0);
-INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (31,3, 'Żelazo', 145.0);
-INSERT INTO parameter (id,  norm_range_id,name, value) VALUES (32,4, 'Ferrytyna', 92.0);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (1,1,1234, 'Leukocyty', 9.77);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (2,2,1234, 'Erytrocyty', 5.44);
 
 
-INSERT INTO patient (gender_id, address_id, employee_id, pesel, first_name, last_name, birth_date,phone, email) VALUES ((SELECT id
-                                                                                   FROM gender
-                                                                                   WHERE name = 'male'), 1, 1, '01300703817', 'Maciej', 'Demucha', '2001-10-07', '098765432', 'maciej.demucha@interia.pl');
-INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_date, phone, email) VALUES ((SELECT id
-                                                                                               FROM gender
-                                                                                               WHERE name = 'female'), 1, '01310688261', 'Anna', 'Nowak', '2001-11-06', '123456789', 'anna.nowak@gmail.com');
 
-INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (1, (SELECT id
-                                                                    FROM patient
-                                                                    WHERE pesel = '01300703817'), 'Morfologia krwi','1234', '2023-07-10');
-INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (3, (SELECT id
-                                                                                   FROM patient
-                                                                                   WHERE pesel = '01300703817'), 'Żelazo, ferrytyna','5678', '2023-12-02');
-INSERT INTO examination (id, patient_id, name, number, date_performed) VALUES (2, (SELECT id
-                                                                           FROM patient
-                                                                           WHERE pesel = '01310688261'), 'Żelazo, ferrytyna','0987', '2023-01-01');
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (3,3,9876, 'Żelazo', 174.0);
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (4,4,9876, 'Ferrytyna', 106.0);
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (31,3,5678, 'Żelazo', 145.0);
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (32,4,5678, 'Ferrytyna', 92.0);
 
-INSERT INTO diagnosis (id, examination_id, description) VALUES (1, 1, "Morfologia krwi wykazała łagodne zwiększenie liczby leukocytów, które jest lekko powyżej normy referencyjnej. Wynik ten może być związany z reakcją organizmu na infekcję, stan zapalny lub inny czynnik stresowy. Zaleca się dalszą diagnostykę w celu ustalenia przyczyny tego zjawiska, a także monitorowanie pacjenta pod kątem ewentualnych objawów klinicznych. W razie potrzeby mogą być zalecane dodatkowe badania laboratoryjne oraz konsultacja specjalisty.
+
+
+
+
+INSERT INTO diagnosis (id, examination_id, description) VALUES (1, 1234, "Morfologia krwi wykazała łagodne zwiększenie liczby leukocytów, które jest lekko powyżej normy referencyjnej. Wynik ten może być związany z reakcją organizmu na infekcję, stan zapalny lub inny czynnik stresowy. Zaleca się dalszą diagnostykę w celu ustalenia przyczyny tego zjawiska, a także monitorowanie pacjenta pod kątem ewentualnych objawów klinicznych. W razie potrzeby mogą być zalecane dodatkowe badania laboratoryjne oraz konsultacja specjalisty.
 
 Ważne jest, aby tę diagnozę interpretować w kontekście pełnej historii medycznej pacjenta oraz ewentualnych objawów klinicznych, aby ustalić dokładną przyczynę leukocytozy.");
-
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 1);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 2);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 5);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 6);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 7);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 8);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 9);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 10);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 11);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 12);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 13);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 14);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 15);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 16);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 17);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 18);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 19);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 20);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 21);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 22);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 23);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 24);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 25);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 26);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 27);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 28);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 29);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (1, 30);
-
-
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (2, 3);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (2, 4);
-
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (3, 31);
-INSERT INTO examination_parameter (examination_id, parameter_id) VALUES (3, 32);

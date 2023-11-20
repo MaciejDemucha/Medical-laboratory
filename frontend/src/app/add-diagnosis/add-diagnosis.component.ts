@@ -50,6 +50,7 @@ export class AddDiagnosisComponent implements OnInit {
 	localStorage.setItem('isAuthenticated', 'false');
     this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
+	localStorage.removeItem('role');
     this.router.navigate(['/']);
   }
 

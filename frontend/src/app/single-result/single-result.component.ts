@@ -19,13 +19,14 @@ import { Doctor } from '../doctor';
 import { DialogDataComponent } from '../dialog-data/dialog-data.component';
 import { Diagnosis } from '../diagnosis';
 import { catchError, of, throwError } from 'rxjs';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-single-result',
   templateUrl: './single-result.component.html',
   styleUrls: ['./single-result.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule,MatTableModule, MatDialogModule]
+  imports: [MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule,MatTableModule, MatDialogModule, MatSnackBarModule]
 })
 export class SingleResultComponent {
   examinationNumber: string = "";
@@ -38,7 +39,7 @@ export class SingleResultComponent {
   displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', /*'Wykres',*/ 'Powiadomienie'];
   doctors: Doctor[] = [];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
+  constructor(private _snackBar: MatSnackBar, private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog){
     
   }
 
@@ -57,7 +58,7 @@ ngOnInit(): void{
     this.getExaminationParametersAndNorms(this.examination.id);
     this.getDiagnosis(this.examination.id);
   },
-    error => alert("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
+    error => this.openSnackBar("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
 
   this.http.get<Patient> (
     `http://localhost:8080/patients/bypesel/${this.pesel}`
@@ -128,18 +129,12 @@ ngOnInit(): void{
       }
     );
   }
+  openSnackBar(message: string) {
+		this._snackBar.open(message);
+	  }
 }
   
 
-/*export class TableBasicExample {
-  
-}*/
 
-/*export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}*/
 
 

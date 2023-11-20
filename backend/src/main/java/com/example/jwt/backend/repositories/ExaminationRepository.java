@@ -13,5 +13,5 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
 
 
     List<Examination> findByPatientId(Long patientId, Sort sort);
-    Optional<Examination> findByNumber(String number);
+    //Optional<Examination> findByNumber(String number);
 }

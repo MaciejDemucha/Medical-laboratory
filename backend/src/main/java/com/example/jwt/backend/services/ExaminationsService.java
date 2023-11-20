@@ -1,15 +1,11 @@
 package com.example.jwt.backend.services;
 
 import com.example.jwt.backend.dtos.ExaminationDto;
-import com.example.jwt.backend.dtos.ParameterDto;
-import com.example.jwt.backend.dtos.PatientDto;
 import com.example.jwt.backend.entites.Examination;
-import com.example.jwt.backend.entites.Parameter;
+import com.example.jwt.backend.entites.Patient;
 import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.ExaminationMapper;
-import com.example.jwt.backend.mappers.ParameterMapper;
 import com.example.jwt.backend.repositories.ExaminationRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -41,22 +37,24 @@ public class ExaminationsService {
     }
 
 
-    public ExaminationDto getExaminationByNumber(String number, String pesel){
+    public ExaminationDto getExaminationByNumber(Long number, String pesel){
         boolean isPatient = patientService.isPatientByPesel(pesel);
         if(!isPatient){
             throw new AppException("Patient not found", HttpStatus.NOT_FOUND);
         }
-        Examination examination = examinationRepository.findByNumber(number)
+        Examination examination = examinationRepository.findById(number)
                 .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
 
         return examinationMapper.toExaminationDto(examination);
     }
 
-    public ExaminationDto createExamination(ExaminationDto examinationDto) {
+    public Examination createExamination(ExaminationDto examinationDto, Patient patient) {
         Examination examination = examinationMapper.toExamination(examinationDto);
+        examination.setPatient(patient);
+
         Examination createdExamination =  examinationRepository.save(examination);
 
-        return examinationMapper.toExaminationDto(createdExamination);
+        return createdExamination;
 
     }
 

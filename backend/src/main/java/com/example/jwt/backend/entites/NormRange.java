@@ -33,13 +33,8 @@ public class NormRange {
     private Float max;
 
     @ManyToOne
-    @JoinColumn(name="gender_id", nullable = false)
+    @JoinColumn(name="gender_id")
     private Gender gender;
-
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parameter_id", referencedColumnName = "id")
-    //@OneToOne(mappedBy = "normRange")
-    private Parameter parameter;*/
 
     @OneToMany(mappedBy="normRange")
     private Set<Parameter> parameters;

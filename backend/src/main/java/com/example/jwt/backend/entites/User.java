@@ -35,7 +35,7 @@ public class User {
     @Size(max = 100)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Size(max = 100)
     private String login;
 
@@ -46,8 +46,8 @@ public class User {
     @OneToMany(mappedBy="employee")
     private Set<Patient> patients;
 
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();*/
+    @Column(nullable = false)
+    @Size(max = 100)
+    private String role;
+
 }

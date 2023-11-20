@@ -14,10 +14,11 @@ import java.util.List;
 public class UserDto {
 
     private Long id;
+    private String role;
     private String title;
     private String firstName;
     private String lastName;
     private String login;
     private String token;
-   // private List<RoleDto> roles;
+
 }

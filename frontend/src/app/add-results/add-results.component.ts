@@ -8,6 +8,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { AuthService } from '../auth.service';
+import { UploadDialogComponent } from '../upload-dialog/upload-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 export interface PeriodicElement {
   name: string;
@@ -21,7 +23,7 @@ export interface PeriodicElement {
   templateUrl: './add-results.component.html',
   styleUrls: ['./add-results.component.css'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatDialogModule],
 })
 export class AddResultsComponent implements OnInit, AfterViewInit{
   patients: Patient[] = [];
@@ -29,7 +31,7 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Patient> = new MatTableDataSource(this.patients);
 
-  constructor(private authService: AuthService,private http: HttpClient, private router: Router){
+  constructor(private authService: AuthService,private http: HttpClient, private router: Router, public dialog: MatDialog){
     
   }
 
@@ -62,7 +64,6 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
     ).subscribe(data => {
       this.patients = data;
       this.dataSource = new MatTableDataSource(this.patients);
-      console.log(this.dataSource.data)
       this.dataSource.paginator = this.paginator;
 
     },
@@ -74,23 +75,17 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
 			  });
   }
 
-  addResult(patient: any) {
-    const authToken = localStorage.getItem('auth_token');
-		const headers = new HttpHeaders({
-			'Authorization': `Bearer ${authToken}`
-		  });
-    this.http.get<Patient[]> (
-      `http://localhost:8080/patients`, {headers}
-    ).subscribe(data => {
-      
-
-    },
-      (error) => {
-				console.log(error);
-				if(error.status === 401){
-					this.onAuthFailure();
-				}
-			  });
+  addResult(patient: Patient) {
+   
+      const dialogRef = this.dialog.open(UploadDialogComponent, {
+        data: {
+          patientId: patient.id,
+        },
+      });
+     
+      dialogRef.afterClosed().subscribe(result => {
+       
+      });
   }
 
   showPatientExaminations(patient: Patient): void{
@@ -104,6 +99,7 @@ export class AddResultsComponent implements OnInit, AfterViewInit{
     localStorage.setItem('isAuthenticated', 'false');
     this.authService.isAuthenticated = false;
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('role');
     this.router.navigate(['/']);
     }
 

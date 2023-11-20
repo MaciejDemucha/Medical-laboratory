@@ -3,6 +3,7 @@ package com.example.jwt.backend.services;
 import com.example.jwt.backend.dtos.NormRangeDto;
 import com.example.jwt.backend.dtos.ParamWithNormDto;
 import com.example.jwt.backend.dtos.ParameterDto;
+import com.example.jwt.backend.entites.Examination;
 import com.example.jwt.backend.entites.NormRange;
 import com.example.jwt.backend.entites.Parameter;
 import com.example.jwt.backend.mappers.NormRangeMapper;
@@ -11,9 +12,7 @@ import com.example.jwt.backend.repositories.ParameterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class ParameterService {
     private final NormRangeMapper normRangeMapper;
 
     public List<ParameterDto> getParameterByExaminationId(Long id){
-        return parameterMapper.toParameterDtos(parameterRepository.findByExaminations_Id(id));
+        return parameterMapper.toParameterDtos(parameterRepository.findByExamination_Id(id));
     }
 
     public NormRangeDto getNormRangeByParameterId(Long id){
@@ -48,6 +47,15 @@ public class ParameterService {
             paramsToSend.add(paramAndNorm);
         }
         return paramsToSend;
+    }
+
+    public Parameter createParameter(ParameterDto parameterDto, NormRange norm, Examination examination){
+        Parameter parameter = parameterMapper.toParameter(parameterDto);
+        parameter.setNormRange(norm);
+        parameter.setExamination(examination);
+
+        Parameter createdParameter = parameterRepository.save(parameter);
+        return createdParameter;
     }
 }
 

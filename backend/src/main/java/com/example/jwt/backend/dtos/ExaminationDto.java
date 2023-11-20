@@ -16,10 +16,9 @@ import java.time.LocalDate;
 public class ExaminationDto {
 
     private Long id;
+    private Long patientId;
     @NotNull
     private String name;
-    @NotNull
-    private String number;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private Date datePerformed; //TODO: naprawić
+    private Date datePerformed;
 }

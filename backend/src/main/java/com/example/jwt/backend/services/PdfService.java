@@ -94,7 +94,7 @@ public class PdfService {
         personalInfoTable.addCell(new Cell().add("Nazwisko").setFont(font));
         personalInfoTable.addCell(new Cell().add(patient.getLastName()).setFont(font));
         personalInfoTable.addCell(new Cell().add("Numer badania").setFont(font));
-        personalInfoTable.addCell(new Cell().add(String.valueOf(examinationDto.getNumber())).setFont(font));
+        personalInfoTable.addCell(new Cell().add(String.valueOf(examinationDto.getId())).setFont(font));
         personalInfoTable.addCell(new Cell().add("Data urodzenia").setFont(font));
         personalInfoTable.addCell(new Cell().add(patient.getBirthDate().toString()).setFont(font));
         personalInfoTable.addCell(new Cell().add("Nazwa badania").setFont(font));

@@ -27,9 +27,11 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { LaboratoriesComponent } from './laboratories/laboratories.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component'
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddPatientComponent } from './add-patient/add-patient.component';
 import { AddResultsComponent } from './add-results/add-results.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
 
 
 @NgModule({
@@ -38,7 +40,7 @@ import { AddResultsComponent } from './add-results/add-results.component';
     HeaderComponent,
     LoginFormComponent,
     ClientResultSubmitComponent,
-   
+    AddEmployeeComponent,
    
   ],
   imports: [
@@ -65,6 +67,8 @@ import { AddResultsComponent } from './add-results/add-results.component';
     AddPatientComponent,
     AddResultsComponent,
     LaboratoriesComponent,
+    MatSnackBarModule,
+    UploadDialogComponent,
   ],
   providers: [AxiosService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],

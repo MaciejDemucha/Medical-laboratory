@@ -6,6 +6,7 @@ import lombok.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,8 +24,6 @@ public class Examination {
     @Column
     private String name;
     @Column
-    private String number;
-    @Column
     private LocalDate datePerformed;
 
     @ManyToOne
@@ -34,7 +33,7 @@ public class Examination {
     @OneToOne(mappedBy = "examination")
     private Diagnosis diagnosis;
 
-    //@ManyToMany
-    //@JoinTable(name = "examination_parameter", joinColumns = @JoinColumn(name = "examination_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"))
-    //private Collection<Parameter> parameters;
+    @OneToMany(mappedBy="examination")
+    private Set<Parameter> parameters;
+
 }

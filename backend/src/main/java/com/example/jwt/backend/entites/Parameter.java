@@ -28,16 +28,15 @@ public class Parameter {
     @Size(max = 100)
     private Float value;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "norm_range_id", referencedColumnName = "id")
-    //@OneToOne(mappedBy = "parameter")
-    //private NormRange normRange;
-
     @ManyToOne
     @JoinColumn(name="norm_range_id")
     private NormRange normRange;
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name = "examination_parameter", joinColumns = @JoinColumn(name = "parameter_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "examination_id", referencedColumnName = "id"))
-    private Collection<Examination> examinations;
+    private Collection<Examination> examinations;*/
+
+    @ManyToOne
+    @JoinColumn(name="examination_id", nullable = false)
+    private Examination examination;
 }

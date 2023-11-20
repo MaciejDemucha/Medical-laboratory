@@ -57,11 +57,12 @@ public class UserService {
         return userMapper.toUserDto(user);
     }
 
-    public List<DoctorNameDto> getAll(){
+    public List<DoctorNameDto> getAllDoctors(){
         List<UserDto> doctors = userMapper.toUserDtos(userRepository.findAll());
         List<DoctorNameDto> doctorNames = new LinkedList<>();
         for (UserDto doctor:doctors) {
-            doctorNames.add(new DoctorNameDto(doctor.getId(),doctor.getTitle(),doctor.getFirstName(),doctor.getLastName()));
+            if(Objects.equals(doctor.getRole(), "doctor"))
+                doctorNames.add(new DoctorNameDto(doctor.getId(),doctor.getTitle(),doctor.getFirstName(),doctor.getLastName()));
         }
         return doctorNames;
     }

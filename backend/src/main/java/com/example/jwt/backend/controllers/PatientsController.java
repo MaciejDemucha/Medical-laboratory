@@ -46,7 +46,7 @@ public class PatientsController {
 
     @GetMapping("/doctors")
     public ResponseEntity<List<DoctorNameDto>> getDoctors(){
-        return ResponseEntity.ok(userService.getAll());
+        return ResponseEntity.ok(userService.getAllDoctors());
     }
 
     @PostMapping("/patients")

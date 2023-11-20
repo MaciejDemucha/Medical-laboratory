@@ -18,8 +18,6 @@ export class AppComponent implements OnInit {
   title: string = 'Laboratorium medyczne';
   patients: Patient[] = [];
   componentToShow: string = "";
-  //isAuthenticated: boolean = false;
-  //loggedId: number|null = null;
 
   constructor(private authService: AuthService, private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
 
@@ -33,26 +31,12 @@ export class AppComponent implements OnInit {
     return this.authService.loggedId;
   }
 
-  homeIcon() {
-	this.componentToShow = "";
-	if(this.getIsAuthenticated() === false)
-		this.router.navigate(['/shop']);
-	else
-		this.router.navigate(['/patients']);
-	
+  public getRole(): any{
+    return this.authService.role;
   }
 
   ngOnInit(): void{
-	//this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-	//if(this.isAuthenticated)
-	//this.loggedId = parseInt(localStorage.getItem('loggedId') ?? "", 10);
-
-	/*this.router.events.subscribe((event) => {
-		const routeConfig = this.route.snapshot?.routeConfig;
-		if (event instanceof NavigationEnd && routeConfig && routeConfig.path === '') {
-		  this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-		}
-	  });*/
+	console.log(this.getRole())
   }
 
   onPatientsTab(): void{
@@ -117,13 +101,18 @@ export class AppComponent implements OnInit {
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);
 				this.authService.loggedId = response.data.id;
+				this.authService.role = response.data.role;
 		        this.componentToShow = "restricted";
-				//this.isAuthenticated = true;
 				this.authService.isAuthenticated = true;
 				localStorage.setItem('isAuthenticated', 'true');
 				if(this.authService.loggedId?.toString() !== undefined)
 					localStorage.setItem('loggedId', this.authService.loggedId?.toString());
-				this.onPatientsTab();
+				if(this.authService.role != null)
+					localStorage.setItem('role', this.authService.role);
+				if(this.getRole() == 'doctor')
+					this.onPatientsTab();
+				else if(this.getRole() == 'employee')
+					this.onAddResultTab();
 
 		    }).catch(
 		    error => {
@@ -169,10 +158,11 @@ export class AppComponent implements OnInit {
 	  }
 
 	onLogout(): void {
-		//this.isAuthenticated = false;
+		
 		this.authService.isAuthenticated = false;
 		localStorage.setItem('isAuthenticated', 'false');
 		localStorage.removeItem('auth_token');
+		localStorage.removeItem('role');
 		this.showComponent("login");
 	}
 

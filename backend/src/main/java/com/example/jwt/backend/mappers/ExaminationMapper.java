@@ -13,7 +13,6 @@ public interface ExaminationMapper {
     Examination toExamination(ExaminationDto examinationDto);
     ExaminationDto toExaminationDto(Examination examination);
 
-    @Mapping(source = "number", target = "number")
     List<ExaminationDto> toExaminationDtos(List<Examination> examinations);
 
     void updateExamination(@MappingTarget Examination target, Examination source);
