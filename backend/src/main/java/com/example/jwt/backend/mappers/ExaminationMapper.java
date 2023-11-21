@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ExaminationMapper {
     Examination toExamination(ExaminationDto examinationDto);
+    @Mapping(source = "patient.id", target = "patientId")
     ExaminationDto toExaminationDto(Examination examination);
 
     List<ExaminationDto> toExaminationDtos(List<Examination> examinations);

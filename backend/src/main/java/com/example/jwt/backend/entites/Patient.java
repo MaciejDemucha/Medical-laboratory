@@ -23,7 +23,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pesel", nullable = false)
+    @Column(name = "pesel", nullable = false, unique = true)
     private String pesel;
 
     @Column(name = "first_name", nullable = false)
