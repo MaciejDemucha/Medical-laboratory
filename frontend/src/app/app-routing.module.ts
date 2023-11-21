@@ -10,11 +10,12 @@ import { LaboratoriesComponent } from './laboratories/laboratories.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { AddPatientComponent } from './add-patient/add-patient.component';
 import { AddResultsComponent } from './add-results/add-results.component';
+import { ResultsShowOnlyComponent } from './results-show-only/results-show-only.component';
 
 const routes: Routes = [
   {path: 'patients', component: PatientDisplayComponent},
   {path: 'patients/results', component: ResultsDisplayComponent},
-  //{path: 'addExamination', component: AddExaminationComponent},
+  {path: 'patients/resultsshowonly', component: ResultsShowOnlyComponent},
   {path: 'singleresult/result', component: SingleResultComponent},
   {path: 'shop', component: ExaminationClientComponent},
   {path: 'singleresult', component: ClientResultSubmitComponent},
@@ -23,7 +24,6 @@ const routes: Routes = [
   {path: 'bucket', component: BucketComponent},
   {path: 'addpatient', component: AddPatientComponent},
   {path: 'addresult', component: AddResultsComponent},
-  //{ path: '', redirectTo: '/shop', pathMatch: 'full' },
 ];
 
 @NgModule({

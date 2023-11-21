@@ -21,15 +21,12 @@ public class NormRange {
     private Long id;
 
     @Column(name = "unit", nullable = false)
-    @Size(max = 100)
     private String unit;
 
     @Column(name = "min", nullable = false)
-    @Size(max = 100)
     private Float min;
 
     @Column(name = "max", nullable = false)
-    @Size(max = 100)
     private Float max;
 
     @ManyToOne

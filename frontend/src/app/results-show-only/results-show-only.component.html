@@ -90,10 +90,6 @@
                   {{examination.datePerformed}}
               </mat-panel-description>
               </div>
-            
-              <button *ngIf="!diagnosisList[examination.id]?.description" (click)="addDiagnosis(examination.id)" class="button-add" mat-button>Dodaj diagnozę</button>
-              <button *ngIf="diagnosisList[examination.id]?.description" (click)="editDiagnosis(examination.id)" class="button-add" mat-button>Edytuj diagnozę</button>
-            
               <button class="button-pdf" mat-button (click)="getPdfResults(examination.id, patient.id)">Pobierz PDF</button>
                 </mat-expansion-panel>
                 

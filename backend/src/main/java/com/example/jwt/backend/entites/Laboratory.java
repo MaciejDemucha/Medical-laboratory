@@ -22,7 +22,6 @@ public class Laboratory {
     private Long id;
 
     @Column(name = "phone", nullable = false)
-    @Size(max = 100)
     private String phone;
 
     @ManyToOne

@@ -24,13 +24,13 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-results-display',
-  templateUrl: './results-display.component.html',
-  styleUrls: ['./results-display.component.css'],
+  selector: 'app-results-show-only',
+  templateUrl: './results-show-only.component.html',
+  styleUrls: ['./results-show-only.component.css'],
   standalone: true,
   imports: [MatIconModule,MatCardModule, MatButtonModule, MatExpansionModule, FormsModule, CommonModule , MatTableModule, MatFormFieldModule, MatInputModule, MatSliderModule]
 })
-export class ResultsDisplayComponent {
+export class ResultsShowOnlyComponent {
   patientId: number = 0;
   patient: Patient = new Patient(0, "", "", "", "");
   examinations: Examination[] = [];

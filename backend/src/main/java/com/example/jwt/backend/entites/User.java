@@ -24,30 +24,24 @@ public class User {
     private Long id;
 
     @Column(name = "title")
-    @Size(max = 100)
     private String title;
 
     @Column(name = "first_name", nullable = false)
-    @Size(max = 100)
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @Size(max = 100)
     private String lastName;
 
     @Column(nullable = false, unique = true)
-    @Size(max = 100)
     private String login;
 
     @Column(nullable = false)
-    @Size(max = 100)
     private String password;
 
     @OneToMany(mappedBy="employee")
     private Set<Patient> patients;
 
     @Column(nullable = false)
-    @Size(max = 100)
     private String role;
 
 }

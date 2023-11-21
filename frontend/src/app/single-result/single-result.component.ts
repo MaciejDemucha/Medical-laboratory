@@ -33,7 +33,7 @@ export class SingleResultComponent {
   pesel: string = "";
   patient: Patient = new Patient(0, "", "", "", "");
   patientsDoctor = new Doctor(0, "", "", "");
-  examination: Examination = new Examination(0, "", "", "");
+  examination: Examination = new Examination(0,0, "", "", "");
   diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
   parametersWithNorms: ParameterWithNorm[] = [];
   displayedColumns: string[] = ['Nazwa', 'Wartość', 'Przedział', /*'Wykres',*/ 'Powiadomienie'];

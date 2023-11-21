@@ -5,8 +5,11 @@
     (change)="onFileSelected($event)" #fileUpload>
 <div style="margin-top: 10px;">
     <p>Plik musi być w następującym formacie:</p>
-    <p>parametr,wartość,dolna granica normy, górna granica normy, jednostka</p>
-    <p>np. Żelazo,10.0,20.0,40.0,μg/dl</p>
+    <p>Pierwszy rekord: Nazwa badania; data: dd.mm.rrrr</p>
+    <p>parametr; wartość; dolna granica normy; górna granica normy; jednostka np.</p>
+    <p>Badanie xyz; 30.12.2020</p>
+    <p>Żelazo;10.0;20.0;40.0;μg/dl</p>
+    <p>itd.</p>
 </div>
-<button (click)="uploadFile()" mat-flat-button>Wyślij</button>
+<button (click)="uploadFile(data.patientId)" mat-flat-button>Wyślij</button>
 </div>

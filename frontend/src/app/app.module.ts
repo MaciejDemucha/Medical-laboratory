@@ -32,6 +32,7 @@ import { AddPatientComponent } from './add-patient/add-patient.component';
 import { AddResultsComponent } from './add-results/add-results.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
+import { ResultsShowOnlyComponent } from './results-show-only/results-show-only.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
     MatButtonModule,
     PatientDisplayComponent,
     ResultsDisplayComponent,
+    ResultsShowOnlyComponent,
     SingleResultComponent, 
     MatToolbarModule,
     MatIconModule,

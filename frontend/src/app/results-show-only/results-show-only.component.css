@@ -1,0 +1,58 @@
+.mat-mdc-form-field + .mat-mdc-form-field {
+	margin-left: 8px;
+  }
+
+  .dropdown{
+    margin-top: 50px;
+  }
+
+  ul {
+    list-style-type: none;
+}
+
+li {
+  margin: 20px;
+}
+
+.info{
+  margin-top: 40px;
+}
+.patient-info{
+  margin-top: 50px;
+}
+
+.button-add {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.button-pdf {
+  text-align: right;
+  margin-top: 10px;
+  margin-left: auto;
+}
+
+table {
+  width: 100%;
+  box-shadow: none;
+}
+
+/*.diagnosis-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  padding: 30px;
+}
+
+.diagnosis-full-width {
+  width: 100%;
+ 
+}
+
+.diagnosis-input {
+  height: auto;
+}*/
+
+mat-slider {
+  width: 220px;
+}

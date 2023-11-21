@@ -20,15 +20,12 @@ public class Address {
     private Long id;
 
     @Column(name = "street", nullable = false)
-    @Size(max = 100)
     private String street;
 
     @Column(name = "postal_code", nullable = false)
-    @Size(max = 100)
     private String postalCode;
 
     @Column(name = "city", nullable = false)
-    @Size(max = 100)
     private String city;
 
     @OneToMany(mappedBy="address")

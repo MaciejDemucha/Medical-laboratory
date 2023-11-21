@@ -21,11 +21,9 @@ public class Parameter {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    @Size(max = 100)
     private String name;
 
     @Column(name = "value", nullable = false)
-    @Size(max = 100)
     private Float value;
 
     @ManyToOne

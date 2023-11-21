@@ -4,18 +4,21 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import {MatListModule} from '@angular/material/list';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../auth.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-dialog',
   templateUrl: './upload-dialog.component.html',
   styleUrls: ['./upload-dialog.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, NgIf, CommonModule, MatListModule, MatIconModule],
+  imports: [MatDialogModule, MatButtonModule, NgIf, CommonModule, MatListModule, MatIconModule, MatSnackBarModule],
 })
 export class UploadDialogComponent {
-constructor(@Inject(MAT_DIALOG_DATA) public data: UploadDialogData, private http: HttpClient){}
+constructor(@Inject(MAT_DIALOG_DATA) public data: UploadDialogData, private http: HttpClient,private authService: AuthService,private _snackBar: MatSnackBar, private router: Router){}
 fileName = '';
 file: File|null = null;
 
@@ -25,7 +28,7 @@ onFileSelected(event: any) {
 
 }
 
-uploadFile() {
+uploadFile(patientId: number) {
 
   if (this.file) {
 
@@ -33,14 +36,42 @@ uploadFile() {
 
       const formData = new FormData();
 
-      formData.append("thumbnail", this.file);
+      const authToken = localStorage.getItem('auth_token');
+      const jsonHeaders = new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`
+      });
 
-      const upload$ = this.http.post("http://localhost:8080/examinations", formData);
+      formData.append('file', this.file);
+      formData.append('patientId', patientId.toString());
+      
 
-      upload$.subscribe();
+    this.http.post('http://localhost:8080/examinations', formData, { headers: jsonHeaders }).subscribe(
+
+    (response) => {
+      this.openSnackBar("Dodano wyniki"); 
+    },
+    (error) => {
+      console.error(error);
+      if(error.status === 401){
+        this.onAuthFailure();
+      }
+      this.openSnackBar("Błąd. Nie podano pliku we właściwym formacie"); 
+    }
+    );
   }
 }
 
+onAuthFailure(){
+  localStorage.setItem('isAuthenticated', 'false');
+  this.authService.isAuthenticated = false;
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('role');
+  this.router.navigate(['/']);
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message);
+  }
 
 }
 

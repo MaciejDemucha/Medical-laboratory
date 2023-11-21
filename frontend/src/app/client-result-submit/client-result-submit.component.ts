@@ -15,7 +15,7 @@ export class ClientResultSubmitComponent {
 
   number: string = "";
   pesel: string = "";
-  examination: Examination = new Examination(0, "", "", "");
+  examination: Examination = new Examination(0,0 ,"", "", "");
 
   constructor(private _snackBar: MatSnackBar,private http: HttpClient,private router: Router){}
 

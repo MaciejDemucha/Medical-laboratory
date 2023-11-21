@@ -20,7 +20,6 @@ public class Gender {
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
-    @Size(max = 100)
     private String name;
 
     @OneToMany(mappedBy="gender")

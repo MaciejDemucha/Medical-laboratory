@@ -24,36 +24,27 @@ public class Patient {
     private Long id;
 
     @Column(name = "pesel", nullable = false)
-    @Size(max = 100)
     private String pesel;
 
     @Column(name = "first_name", nullable = false)
-    @Size(max = 100)
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @Size(max = 100)
     private String lastName;
 
     @Column(name = "phone", nullable = false)
-    @Size(max = 100)
     private String phone;
 
     @Column(name = "email", nullable = false)
-    @Size(max = 100)
     private String email;
 
     @Column(name = "birth_date", nullable = false)
-    //@Size(max = 100)
-    private Date birthDate; //TODO poprawic
-    //private LocalDate birthDate;
+    private Date birthDate;
 
     @ManyToOne
     @JoinColumn(name="employee_id")
     private User employee;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "address_id", referencedColumnName = "id")
     @ManyToOne
     @JoinColumn(name="address_id")
     private Address address;
@@ -65,5 +56,4 @@ public class Patient {
     @OneToMany(mappedBy="patient")
     private Set<Examination> examinations;
 
-    //TODO: login password
 }

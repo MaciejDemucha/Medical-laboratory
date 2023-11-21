@@ -26,6 +26,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -92,20 +95,33 @@ public class ExaminationsController {
     }
 
 
-    @PostMapping(value = "/examinations", consumes = {"multipart/form-data"})
-    public ResponseEntity<Examination> createExamination(@Valid @RequestBody ExaminationDto examinationDto, @RequestPart("file") MultipartFile file) throws IOException {
-        Patient patient = patientMapper.toPatient(patientService.getPatientById(examinationDto.getPatientId()));
-        Examination examination = examinationsService.createExamination(examinationDto, patient);
+    @PostMapping(value = "/examinations", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Examination> createExamination(@RequestParam("patientId") String patientIdString, @RequestParam("file") MultipartFile file) throws IOException, ParseException {
+
+        Long patientId = Long.parseLong(patientIdString);
         BufferedReader fileReader = new BufferedReader(new
                 InputStreamReader(file.getInputStream(), "UTF-8"));
-        CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT);
+        CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT.withDelimiter(';'));
 
-        Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+        List<CSVRecord> csvRecords = csvParser.getRecords();
 
-        for (CSVRecord csvRecord : csvRecords) {
-            System.out.println(csvRecord.get(0));
-            NormRange norm = normRangeService.createNorm(new NormRangeDto(null,  csvRecord.get(4),Float.parseFloat(csvRecord.get(2)), Float.parseFloat(csvRecord.get(3))));
-            Parameter parameter = parameterService.createParameter(new ParameterDto(null,csvRecord.get(0), Float.parseFloat(csvRecord.get(1))), norm, examination);
+        CSVRecord firstRecord = csvRecords.get(0);
+
+        String pattern = "dd.MM.yyyy";
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
+        java.util.Date utilDate = dateFormat.parse(firstRecord.get(1));
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+        ExaminationDto examinationToCreate = new ExaminationDto(null, /*examinationDto.getPatientId()*/patientId, firstRecord.get(0), sqlDate);
+        Patient patient = patientMapper.toPatient(patientService.getPatientById(/*examinationDto.getPatientId()*/ patientId));
+        Examination examination = examinationsService.createExamination(examinationToCreate, patient);
+
+        for(int i = 1; i < csvRecords.size(); i++){
+
+                CSVRecord csvRecord = csvRecords.get(i);
+                NormRange norm = normRangeService.createNorm(new NormRangeDto(null,  csvRecord.get(4),Float.parseFloat(csvRecord.get(2)), Float.parseFloat(csvRecord.get(3))));
+                Parameter parameter = parameterService.createParameter(new ParameterDto(null,csvRecord.get(0), Float.parseFloat(csvRecord.get(1))), norm, examination);
+
         }
 
         return ResponseEntity.created(URI.create("/examinations/" + examination.getId())).body(examination);
