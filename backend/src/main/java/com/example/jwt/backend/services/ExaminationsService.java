@@ -44,6 +44,9 @@ public class ExaminationsService {
         }
         Examination examination = examinationRepository.findById(number)
                 .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
+        if(!examination.getPatient().getPesel().equals(pesel)){
+            throw new AppException("Not found examination for that pesel", HttpStatus.NOT_FOUND);
+        }
 
         return examinationMapper.toExaminationDto(examination);
     }

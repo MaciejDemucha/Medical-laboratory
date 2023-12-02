@@ -102,25 +102,31 @@ this.http.post<any>(`http://localhost:8080/patients`, data, { headers }).subscri
 );
     }
     else {
-      this.openSnackBar("Nie podano wymaganych danych lub są one niewłaściwe"); 
+      this.openSnackBar("Pacjent o tym numerze PESEL już istnieje lub podane dane są niewłaściwe"); 
     }
     
   }
 
   getBirthDateFromPesel(pesel :string){
-     
     var substring = pesel.substr(0, 6);
    
-    var year = parseInt(substring.substr(0, 2), 10);
+    var year = substring.substr(0, 2);
+    var day = substring.substr(4, 2);
+    var monthString = substring.substr(2, 2);
     var month = parseInt(substring.substr(2, 2),10);
-    var day = parseInt(substring.substr(4, 2),10);
 
-    if(month > 12){
+    if(month >= 21){
       month -= 20;
-      return  day.toString() + "." + month.toString() + "." + "20" + year.toString();
+      monthString = month.toString();
+      
+      if(month < 10){
+         monthString = "0" + month.toString()
+      }
+
+      return  day + "." + monthString + "." + "20" + year;
     }
     else{
-      return day.toString() + "." + month.toString() + "." + "19" + year.toString();
+      return day + "." + monthString + "." + "19" + year;
     }
   }
 

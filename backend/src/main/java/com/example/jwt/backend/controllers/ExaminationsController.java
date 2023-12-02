@@ -61,19 +61,32 @@ public class ExaminationsController {
         return ResponseEntity.ok(examinationsService.getExamination(id));
     }
 
-    @GetMapping("/examinations/result/{pesel}/{number}")
-    public ResponseEntity<ExaminationDto> getExaminationByNumber(@PathVariable Long number, @PathVariable String pesel){
-        return ResponseEntity.ok(examinationsService.getExaminationByNumber(number, pesel));
+    @GetMapping("examinations/parameterswithnorms/{id}")
+    public ResponseEntity<List<ParamWithNormDto>> getParametersAndNormsByExaminationId(@PathVariable Long id){
+        List<ParameterDto> params = parameterService.getParameterByExaminationId(id);
+        List<ParamWithNormDto> paramsToSend = new LinkedList<>();
+        for (ParameterDto param:params) {
+            NormRangeDto norm = parameterService.getNormRangeByParameterId(param.getId());
+            ParamWithNormDto paramAndNorm = new ParamWithNormDto(param.getId(), param.getName(), param.getValue(),
+                    norm.getId(), norm.getUnit(), norm.getMin(), norm.getMax());
+            paramsToSend.add(paramAndNorm);
+        }
+        return ResponseEntity.ok(paramsToSend);
+    }
+
+    @GetMapping("/examinations/result/{pesel}/{id}")
+    public ResponseEntity<ExaminationDto> getExaminationByNumber(@PathVariable Long id, @PathVariable String pesel){
+        return ResponseEntity.ok(examinationsService.getExaminationByNumber(id, pesel));
     }
 
     @GetMapping("/pdf/generate/{patientId}/{examinationId}")
-    public ResponseEntity<InputStreamResource> generateResultsPDF(@PathVariable Long examinationId, @PathVariable Long patientId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<InputStreamResource> generateResultsPDF(@PathVariable Long examinationId, @PathVariable Long patientId) throws IOException {
         try {
             ExaminationDto examinationDto = examinationsService.getExamination(examinationId);
             List<ParamWithNormDto> params = parameterService.getListOfParamsForExamination(examinationId);
             PatientDto patientDto = patientService.getPatientById(patientId);
 
-            byte[] pdfContent = this.pdfService.generateResultsPDF(response, examinationDto, params, patientDto);
+            byte[] pdfContent = this.pdfService.generateResultsPDF(examinationDto, params, patientDto);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=result.pdf");
@@ -112,8 +125,8 @@ public class ExaminationsController {
         java.util.Date utilDate = dateFormat.parse(firstRecord.get(1));
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-        ExaminationDto examinationToCreate = new ExaminationDto(null, /*examinationDto.getPatientId()*/patientId, firstRecord.get(0), sqlDate);
-        Patient patient = patientMapper.toPatient(patientService.getPatientById(/*examinationDto.getPatientId()*/ patientId));
+        ExaminationDto examinationToCreate = new ExaminationDto(null, patientId, firstRecord.get(0), sqlDate);
+        Patient patient = patientMapper.toPatient(patientService.getPatientById(patientId));
         Examination examination = examinationsService.createExamination(examinationToCreate, patient);
 
         for(int i = 1; i < csvRecords.size(); i++){

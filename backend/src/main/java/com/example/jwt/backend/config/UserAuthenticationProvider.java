@@ -49,7 +49,6 @@ public class UserAuthenticationProvider {
                 .withClaim("lastName", user.getLastName())
                 //.withClaim("roles", user.getRoles())
                 .sign(algorithm);
-        System.out.println("token: " + token);
         return token;
     }
 
@@ -65,11 +64,10 @@ public class UserAuthenticationProvider {
                 .login(decoded.getSubject())
                 .firstName(decoded.getClaim("firstName").asString())
                 .lastName(decoded.getClaim("lastName").asString())
-                //.roles(decoded.getClaim("roles").asList(RoleDto.class))
+                //.roles(decoded.getClaim("roles").asString())
                 .build();
 
-        /*List<GrantedAuthority> authorities= */
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()/*user.getRoles()*/);
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()/*user.getRole()*/);
     }
 
     public Authentication validateTokenStrongly(String token) {

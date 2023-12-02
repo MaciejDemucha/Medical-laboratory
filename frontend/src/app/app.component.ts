@@ -7,6 +7,7 @@ import { ExaminationOffer } from './examinationOffer';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
+import { ShoppingcartService } from './shoppingcart.service';
 
 
 @Component({
@@ -18,13 +19,18 @@ export class AppComponent implements OnInit {
   title: string = 'Laboratorium medyczne';
   patients: Patient[] = [];
   componentToShow: string = "";
+  bucketCount = 0;
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
+  constructor(private shopService: ShoppingcartService ,private authService: AuthService, private _snackBar: MatSnackBar,private route: ActivatedRoute, private http: HttpClient, private axiosService: AxiosService, private router: Router){
 
   }
 
   public getIsAuthenticated(): any {
     return this.authService.isAuthenticated;
+  }
+
+  public getBucketSize(){
+	return this.shopService.getCartSize();
   }
 
   public getLoggedId(): any{

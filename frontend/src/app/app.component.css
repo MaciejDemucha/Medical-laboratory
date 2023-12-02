@@ -54,6 +54,12 @@
   margin-right: auto;
   }
 
+  .image {
+	height: 100px;
+	margin-top: 50px;
+	width: 100%;
+  }
+
   /*.menuLogin{
 	width: auto;
   }

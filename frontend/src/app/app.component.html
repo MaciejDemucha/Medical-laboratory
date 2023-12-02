@@ -26,7 +26,7 @@
           <mat-icon *ngIf="getIsAuthenticated() == false"> add_location</mat-icon>
           <button *ngIf="getIsAuthenticated() == false" (click)="onLaboratoriesTab()" mat-flat-button color="primary">Nasze laboratoria</button>
           <mat-icon *ngIf="getIsAuthenticated() == false">add_shopping_cart</mat-icon>
-          <button *ngIf="getIsAuthenticated() == false" (click)="onBucketTab()" mat-flat-button color="primary">Koszyk</button>
+          <button *ngIf="getIsAuthenticated() == false" (click)="onBucketTab()" mat-flat-button color="primary" matBadge="bucketCount" [matBadgeHidden] = "bucketCount == 0" matBadgePosition="before" matBadgeColor="accent">Koszyk</button>
           </div>
       </mat-toolbar-row>
 

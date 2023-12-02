@@ -20,13 +20,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-bucket',
   templateUrl: './bucket.component.html',
   styleUrls: ['./bucket.component.css'],
   standalone: true,
-  imports: [MatProgressSpinnerModule,FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
+  imports: [MatExpansionModule,MatProgressSpinnerModule,FormsModule,MatSnackBarModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatCardModule, CommonModule, MatButtonModule],
 })
 export class BucketComponent implements OnInit{
   bucket: any[] = [];

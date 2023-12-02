@@ -26,7 +26,8 @@ export class ClientResultSubmitComponent {
     ).subscribe(data => {
       this.examination = data;
       const url = this.router.serializeUrl(this.router.createUrlTree(['/singleresult/result'], { queryParams: { number: this.number, pesel: this.pesel } }));
-      window.open(url, '_blank');
+      //window.open(url, '_blank');
+      this.router.navigateByUrl(url);
     },
       error => {
         this.openSnackBar("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone");

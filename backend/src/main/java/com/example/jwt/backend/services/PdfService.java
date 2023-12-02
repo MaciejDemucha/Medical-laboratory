@@ -45,7 +45,7 @@ public class PdfService {
     public static final String ARIMO =
             "src/main/resources/Arimo-Regular.ttf";
 
-    public byte[] generateResultsPDF(HttpServletResponse response, ExaminationDto examinationDto, List<ParamWithNormDto> params, PatientDto patient) throws IOException {
+    public byte[] generateResultsPDF(ExaminationDto examinationDto, List<ParamWithNormDto> params, PatientDto patient) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter pdfWriter = new PdfWriter(baos);
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
@@ -69,15 +69,6 @@ public class PdfService {
                 .setFontSize(30f)
                 .setBorder(Border.NO_BORDER)
         );
-
-       /* table.addCell(new Cell().add("Voucher")
-                .setTextAlignment(TextAlignment.RIGHT)
-                .setMarginTop(30f)
-                .setMarginBottom(30f)
-                .setBorder(Border.NO_BORDER)
-                .setMarginRight(10f)
-                .setFont(font)
-        );*/
 
         float colWidth[] = {80, 300, 100, 80};
         Table personalInfoTable = new Table(colWidth);

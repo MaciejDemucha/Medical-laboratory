@@ -1,8 +1,6 @@
 package com.example.jwt.backend.mappers;
 
-import com.example.jwt.backend.dtos.ExaminationDto;
 import com.example.jwt.backend.dtos.PatientDto;
-import com.example.jwt.backend.entites.Examination;
 import com.example.jwt.backend.entites.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

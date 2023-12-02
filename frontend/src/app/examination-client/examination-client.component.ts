@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingcartService } from '../shoppingcart.service';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './examination-client.component.html',
   styleUrls: ['./examination-client.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, CommonModule, MatSnackBarModule],
+  imports: [MatCardModule, MatButtonModule, CommonModule, MatSnackBarModule, MatExpansionModule],
 })
 export class ExaminationClientComponent {
   offers: ExaminationOffer[] = [];

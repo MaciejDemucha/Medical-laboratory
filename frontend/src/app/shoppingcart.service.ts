@@ -23,6 +23,11 @@ export class ShoppingcartService {
     return cartString ? JSON.parse(cartString) : [];
   }
 
+  getCartSize(){
+    let cart = this.getCart();
+    return cart.length;
+  }
+
   // Save the shopping cart to the cookie
   saveCart(cart: any[]): void {
     this.cookieService.set(this.cartKey, JSON.stringify(cart));

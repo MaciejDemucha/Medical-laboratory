@@ -5,7 +5,20 @@
           <mat-card-subtitle>Cena: {{examination.price}} zł</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{examination.description}}</p>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Opis badania
+                </mat-panel-title>
+                <mat-panel-description>
+                  kliknij, aby rozwinąć
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p>{{examination.description}}</p>
+            </mat-expansion-panel>
+            
+          </mat-accordion>
         </mat-card-content>
         <mat-card-actions align="end">
           <button (click)="addItemToBucket(examination)" mat-button>Dodaj do koszyka</button>

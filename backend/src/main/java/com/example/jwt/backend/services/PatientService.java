@@ -30,8 +30,6 @@ public class PatientService {
     private final GenderRepository genderRepository;
 
 
-    //TODO: register
-
     public List<PatientDto> allPatients(){
         return patientMapper.toPatientDtos(patientRepository.findAll());
     }
@@ -95,11 +93,16 @@ public class PatientService {
             throw new AppException("Patient with this PESEL already exists", HttpStatus.BAD_REQUEST);
         }
 
+        if(patientDto.getPesel().length() != 11){
+            throw new AppException("PESEL is not valid", HttpStatus.BAD_REQUEST);
+        }
+
         Patient patient = patientMapper.toPatient(patientDto);
         if(patient.getGender() == null){
-            String checkName = patient.getFirstName();
+            String checkPesel = patient.getPesel();
             Gender gender;
-            if(checkName.charAt(checkName.length() - 1) == 'a'){
+            char c = checkPesel.charAt(checkPesel.length() - 2);
+            if(c == '0' || c == '2' || c == '4' || c == '6' || c == '8'){
                 gender = genderRepository.findById(2L).orElseThrow(() -> new AppException("Gender not found", HttpStatus.NOT_FOUND));
             }
             else {

@@ -1,23 +1,7 @@
 <div *ngIf="cardToShow === 'summary'">
 <div *ngIf="bucket.length == 0"><h3>Koszyk jest pusty</h3></div>
 
-<p *ngFor="let examination of bucket">
-    <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{examination.name}}</mat-card-title>
-          <mat-card-subtitle>Cena: {{examination.price}} zł</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{examination.description}}</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button (click)="removeFromBucket(examination)" mat-button>Usuń</button>
-        </mat-card-actions>
-    </mat-card>
-</p>
-
-
-<mat-card>
+<mat-card style="margin-bottom: 30px;">
   <mat-card-header><h4>Do zapłaty</h4></mat-card-header>
 <mat-card-content><h6>Suma: {{sumToPay}} zł</h6></mat-card-content>
 <mat-card-actions align="end">
@@ -25,6 +9,36 @@
     <button *ngIf="bucket.length == 0" mat-stroked-button disabled>Dalej</button>
   </mat-card-actions>
 </mat-card>
+
+
+<p *ngFor="let examination of bucket">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{examination.name}}</mat-card-title>
+          <mat-card-subtitle>Cena: {{examination.price}} zł</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Opis badania
+                </mat-panel-title>
+                <mat-panel-description>
+                  kliknij, aby rozwinąć
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p>{{examination.description}}</p>
+            </mat-expansion-panel>
+            
+          </mat-accordion>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button (click)="removeFromBucket(examination)" mat-button>Usuń</button>
+        </mat-card-actions>
+    </mat-card>
+</p>
+
 </div>
 
 <div *ngIf="cardToShow === 'credentials'">

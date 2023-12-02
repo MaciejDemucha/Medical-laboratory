@@ -33,6 +33,7 @@ import { AddResultsComponent } from './add-results/add-results.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
 import { ResultsShowOnlyComponent } from './results-show-only/results-show-only.component';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { ResultsShowOnlyComponent } from './results-show-only/results-show-only.
     LaboratoriesComponent,
     MatSnackBarModule,
     UploadDialogComponent,
+    MatBadgeModule
   ],
   providers: [AxiosService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}} ],

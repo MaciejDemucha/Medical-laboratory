@@ -6,8 +6,8 @@ INSERT INTO employee (id,role, title, first_name, last_name, login, password) VA
 INSERT INTO gender (name) VALUES ('male');
 INSERT INTO gender (name) VALUES ('female');
 
-INSERT INTO examination_offer(id, name, description, price) VALUES (1, 'Morfologia krwi','Opis',19.99),
-                                                             (2, 'Żelazo, ferrytyna','Opis',15.99);
+INSERT INTO examination_offer(id, name, description, price) VALUES (1, 'Morfologia krwi','Morfologia krwi pełna (tzw. morfologia 5 diff.). Jakościowa i ilościowa ocena składu i morfologii  krwi obwodowej, krwinek: czerwonych (erytrocytów), białych (pięciu frakcji) oraz płytek krwi (trombocytów). Podstawowe przesiewowe badanie krwi o zastosowaniu profilaktycznym i diagnostycznym.',19.99),
+                                                             (2, 'Żelazo, ferrytyna','Żelazo. Pomiar stężenia żelaza w surowicy krwi, przydatny  w diagnostyce niedoborów i nadmiaru żelaza. Ferrytyna. Kliniczna ocena zapasów żelaza w organizmie z naciskiem na niedobory. ',15.99);
 
 
 INSERT INTO address (id, street, postal_code, city) VALUES (1, 'Wróblewskiego 25', '51-627', 'Wrocław');
@@ -38,36 +38,18 @@ INSERT INTO patient (gender_id, address_id, pesel, first_name, last_name, birth_
 
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (1,(SELECT id FROM gender WHERE name = 'male'), 4.23, 9.07, 'tys/μl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (2,(SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (5, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (6, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (7, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (8, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (9, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (10, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (11, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (12, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (13, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (14, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (15, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (16, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (17, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (18, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (19, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (20, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (21, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (22, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (23, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (24, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (25, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (26, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (27, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (28, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (29, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (30, (SELECT id FROM gender WHERE name = 'male'), 4.63, 6.08, 'mln/μl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (7, (SELECT id FROM gender WHERE name = 'male'), 13.7, 17.5, 'g/dl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (8, (SELECT id FROM gender WHERE name = 'male'), 40.1, 51.0, '%');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (9,(SELECT id FROM gender WHERE name = 'male'), 79.1, 92.07, 'fl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (10,(SELECT id FROM gender WHERE name = 'male'), 25.7, 32.2, 'pg');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (11, (SELECT id FROM gender WHERE name = 'male'), 32.3, 36.5, 'g/dl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (12, (SELECT id FROM gender WHERE name = 'male'), 150.0, 400.0, 'tys/μl');
 
 
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (3,(SELECT id FROM gender WHERE name = 'female'), 33.0, 193.0, 'μg/dl');
-INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (4,(SELECT id FROM gender WHERE name = 'female'), 30.0, 400.00, 'mln/μl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (3,(SELECT id FROM gender WHERE name = 'female'), 31.0, 183.0, 'μg/dl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (4,(SELECT id FROM gender WHERE name = 'female'), 27.0, 370.00, 'mln/μl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (5,(SELECT id FROM gender WHERE name = 'male'), 33.0, 193.0, 'μg/dl');
+INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (6,(SELECT id FROM gender WHERE name = 'male'), 30.0, 400.00, 'mln/μl');
 
 INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (1234, (SELECT id
                                                                                FROM patient
@@ -82,13 +64,19 @@ INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (9876, (S
 
 INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (1,1,1234, 'Leukocyty', 9.77);
 INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (2,2,1234, 'Erytrocyty', 5.44);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (9,7,1234, 'Hemoglobina', 16.4);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (10,8,1234, 'Hematokryt', 31.9);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (5,9,1234, 'MCV', 89.9);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (6,10,1234, 'MCH', 30.1);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (7,11,1234, 'MCHC', 33.5);
+INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (8,12,1234, 'Płytki krwi', 184.0);
 
 
 
 INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (3,3,9876, 'Żelazo', 174.0);
 INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (4,4,9876, 'Ferrytyna', 106.0);
-INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (31,3,5678, 'Żelazo', 145.0);
-INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (32,4,5678, 'Ferrytyna', 92.0);
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (31,5,5678, 'Żelazo', 145.0);
+INSERT INTO parameter (id,  norm_range_id,examination_id,name, value) VALUES (32,6,5678, 'Ferrytyna', 92.0);
 
 
 

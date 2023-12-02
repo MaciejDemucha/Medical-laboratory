@@ -29,6 +29,5 @@ public class PatientDto {
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthDate;
-    //private LocalDate birthDate;
 
 }

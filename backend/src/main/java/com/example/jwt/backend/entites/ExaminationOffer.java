@@ -19,7 +19,7 @@ public class ExaminationOffer {
     private Long id;
     @Column
     private String name;
-    @Column
+    @Column(length = 100000)
     private String description;
 
     @Column(name = "price", precision = 10, scale = 2) // precision is the total number of digits, scale is the number of decimal places

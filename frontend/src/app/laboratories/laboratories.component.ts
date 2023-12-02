@@ -48,7 +48,7 @@ export class LaboratoriesComponent implements OnInit {
   
   ngOnInit() {
     this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-      zoom: 10,
+      zoom: 12,
       center: { lat: 51.107482, lng: 17.010159 },
       mapTypeControl: false,
     });
@@ -89,7 +89,7 @@ export class LaboratoriesComponent implements OnInit {
 
   getLaboratorySchedule(id: number): void {
     this.http.get<Schedule[]> (
-      `http://localhost:8080/schedule/${id}`
+      `http://localhost:8080/laboratories/schedule/${id}`
     ).subscribe(data => {
       this.scheduleList[id] = data;
       this.dataSource.data.push({labId: id, street: this.addressList[id].street, postalCode: this.addressList[id].postalCode, city: this.addressList[id].city});
