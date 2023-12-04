@@ -44,6 +44,7 @@ public class ExaminationsController {
     private final PatientService patientService;
     private final PatientMapper patientMapper;
     private final NormRangeService normRangeService;
+    private final EmailService emailService;
 
     @GetMapping("/examinations")
     public ResponseEntity<List<ExaminationDto>> allExaminations(){
@@ -74,9 +75,9 @@ public class ExaminationsController {
         return ResponseEntity.ok(paramsToSend);
     }
 
-    @GetMapping("/examinations/result/{pesel}/{id}")
-    public ResponseEntity<ExaminationDto> getExaminationByNumber(@PathVariable Long id, @PathVariable String pesel){
-        return ResponseEntity.ok(examinationsService.getExaminationByNumber(id, pesel));
+    @GetMapping("/examinations/result/{id}/{code}")
+    public ResponseEntity<ExaminationDto> getExaminationByNumber(@PathVariable Long id, @PathVariable String code){
+        return ResponseEntity.ok(examinationsService.getExaminationByNumber(id, code));
     }
 
     @GetMapping("/pdf/generate/{patientId}/{examinationId}")
@@ -137,6 +138,10 @@ public class ExaminationsController {
 
         }
 
+        String text = "Udostępniono wyniki dla badania: \n" + examination.getName() + "\n\nData wykonania: " +
+                examination.getDatePerformed() + "\n\nSzczegóły możesz zobaczyć w zakładce Wyniki badań na naszej stronie. Należy podać następujące dane: \nNumer badania: " +
+                examination.getId() + "\nKod dostępu: "  + examination.getPassword();
+        emailService.sendEmail(examination.getPatient().getEmail(), "Laboratorium medyczne - wyniki badań", text);
         return ResponseEntity.created(URI.create("/examinations/" + examination.getId())).body(examination);
 
     }

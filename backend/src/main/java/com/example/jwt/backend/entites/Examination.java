@@ -25,6 +25,8 @@ public class Examination {
     private String name;
     @Column
     private LocalDate datePerformed;
+    @Column(unique = true)
+    private String password;
 
     @ManyToOne
     @JoinColumn(name="patient_id", nullable = false)

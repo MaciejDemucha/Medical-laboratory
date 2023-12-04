@@ -30,7 +30,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class SingleResultComponent {
   examinationNumber: string = "";
-  pesel: string = "";
+  password: string = "";
+  id: number = 0;
   patient: Patient = new Patient(0, "", "", "", "");
   patientsDoctor = new Doctor(0, "", "", "");
   examination: Examination = new Examination(0,0, "", "", "");
@@ -46,13 +47,14 @@ export class SingleResultComponent {
 ngOnInit(): void{
   this.route.queryParams.subscribe(params => {
     this.examinationNumber = params['number'];
-    this.pesel = params['pesel'];
+    this.password = params['password'];
+    this.id = params['id'];
   });
 
   
 
   this.http.get<Examination> (
-    `http://localhost:8080/examinations/result/${this.pesel}/${this.examinationNumber}`
+    `http://localhost:8080/examinations/result/${this.examinationNumber}/${this.password}`
   ).subscribe(data => {
     this.examination = data;
     this.getExaminationParametersAndNorms(this.examination.id);
@@ -61,7 +63,7 @@ ngOnInit(): void{
     error => this.openSnackBar("Podano błędne dane lub wyniki badań nie zostały jeszcze zamieszczone"));
 
   this.http.get<Patient> (
-    `http://localhost:8080/patients/bypesel/${this.pesel}`
+    `http://localhost:8080/patients/${this.id}`
   ).subscribe(data => {
     this.patient = data;
     this.getPatientsDoctor();

@@ -7,11 +7,13 @@ import com.example.jwt.backend.exceptions.AppException;
 import com.example.jwt.backend.mappers.ExaminationMapper;
 import com.example.jwt.backend.repositories.ExaminationRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -37,23 +39,48 @@ public class ExaminationsService {
     }
 
 
-    public ExaminationDto getExaminationByNumber(Long number, String pesel){
-        boolean isPatient = patientService.isPatientByPesel(pesel);
+    public ExaminationDto getExaminationByNumber(Long number, String password){
+        /*boolean isPatient = patientService.isPatientByPesel(pesel);
         if(!isPatient){
             throw new AppException("Patient not found", HttpStatus.NOT_FOUND);
-        }
+        }*/
         Examination examination = examinationRepository.findById(number)
                 .orElseThrow(() -> new AppException("Examination not found", HttpStatus.NOT_FOUND));
-        if(!examination.getPatient().getPesel().equals(pesel)){
-            throw new AppException("Not found examination for that pesel", HttpStatus.NOT_FOUND);
+        if(!examination.getPassword().equals(password)){
+            throw new AppException("Wrong password for this examination", HttpStatus.NOT_FOUND);
         }
 
         return examinationMapper.toExaminationDto(examination);
     }
 
+    private String generateExaminationPassword(){
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 8;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
+    }
+
     public Examination createExamination(ExaminationDto examinationDto, Patient patient) {
+
         Examination examination = examinationMapper.toExamination(examinationDto);
         examination.setPatient(patient);
+        String password = generateExaminationPassword();
+
+        try{
+            examination.setPassword(password);
+        }
+        catch (ConstraintViolationException e){
+            password = generateExaminationPassword();
+            examination.setPassword(password);
+        }
 
         Examination createdExamination =  examinationRepository.save(examination);
 

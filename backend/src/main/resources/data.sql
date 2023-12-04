@@ -51,15 +51,15 @@ INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (4,(SELECT id FROM
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (5,(SELECT id FROM gender WHERE name = 'male'), 33.0, 193.0, 'μg/dl');
 INSERT INTO norm_range (id, gender_id, min, max, unit) VALUES (6,(SELECT id FROM gender WHERE name = 'male'), 30.0, 400.00, 'mln/μl');
 
-INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (1234, (SELECT id
+INSERT INTO examination (id, patient_id, name,  date_performed, password) VALUES (1234, (SELECT id
                                                                                FROM patient
-                                                                               WHERE pesel = '01300703817'), 'Morfologia krwi', '2023-07-10');
-INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (5678, (SELECT id
+                                                                               WHERE pesel = '01300703817'), 'Morfologia krwi', '2023-07-10', '1@abcdefg');
+INSERT INTO examination (id, patient_id, name,  date_performed, password) VALUES (5678, (SELECT id
                                                                                FROM patient
-                                                                               WHERE pesel = '01300703817'), 'Żelazo, ferrytyna', '2023-12-02');
-INSERT INTO examination (id, patient_id, name,  date_performed) VALUES (9876, (SELECT id
+                                                                               WHERE pesel = '01300703817'), 'Żelazo, ferrytyna', '2023-12-02', '2@abcdefg');
+INSERT INTO examination (id, patient_id, name,  date_performed, password) VALUES (9876, (SELECT id
                                                                                FROM patient
-                                                                               WHERE pesel = '01310688261'), 'Żelazo, ferrytyna', '2023-01-01');
+                                                                               WHERE pesel = '01310688261'), 'Żelazo, ferrytyna', '2023-01-01', '3@abcdefg');
 
 
 INSERT INTO parameter (id, norm_range_id,examination_id, name, value) VALUES (1,1,1234, 'Leukocyty', 9.77);

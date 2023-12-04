@@ -14,7 +14,7 @@ export class ClientResultSubmitComponent {
   @Output() onSubmitRegisterEvent = new EventEmitter();
 
   number: string = "";
-  pesel: string = "";
+  password: string = "";
   examination: Examination = new Examination(0,0 ,"", "", "");
 
   constructor(private _snackBar: MatSnackBar,private http: HttpClient,private router: Router){}
@@ -22,10 +22,10 @@ export class ClientResultSubmitComponent {
   onSubmitResult(): void{
 
     this.http.get<Examination> (
-      `http://localhost:8080/examinations/result/${this.pesel}/${this.number}`
+      `http://localhost:8080/examinations/result/${this.number}/${this.password}`
     ).subscribe(data => {
       this.examination = data;
-      const url = this.router.serializeUrl(this.router.createUrlTree(['/singleresult/result'], { queryParams: { number: this.number, pesel: this.pesel } }));
+      const url = this.router.serializeUrl(this.router.createUrlTree(['/singleresult/result'], { queryParams: { number: this.number, password: this.password, id: this.examination.patientId } }));
       //window.open(url, '_blank');
       this.router.navigateByUrl(url);
     },
