@@ -21,6 +21,7 @@ import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bucket',
@@ -47,7 +48,7 @@ export class BucketComponent implements OnInit{
 
   matcher = new MyErrorStateMatcher();
 
-    constructor(private shopService: ShoppingcartService, private http: HttpClient, public dialog: MatDialog, private _snackBar: MatSnackBar){}
+    constructor(private shopService: ShoppingcartService, private http: HttpClient, public dialog: MatDialog, private _snackBar: MatSnackBar, private router: Router){}
 
     ngOnInit(){
       this.bucket = this.shopService.getCart();
@@ -84,13 +85,14 @@ export class BucketComponent implements OnInit{
 
     this.http.post<any>(`http://localhost:8080/order`, data, { headers }).subscribe(
       (response) => {
-        this.setCard("confirm");
+       //this.setCard("confirm");
         this.showSpinner = false;
         this.bucket = [];
         this.shopService.clearCart();
+        this.router.navigate(['/orderconfirm']);
       },
       (error) => {
-        
+         this.openSnackBar("Wystąpił błąd");
         console.error(error);
         this.showSpinner = false;
       }

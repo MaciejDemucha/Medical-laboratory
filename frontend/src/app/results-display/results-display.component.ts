@@ -153,7 +153,14 @@ export class ResultsDisplayComponent {
       });
      
       dialogRef.afterClosed().subscribe(result => {
-       
+
+       this.http.get<Diagnosis>(
+        `http://localhost:8080/diagnosis/${id}`
+      ).subscribe(
+        (data) => {
+            this.diagnosisList[id] = data;
+        }
+      );
       });
   }
 

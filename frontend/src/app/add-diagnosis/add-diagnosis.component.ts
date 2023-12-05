@@ -8,27 +8,29 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { DialogData } from '../dialog-data/dialog-data.component';
-import { MAT_DIALOG_DATA , MatDialogModule} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA , MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { catchError, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-add-diagnosis',
   templateUrl: './add-diagnosis.component.html',
   styleUrls: ['./add-diagnosis.component.css'],
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatDialogModule, CommonModule],
+  imports: [MatProgressSpinnerModule ,FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatDialogModule, CommonModule],
 })
 export class AddDiagnosisComponent implements OnInit {
 	@ViewChild('desc') input?: ElementRef<HTMLInputElement>;
 	oldDesc: string = "";
 	activeButton: boolean = true;
 	diagnosis: Diagnosis | null = new Diagnosis(0, 0, "");
+	showSpinner: boolean = false;
 
-  constructor(private authService: AuthService,private _snackBar: MatSnackBar, private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
+  constructor(public dialogRef: MatDialogRef<AddDiagnosisComponent>,private authService: AuthService,private _snackBar: MatSnackBar, private router: Router, private http: HttpClient, private desc: ElementRef, @Inject(MAT_DIALOG_DATA) public data: DiagnosisDialogData){
   }
 
   ngOnInit() {
@@ -86,21 +88,8 @@ export class AddDiagnosisComponent implements OnInit {
     );
   }
 
-  /*diagnosises: Diagnosis[] = [];
-
-  appendData(newDiagnosis: any): void {
-		this.diagnosises.push(newDiagnosis);
-	}
-
-	removeItem(diagnosisId: number): void {
-		this.http.delete(
-			"http://localhost:8080/diagnosis/" + diagnosisId
-		).subscribe(data => 
-			this.diagnosises = this.diagnosises.filter((diagnosis: Diagnosis) =>
-			diagnosis.id != diagnosisId));
-	}*/
-
 	onSubmit(): void{
+		this.showSpinner = true;
 		const authToken = localStorage.getItem('auth_token');
 		const headers = new HttpHeaders({
 			'Authorization': `Bearer ${authToken}`
@@ -110,13 +99,13 @@ export class AddDiagnosisComponent implements OnInit {
 		if(descRef){
 			this.data.oldDesc = descRef.value;
 		if(this.data.isNewExamination === true){
-			
 				this.http.post("http://localhost:8080/diagnosis", {
 				examinationId: this.data.examinationId,
 				description: descRef.value
 			}, {headers}).subscribe((response) => {
-				console.log(response);
+				
 				this.openSnackBar("Diagnoza została dodana");
+				this.dialogRef.close();
 			  }, (error) => {
 				console.log(error);
 				if(error.status === 401){
@@ -131,8 +120,8 @@ export class AddDiagnosisComponent implements OnInit {
 				examinationId: this.data.examinationId,
 				description: descRef.value
 			}, {headers}).subscribe((response) => {
-				console.log(response);
 				this.openSnackBar("Diagnoza została zmieniona");
+				this.dialogRef.close();
 			  }, (error) => {
 				console.log(error);
 				if(error.status === 401){

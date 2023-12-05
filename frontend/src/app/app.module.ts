@@ -34,6 +34,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UploadDialogComponent } from './upload-dialog/upload-dialog.component';
 import { ResultsShowOnlyComponent } from './results-show-only/results-show-only.component';
 import {MatBadgeModule} from '@angular/material/badge';
+import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     LoginFormComponent,
     ClientResultSubmitComponent,
     AddEmployeeComponent,
+    OrderConfirmComponent,
    
   ],
   imports: [

@@ -9,18 +9,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-upload-dialog',
   templateUrl: './upload-dialog.component.html',
   styleUrls: ['./upload-dialog.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, NgIf, CommonModule, MatListModule, MatIconModule, MatSnackBarModule],
+  imports: [MatProgressSpinnerModule,MatDialogModule, MatButtonModule, NgIf, CommonModule, MatListModule, MatIconModule, MatSnackBarModule],
 })
 export class UploadDialogComponent {
 constructor(@Inject(MAT_DIALOG_DATA) public data: UploadDialogData, private http: HttpClient,private authService: AuthService,private _snackBar: MatSnackBar, private router: Router){}
 fileName = '';
 file: File|null = null;
+showSpinner: boolean = false;
 
 onFileSelected(event: any) {
 
@@ -44,13 +46,15 @@ uploadFile(patientId: number) {
       formData.append('file', this.file);
       formData.append('patientId', patientId.toString());
       
-
+    this.showSpinner = true;
     this.http.post('http://localhost:8080/examinations', formData, { headers: jsonHeaders }).subscribe(
 
     (response) => {
       this.openSnackBar("Dodano wyniki"); 
+      this.showSpinner = false;
     },
     (error) => {
+      this.showSpinner = false;
       console.error(error);
       if(error.status === 401){
         this.onAuthFailure();

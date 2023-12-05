@@ -6,8 +6,9 @@
             <textarea [ngModelOptions]="{standalone: true}"  [(ngModel)]="oldDesc" (ngModelChange)="onTextChange($event)"  id="desc" class="description" matInput>{{oldDesc}}</textarea>
           </mat-form-field>
       <div class="buttons">
-          <button [matDialogClose] type="submit" mat-raised-button *ngIf="activeButton == true">Zapisz</button>
-          <button mat-stroked-button disabled *ngIf="activeButton == false">Zapisz</button>
+          <button type="submit" mat-raised-button *ngIf="activeButton == true && showSpinner === false">Zapisz</button>
+          <button  mat-stroked-button disabled *ngIf="activeButton == false && showSpinner === false">Zapisz</button>
+          <mat-spinner [diameter]="40" *ngIf="showSpinner === true"></mat-spinner>
         </div>
     </form>
         

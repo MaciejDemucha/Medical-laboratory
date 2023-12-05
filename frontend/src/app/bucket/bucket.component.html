@@ -88,7 +88,7 @@
     </form>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-flat-button color="primary" (click)="submitOrder()" mat-button>Zamów</button>
+    <button *ngIf="showSpinner === false" mat-flat-button color="primary" (click)="submitOrder()" mat-button>Zamów</button>
     <mat-spinner [diameter]="40" *ngIf="showSpinner === true"></mat-spinner>
   </mat-card-actions>
 
