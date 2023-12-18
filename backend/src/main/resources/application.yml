@@ -18,12 +18,14 @@ spring:
       mode: always
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver #org.postgresql.Driver
-    url: jdbc:mysql://localhost:3306/laboratory #jdbc:postgresql://localhost:5432/backenddb
-    username: root #backend
-    password: d31f2547 #backend
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/laboratory
+    username: root
+    password: d31f2547
   jpa:
     defer-datasource-initialization: true
-    database-platform: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      show:
+        sql: true
+      ddl-auto: create
