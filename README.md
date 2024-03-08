@@ -7,12 +7,13 @@ W pliku backend\src\main\resources\application.yml należy umieścić dane do po
 
 ![database_connection](https://github.com/MaciejDemucha/Medical-laboratory/assets/72813169/3f5c0f4e-58e1-485d-9b65-31e044d3db8a)
 
-3. Backend:
+2. Backend:
+Należy zainstalować środowisko Java: https://www.oracle.com/pl/java/technologies/downloads/.
 Należy w folderze backend użyć komendy
 - `./mvnw spring-boot:run`
 3. Frontend:
 Instalacja:
-Należy zainstalować Node.js w wersji LTS: https://nodejs.org/en/download/
+Należy zainstalować Node.js w wersji LTS: https://nodejs.org/en/download/.
 W folderze frontend należy zainstalować Angular CLI:
 - `npm install -g @angular/cli`
 
@@ -21,3 +22,5 @@ Następnie należy użyć komendy npm install w celu zainstalowania bibliotek do
 Uruchomienie:
 W folderze frontend należy użyć komendy: 
 - `ng serve`
+
+Aplikacja jest dostępna pod adresem: http://localhost:4200/
